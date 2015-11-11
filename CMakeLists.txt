@@ -15,13 +15,25 @@
 #      111025    K. Kumar          Adapted file to work with Revision 194.
 #      111026    K. Kumar          Adapted file so all headers show in project tree in Qt Creator.
 #      130111    D. Dirkx          Modified for separate spice compilation
+#      151111    J. Geul           Make file more targeted for CSPICE
 #/
 
-# Specify minimum CMake version required to compile Tudat.
+# Specify minimum CMake version required to compile cspice.
 cmake_minimum_required( VERSION 2.6 )
 
-# Specific Tudat project name.
+# Specific project name.
 project( CSpice )
+
+# Detect if CSPICE is build standalone or from within project
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
+  message(STATUS "Building ${PROJECT_NAME} standalone.")
+  include("${CMAKE_CURRENT_SOURCE_DIR}/UserSettings.txt" OPTIONAL)
+else()
+  message(STATUS "Building ${PROJECT_NAME} from within ${CMAKE_PROJECT_NAME}.")
+  include("${CMAKE_CURRENT_SOURCE_DIR}/UserSettings.txt" OPTIONAL)
+  include("${CMAKE_SOURCE_DIR}/UserSettings.txt" OPTIONAL)
+  set(PROJECTROOT ${PROJECTROOT} PARENT_SCOPE)
+endif()
 
 # Define the basic input (trunk).
 set(SRCROOT ${PROJECT_SOURCE_DIR})
@@ -29,8 +41,8 @@ set(SRCROOT ${PROJECT_SOURCE_DIR})
 set(LIBROOT "${SRCROOT}/lib")
 set(BINROOT "${SRCROOT}/bin")
 
- set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall -g -Woverloaded-virtual -Wold-style-cast -Wnon-virtual-dtor")
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -g -Wno-incompatible-pointer-types")
+# Hide warnings for implicit-int and incompatible-pointer-types
 
 # Set CMake build-type. If it not supplied by the user (either directly as an argument of through
 # the "UserSettings.txt" file, the default built type is "Release". NB: It is important this
