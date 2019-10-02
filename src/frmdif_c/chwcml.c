@@ -20,8 +20,8 @@ static integer c__100 = 100;
 static integer c__5 = 5;
 static integer c__4 = 4;
 static integer c__0 = 0;
-static doublereal c_b849 = 0.;
-static doublereal c_b1112 = 1e-8;
+static doublereal c_b851 = 0.;
+static doublereal c_b1114 = 1e-8;
 
 /* $Procedure      CHWCML ( Extract arguments from FRMDIFF command line ) */
 /* Subroutine */ int chwcml_(char *line, char *kernam, char *ffrnam, integer *
@@ -52,7 +52,7 @@ static doublereal c_b1112 = 1e-8;
     /* System generated locals */
     address a__1[2], a__2[3], a__3[5], a__4[4];
     integer i__1, i__2, i__3[2], i__4, i__5, i__6, i__7[3], i__8[5], i__9[4];
-    char ch__1[93], ch__2[133], ch__3[136];
+    char ch__1[93], ch__2[133], ch__3[137];
 
     /* Builtin functions */
     integer s_rnge(char *, integer, char *, integer);
@@ -215,6 +215,14 @@ static doublereal c_b1112 = 1e-8;
 /*     B.V. Semenov   (JPL) */
 
 /* $ Version */
+
+/* -    Version 2.3.0, 08-MAR-2017 (BVS). */
+
+/*        Updated version. */
+
+/* -    Version 2.2.0, 29-SEP-2016 (BVS). */
+
+/*        Updated version. */
 
 /* -    Version 2.1.0, 25-MAR-2014 (BVS). */
 
@@ -403,6 +411,13 @@ static doublereal c_b1112 = 1e-8;
 
 /* $ Version */
 
+/* -    Version 2.1.0, 29-SEP-2016 (BVS). */
+
+/*        Added initialization to blank of the first kernel name and */
+/*        type for cases when the sole command line argument is a file */
+/*        name. This change prevents rather bogus looking errors being */
+/*        signaled later by LDKLST. */
+
 /* -    Version 2.0.0, 29-MAR-2012 (BVS). */
 
 /*        Changed calling sequence to include additional SIGDIG output. */
@@ -442,9 +457,9 @@ static doublereal c_b1112 = 1e-8;
 
     for (i__ = 1; i__ <= 25; ++i__) {
 	ucase_(clkeys + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clkeys", i__1, "chwcml_", (ftnlen)344)) << 5), clkeyu + (((
+		"clkeys", i__1, "chwcml_", (ftnlen)351)) << 5), clkeyu + (((
 		i__2 = i__ - 1) < 25 && 0 <= i__2 ? i__2 : s_rnge("clkeyu", 
-		i__2, "chwcml_", (ftnlen)344)) << 5), (ftnlen)32, (ftnlen)32);
+		i__2, "chwcml_", (ftnlen)351)) << 5), (ftnlen)32, (ftnlen)32);
     }
 
 /*     Initialize version display. */
@@ -452,8 +467,8 @@ static doublereal c_b1112 = 1e-8;
     tkvrsn_("TOOLKIT", hword, (ftnlen)7, (ftnlen)32);
     s_copy(vermsg, " ", (ftnlen)80, (ftnlen)1);
 /* Writing concatenation */
-    i__3[0] = 60, a__1[0] = "frmdiff -- Version 2.1.0, March 25, 2014 -- Too"
-	    "lkit Version ";
+    i__3[0] = 59, a__1[0] = "frmdiff -- Version 2.3.0, March 8, 2017 -- Tool"
+	    "kit Version ";
     i__3[1] = rtrim_(hword, (ftnlen)32), a__1[1] = hword;
     s_cat(vermsg + 80, a__1, i__3, &c__2, (ftnlen)80);
     s_copy(vermsg + 160, " ", (ftnlen)80, (ftnlen)1);
@@ -712,23 +727,23 @@ static doublereal c_b1112 = 1e-8;
     nargs = wdcnt_(line, line_len);
     if (nargs == 0 || clflag[(i__1 = isrchc_("-v", &c__25, clkeys, (ftnlen)2, 
 	    (ftnlen)32) - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", i__1,
-	     "chwcml_", (ftnlen)550)] || clflag[(i__2 = isrchc_("-help", &
+	     "chwcml_", (ftnlen)557)] || clflag[(i__2 = isrchc_("-help", &
 	    c__25, clkeys, (ftnlen)5, (ftnlen)32) - 1) < 25 && 0 <= i__2 ? 
-	    i__2 : s_rnge("clflag", i__2, "chwcml_", (ftnlen)550)] || clflag[(
+	    i__2 : s_rnge("clflag", i__2, "chwcml_", (ftnlen)557)] || clflag[(
 	    i__4 = isrchc_("-h", &c__25, clkeys, (ftnlen)2, (ftnlen)32) - 1) <
 	     25 && 0 <= i__4 ? i__4 : s_rnge("clflag", i__4, "chwcml_", (
-	    ftnlen)550)] || clflag[(i__5 = isrchc_("-usage", &c__25, clkeys, (
+	    ftnlen)557)] || clflag[(i__5 = isrchc_("-usage", &c__25, clkeys, (
 	    ftnlen)6, (ftnlen)32) - 1) < 25 && 0 <= i__5 ? i__5 : s_rnge(
-	    "clflag", i__5, "chwcml_", (ftnlen)550)] || clflag[(i__6 = 
+	    "clflag", i__5, "chwcml_", (ftnlen)557)] || clflag[(i__6 = 
 	    isrchc_("-u", &c__25, clkeys, (ftnlen)2, (ftnlen)32) - 1) < 25 && 
-	    0 <= i__6 ? i__6 : s_rnge("clflag", i__6, "chwcml_", (ftnlen)550)]
+	    0 <= i__6 ? i__6 : s_rnge("clflag", i__6, "chwcml_", (ftnlen)557)]
 	    ) {
 
 /*        Display version in all cases. */
 
 	for (i__ = 1; i__ <= 3; ++i__) {
 	    tostdo_(vermsg + ((i__1 = i__ - 1) < 3 && 0 <= i__1 ? i__1 : 
-		    s_rnge("vermsg", i__1, "chwcml_", (ftnlen)561)) * 80, (
+		    s_rnge("vermsg", i__1, "chwcml_", (ftnlen)568)) * 80, (
 		    ftnlen)80);
 	}
 
@@ -737,24 +752,24 @@ static doublereal c_b1112 = 1e-8;
 
 	if (nargs == 0 || clflag[(i__1 = isrchc_("-usage", &c__25, clkeys, (
 		ftnlen)6, (ftnlen)32) - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clflag", i__1, "chwcml_", (ftnlen)568)] || clflag[(i__2 = 
+		"clflag", i__1, "chwcml_", (ftnlen)575)] || clflag[(i__2 = 
 		isrchc_("-u", &c__25, clkeys, (ftnlen)2, (ftnlen)32) - 1) < 
 		25 && 0 <= i__2 ? i__2 : s_rnge("clflag", i__2, "chwcml_", (
-		ftnlen)568)]) {
+		ftnlen)575)]) {
 	    for (i__ = 1; i__ <= 33; ++i__) {
 		tostdo_(usgmsg + ((i__1 = i__ - 1) < 33 && 0 <= i__1 ? i__1 : 
-			s_rnge("usgmsg", i__1, "chwcml_", (ftnlen)573)) * 80, 
+			s_rnge("usgmsg", i__1, "chwcml_", (ftnlen)580)) * 80, 
 			(ftnlen)80);
 	    }
 	} else if (clflag[(i__1 = isrchc_("-help", &c__25, clkeys, (ftnlen)5, 
 		(ftnlen)32) - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-		i__1, "chwcml_", (ftnlen)576)] || clflag[(i__2 = isrchc_(
+		i__1, "chwcml_", (ftnlen)583)] || clflag[(i__2 = isrchc_(
 		"-h", &c__25, clkeys, (ftnlen)2, (ftnlen)32) - 1) < 25 && 0 <=
-		 i__2 ? i__2 : s_rnge("clflag", i__2, "chwcml_", (ftnlen)576)]
+		 i__2 ? i__2 : s_rnge("clflag", i__2, "chwcml_", (ftnlen)583)]
 		) {
 	    for (i__ = 1; i__ <= 28; ++i__) {
 		tostdo_(hlpmsg + ((i__1 = i__ - 1) < 28 && 0 <= i__1 ? i__1 : 
-			s_rnge("hlpmsg", i__1, "chwcml_", (ftnlen)581)) * 80, 
+			s_rnge("hlpmsg", i__1, "chwcml_", (ftnlen)588)) * 80, 
 			(ftnlen)80);
 	    }
 	}
@@ -838,6 +853,9 @@ static doublereal c_b1112 = 1e-8;
 		s_copy(kernam, " ", kernam_len, (ftnlen)1);
 		s_copy(arctyp, " ", (ftnlen)7, (ftnlen)1);
 	    }
+	} else {
+	    s_copy(kernam, " ", kernam_len, (ftnlen)1);
+	    s_copy(arctyp, " ", (ftnlen)7, (ftnlen)1);
 	}
     } else {
 	s_copy(kernam, " ", kernam_len, (ftnlen)1);
@@ -889,12 +907,12 @@ static doublereal c_b1112 = 1e-8;
 
     i__ = isrchc_("-k1", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)741)]) {
+	    i__1, "chwcml_", (ftnlen)753)]) {
 	if (s_cmp(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)743)) << 10), " ", (
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)755)) << 10), " ", (
 		ftnlen)1024, (ftnlen)1) != 0) {
 	    s_copy(kernls, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)745)) << 
+		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)757)) << 
 		    10), kernls_len, (ftnlen)1024);
 	    s_copy(hline, kernls, (ftnlen)1024, kernls_len);
 	    while(s_cmp(hline, " ", (ftnlen)1024, (ftnlen)1) != 0) {
@@ -922,13 +940,13 @@ static doublereal c_b1112 = 1e-8;
 
     i__ = isrchc_("-k2", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)782)]) {
+	    i__1, "chwcml_", (ftnlen)794)]) {
 	if (s_cmp(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)784)) << 10), " ", (
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)796)) << 10), " ", (
 		ftnlen)1024, (ftnlen)1) != 0) {
 	    s_copy(kernls + kernls_len, clvals + (((i__1 = i__ - 1) < 25 && 0 
 		    <= i__1 ? i__1 : s_rnge("clvals", i__1, "chwcml_", (
-		    ftnlen)786)) << 10), kernls_len, (ftnlen)1024);
+		    ftnlen)798)) << 10), kernls_len, (ftnlen)1024);
 	    s_copy(hline, kernls + kernls_len, (ftnlen)1024, kernls_len);
 	    while(s_cmp(hline, " ", (ftnlen)1024, (ftnlen)1) != 0) {
 		nextwd_(hline, hline2, hline, (ftnlen)1024, (ftnlen)1024, (
@@ -955,13 +973,13 @@ static doublereal c_b1112 = 1e-8;
 
     i__ = isrchc_("-k", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)823)]) {
+	    i__1, "chwcml_", (ftnlen)835)]) {
 	if (s_cmp(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)825)) << 10), " ", (
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)837)) << 10), " ", (
 		ftnlen)1024, (ftnlen)1) != 0) {
 	    s_copy(kernls + (kernls_len << 1), clvals + (((i__1 = i__ - 1) < 
 		    25 && 0 <= i__1 ? i__1 : s_rnge("clvals", i__1, "chwcml_",
-		     (ftnlen)827)) << 10), kernls_len, (ftnlen)1024);
+		     (ftnlen)839)) << 10), kernls_len, (ftnlen)1024);
 	    s_copy(hline, kernls + (kernls_len << 1), (ftnlen)1024, 
 		    kernls_len);
 	    while(s_cmp(hline, " ", (ftnlen)1024, (ftnlen)1) != 0) {
@@ -1048,17 +1066,17 @@ static doublereal c_b1112 = 1e-8;
     ffrid[0] = 0;
     i__ = isrchc_("-f1", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)910)]) {
+	    i__1, "chwcml_", (ftnlen)922)]) {
 
 /*        The first ``from'' frame was provided on the command line. Was */
 /*        it given as a name or as an ID? Try to convert it to integer */
 /*        as see if it worked. */
 
 	s_copy(ffrnam, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)917)) << 10), 
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)929)) << 10), 
 		ffrnam_len, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)918)) << 10), ffrid, error,
+		"clvals", i__1, "chwcml_", (ftnlen)930)) << 10), ffrid, error,
 		 &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1066,14 +1084,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to convert it to ID. If we can't, report an error. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)926)) << 10), 
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)938)) << 10), 
 		    ffrid, (ftnlen)1024);
 	    if (ffrid[0] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)934))
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)946))
 			 << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-f1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADFROMFRAME1SP1)", (ftnlen)23);
@@ -1089,7 +1107,7 @@ static doublereal c_b1112 = 1e-8;
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)953))
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)965))
 			 << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-f1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADFROMFRAME1SP2)", (ftnlen)23);
@@ -1105,17 +1123,17 @@ static doublereal c_b1112 = 1e-8;
     tfrcls[0] = 0;
     i__ = isrchc_("-t1", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)972)]) {
+	    i__1, "chwcml_", (ftnlen)984)]) {
 
 /*        The first ``to'' frame was provided on the command line. Was */
 /*        it given as a name or as an ID? Try to convert it to integer */
 /*        and see if it worked. */
 
 	s_copy(tfrnam, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)979)) << 10), 
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)991)) << 10), 
 		tfrnam_len, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)980)) << 10), tfrid, error,
+		"clvals", i__1, "chwcml_", (ftnlen)992)) << 10), tfrid, error,
 		 &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1123,15 +1141,15 @@ static doublereal c_b1112 = 1e-8;
 /*           try to convert it to ID. If we can't, report an error. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)988)) << 10), 
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1000)) << 10), 
 		    tfrid, (ftnlen)1024);
 	    if (tfrid[0] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)996))
-			 << 10), (ftnlen)1, (ftnlen)1024);
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1008)
+			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-t1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADTOFRAME1SPEC1)", (ftnlen)23);
 	    }
@@ -1186,7 +1204,7 @@ static doublereal c_b1112 = 1e-8;
 			    " a frame name recognized in SPICE.", (ftnlen)129);
 		    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 
 			    ? i__1 : s_rnge("clvals", i__1, "chwcml_", (
-			    ftnlen)1058)) << 10), (ftnlen)1, (ftnlen)1024);
+			    ftnlen)1070)) << 10), (ftnlen)1, (ftnlen)1024);
 		    errch_("#", "-t1", (ftnlen)1, (ftnlen)3);
 		    sigerr_("SPICE(BADTOFRAME1SPEC2)", (ftnlen)23);
 		}
@@ -1208,7 +1226,7 @@ static doublereal c_b1112 = 1e-8;
     cfrfnd[0] = FALSE_;
     i__ = isrchc_("-c1", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1086)] && (s_cmp(kernam, " ", kernam_len,
+	    i__1, "chwcml_", (ftnlen)1098)] && (s_cmp(kernam, " ", kernam_len,
 	     (ftnlen)1) != 0 && iscpck[0] || s_cmp(kernam, " ", kernam_len, (
 	    ftnlen)1) == 0 && iscpck[1])) {
 
@@ -1260,10 +1278,10 @@ static doublereal c_b1112 = 1e-8;
 /*        this file. */
 
 	s_copy(cfrnam, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1148)) << 10), (
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1160)) << 10), (
 		ftnlen)32, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1149)) << 10), cfrcid, 
+		"clvals", i__1, "chwcml_", (ftnlen)1161)) << 10), cfrcid, 
 		error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1271,14 +1289,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to get its ID. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1157)) << 10), 
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1169)) << 10), 
 		    cfrcid, (ftnlen)1024);
 	    if (cfrcid[0] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1165)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1177)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADCOVFRAME1SPEC4)", (ftnlen)24);
@@ -1313,7 +1331,7 @@ static doublereal c_b1112 = 1e-8;
 		    errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
 		    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 
 			    ? i__1 : s_rnge("clvals", i__1, "chwcml_", (
-			    ftnlen)1204)) << 10), (ftnlen)1, (ftnlen)1024);
+			    ftnlen)1216)) << 10), (ftnlen)1, (ftnlen)1024);
 		    errint_("#", &clssid, (ftnlen)1);
 		    errch_("#", "-c1", (ftnlen)1, (ftnlen)3);
 		    sigerr_("SPICE(COVFRAME1NODATA1)", (ftnlen)23);
@@ -1324,7 +1342,7 @@ static doublereal c_b1112 = 1e-8;
 			"ich the frame applies. The class was '#'; the kernel"
 			" architecture/type were '#'.", (ftnlen)183);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1220)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1232)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c1", (ftnlen)1, (ftnlen)3);
 		errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
@@ -1352,7 +1370,7 @@ static doublereal c_b1112 = 1e-8;
 			"#'  specified after '#' key.", (ftnlen)79);
 		errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1251)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1263)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(COVFRAME1NODATA2)", (ftnlen)23);
@@ -1370,7 +1388,7 @@ static doublereal c_b1112 = 1e-8;
 	    }
 	}
     } else if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-	    "clflag", i__1, "chwcml_", (ftnlen)1270)]) {
+	    "clflag", i__1, "chwcml_", (ftnlen)1282)]) {
 
 /*        If we are here, the first coverage frame was provided on the */
 /*        command line but either no primary kernels files were given or */
@@ -1379,10 +1397,10 @@ static doublereal c_b1112 = 1e-8;
 /*        to convert it to integer and see if it worked. */
 
 	s_copy(cfrnam, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1279)) << 10), (
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1291)) << 10), (
 		ftnlen)32, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1280)) << 10), cfrid, 
+		"clvals", i__1, "chwcml_", (ftnlen)1292)) << 10), cfrid, 
 		error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1390,14 +1408,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to convert it to ID. If we can't, report an error. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1288)) << 10), 
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1300)) << 10), 
 		    cfrid, (ftnlen)1024);
 	    if (cfrid[0] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1296)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1308)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADCOVFRAME1SPEC5)", (ftnlen)24);
@@ -1413,7 +1431,7 @@ static doublereal c_b1112 = 1e-8;
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1315)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1327)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c1", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADCOVFRAME1SPEC6)", (ftnlen)24);
@@ -1471,17 +1489,17 @@ static doublereal c_b1112 = 1e-8;
     ffrid[1] = 0;
     i__ = isrchc_("-f2", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1376)]) {
+	    i__1, "chwcml_", (ftnlen)1388)]) {
 
 /*        The second ``from'' frame was provided on the command line. */
 /*        Was it given as a name or as an ID? Try to convert it to */
 /*        integer and see if it worked. */
 
 	s_copy(ffrnam + ffrnam_len, clvals + (((i__1 = i__ - 1) < 25 && 0 <= 
-		i__1 ? i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1383))
+		i__1 ? i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1395))
 		 << 10), ffrnam_len, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1384)) << 10), &ffrid[1], 
+		"clvals", i__1, "chwcml_", (ftnlen)1396)) << 10), &ffrid[1], 
 		error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1489,14 +1507,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to convert it to ID. If we can't, report an error. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1392)) << 10), &
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1404)) << 10), &
 		    ffrid[1], (ftnlen)1024);
 	    if (ffrid[1] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1400)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1412)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-f2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADFROMFRAME2SP1)", (ftnlen)23);
@@ -1512,7 +1530,7 @@ static doublereal c_b1112 = 1e-8;
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1419)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1431)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-f2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADFROMFRAME2SP2)", (ftnlen)23);
@@ -1528,17 +1546,17 @@ static doublereal c_b1112 = 1e-8;
     tfrcls[1] = 0;
     i__ = isrchc_("-t2", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1438)]) {
+	    i__1, "chwcml_", (ftnlen)1450)]) {
 
 /*        The second ``to'' frame was provided on the command line. Was */
 /*        it given as a name or as an ID? Try to convert it to integer */
 /*        and see if it worked. */
 
 	s_copy(tfrnam + tfrnam_len, clvals + (((i__1 = i__ - 1) < 25 && 0 <= 
-		i__1 ? i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1445))
+		i__1 ? i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1457))
 		 << 10), tfrnam_len, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1446)) << 10), &tfrid[1], 
+		"clvals", i__1, "chwcml_", (ftnlen)1458)) << 10), &tfrid[1], 
 		error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1546,14 +1564,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to convert it to ID. If we can't, report an error. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1454)) << 10), &
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1466)) << 10), &
 		    tfrid[1], (ftnlen)1024);
 	    if (tfrid[1] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1462)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1474)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-t2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADTOFRAME2SPEC1)", (ftnlen)23);
@@ -1606,7 +1624,7 @@ static doublereal c_b1112 = 1e-8;
 			    " a frame name recognized in SPICE.", (ftnlen)129);
 		    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 
 			    ? i__1 : s_rnge("clvals", i__1, "chwcml_", (
-			    ftnlen)1521)) << 10), (ftnlen)1, (ftnlen)1024);
+			    ftnlen)1533)) << 10), (ftnlen)1, (ftnlen)1024);
 		    errch_("#", "-t2", (ftnlen)1, (ftnlen)3);
 		    sigerr_("SPICE(BADTOFRAME2SPEC2)", (ftnlen)23);
 		}
@@ -1628,7 +1646,7 @@ static doublereal c_b1112 = 1e-8;
     cfrfnd[1] = FALSE_;
     i__ = isrchc_("-c2", &c__25, clkeys, (ftnlen)3, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1549)] && (s_cmp(kernam + kernam_len, 
+	    i__1, "chwcml_", (ftnlen)1561)] && (s_cmp(kernam + kernam_len, 
 	    " ", kernam_len, (ftnlen)1) != 0 && iscpck[1])) {
 
 /*        This case -- specifying the second coverage frame and */
@@ -1673,10 +1691,10 @@ static doublereal c_b1112 = 1e-8;
 /*        this file. */
 
 	s_copy(cfrnam + 32, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1604)) << 10)
+		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1616)) << 10)
 		, (ftnlen)32, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1605)) << 10), &cfrcid[1], 
+		"clvals", i__1, "chwcml_", (ftnlen)1617)) << 10), &cfrcid[1], 
 		error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1684,14 +1702,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to get its ID. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1613)) << 10), &
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1625)) << 10), &
 		    cfrcid[1], (ftnlen)1024);
 	    if (cfrcid[1] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1621)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1633)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADCOVFRAME2SPEC4)", (ftnlen)24);
@@ -1718,7 +1736,7 @@ static doublereal c_b1112 = 1e-8;
 		    errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
 		    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 
 			    ? i__1 : s_rnge("clvals", i__1, "chwcml_", (
-			    ftnlen)1652)) << 10), (ftnlen)1, (ftnlen)1024);
+			    ftnlen)1664)) << 10), (ftnlen)1, (ftnlen)1024);
 		    errint_("#", &clssid, (ftnlen)1);
 		    errch_("#", "-c2", (ftnlen)1, (ftnlen)3);
 		    sigerr_("SPICE(COVFRAME2NODATA1)", (ftnlen)23);
@@ -1729,7 +1747,7 @@ static doublereal c_b1112 = 1e-8;
 			"ich the frame applies. The class was '#'; the kernel"
 			" architecture/type were '#'.", (ftnlen)183);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1668)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1680)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c2", (ftnlen)1, (ftnlen)3);
 		errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
@@ -1751,7 +1769,7 @@ static doublereal c_b1112 = 1e-8;
 			"#'  specified after '#' key.", (ftnlen)79);
 		errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1693)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1705)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(COVFRAME2NODATA2)", (ftnlen)23);
@@ -1769,7 +1787,7 @@ static doublereal c_b1112 = 1e-8;
 	    }
 	}
     } else if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-	    "clflag", i__1, "chwcml_", (ftnlen)1712)]) {
+	    "clflag", i__1, "chwcml_", (ftnlen)1724)]) {
 
 /*        If we are here, the second coverage frame was provided on the */
 /*        command line but either no primary kernels files were given or */
@@ -1778,10 +1796,10 @@ static doublereal c_b1112 = 1e-8;
 /*        integer and see if it worked. */
 
 	s_copy(cfrnam + 32, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1721)) << 10)
+		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1733)) << 10)
 		, (ftnlen)32, (ftnlen)1024);
 	nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1722)) << 10), &cfrid[1], 
+		"clvals", i__1, "chwcml_", (ftnlen)1734)) << 10), &cfrid[1], 
 		error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr != 0) {
 
@@ -1789,14 +1807,14 @@ static doublereal c_b1112 = 1e-8;
 /*           try to convert it to ID. If we can't, report an error. */
 
 	    namfrm_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1730)) << 10), &
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)1742)) << 10), &
 		    cfrid[1], (ftnlen)1024);
 	    if (cfrid[1] == 0) {
 		setmsg_("'#' specified after '#' key is neither an integer n"
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1738)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1750)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADCOVFRAME2SPEC5)", (ftnlen)24);
@@ -1812,7 +1830,7 @@ static doublereal c_b1112 = 1e-8;
 			"umber representing a legitimate frame ID nor a frame"
 			" name recognized in SPICE.", (ftnlen)129);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1757)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1769)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-c2", (ftnlen)1, (ftnlen)3);
 		sigerr_("SPICE(BADCOVFRAME2SPEC6)", (ftnlen)24);
@@ -1847,13 +1865,13 @@ static doublereal c_b1112 = 1e-8;
     i__ = isrchc_("-a", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     *avflg = FALSE_;
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1799)]) {
+	    i__1, "chwcml_", (ftnlen)1811)]) {
 	if (eqstr_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1801)) << 10), 
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1813)) << 10), 
 		"yes", (ftnlen)1024, (ftnlen)3)) {
 	    *avflg = TRUE_;
 	} else if (eqstr_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1805)) << 10)
+		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1817)) << 10)
 		, "no", (ftnlen)1024, (ftnlen)2)) {
 	    *avflg = FALSE_;
 	} else {
@@ -1861,7 +1879,7 @@ static doublereal c_b1112 = 1e-8;
 		    "' key is not recognized. Recognized values are '#' and '"
 		    "#'.", (ftnlen)114);
 	    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 :
-		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)1815)) << 10), 
+		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)1827)) << 10), 
 		    (ftnlen)1, (ftnlen)1024);
 	    errch_("#", "-a", (ftnlen)1, (ftnlen)2);
 	    errch_("#", "yes", (ftnlen)1, (ftnlen)3);
@@ -1875,13 +1893,13 @@ static doublereal c_b1112 = 1e-8;
 
     i__ = isrchc_("-m", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1831)]) {
+	    i__1, "chwcml_", (ftnlen)1843)]) {
 	if (eqstr_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1833)) << 10), 
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1845)) << 10), 
 		"from", (ftnlen)1024, (ftnlen)4)) {
 	    *avfflg = FALSE_;
 	} else if (eqstr_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1837)) << 10)
+		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1849)) << 10)
 		, "to", (ftnlen)1024, (ftnlen)2)) {
 	    *avfflg = TRUE_;
 	} else {
@@ -1889,7 +1907,7 @@ static doublereal c_b1112 = 1e-8;
 		    " is not recognized. Recognized values are '#' and '#'.", (
 		    ftnlen)109);
 	    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 :
-		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)1847)) << 10), 
+		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)1859)) << 10), 
 		    (ftnlen)1, (ftnlen)1024);
 	    errch_("#", "-m", (ftnlen)1, (ftnlen)2);
 	    errch_("#", "from", (ftnlen)1, (ftnlen)4);
@@ -1919,24 +1937,24 @@ static doublereal c_b1112 = 1e-8;
     et[0] = dpmin_();
     i__ = isrchc_("-b", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1879)]) {
+	    i__1, "chwcml_", (ftnlen)1891)]) {
 	s_copy(time, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1880)) << 10), (
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)1892)) << 10), (
 		ftnlen)1024, (ftnlen)1024);
 	str2et_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1881)) << 10), et, (ftnlen)
+		"clvals", i__1, "chwcml_", (ftnlen)1893)) << 10), et, (ftnlen)
 		1024);
     }
     s_copy(time + 1024, " ", (ftnlen)1024, (ftnlen)1);
     et[1] = dpmax_();
     i__ = isrchc_("-e", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)1889)]) {
+	    i__1, "chwcml_", (ftnlen)1901)]) {
 	s_copy(time + 1024, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1890)) << 10)
+		i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)1902)) << 10)
 		, (ftnlen)1024, (ftnlen)1024);
 	str2et_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)1891)) << 10), &et[1], (
+		"clvals", i__1, "chwcml_", (ftnlen)1903)) << 10), &et[1], (
 		ftnlen)1024);
     }
 
@@ -2154,10 +2172,10 @@ static doublereal c_b1112 = 1e-8;
 			"use the frame class ID '#' from the last segment of "
 			"the ";
 		i__9[1] = 3, a__4[1] = hartyp + 4;
-		i__9[2] = 31, a__4[2] = "file '#' cannot be mapped to a ";
+		i__9[2] = 32, a__4[2] = " file '#' cannot be mapped to a ";
 		i__9[3] = 11, a__4[3] = "frame name.";
-		s_cat(ch__3, a__4, i__9, &c__4, (ftnlen)136);
-		setmsg_(ch__3, (ftnlen)136);
+		s_cat(ch__3, a__4, i__9, &c__4, (ftnlen)137);
+		setmsg_(ch__3, (ftnlen)137);
 		errint_("#", ic, (ftnlen)1);
 		errch_("#", hkrnam, (ftnlen)1, (ftnlen)1024);
 		sigerr_("SPICE(CANTPICKDEFAULTS4)", (ftnlen)24);
@@ -2301,7 +2319,7 @@ static doublereal c_b1112 = 1e-8;
 /*        Get ET coverage window adjusted for round off, at interval */
 /*        level, with zero tolerance, and angular rate flag set earlier. */
 
-	ckcovr_(hkrnam, cfrcid, avflg, "INTERVAL", &c_b849, cover1, (ftnlen)
+	ckcovr_(hkrnam, cfrcid, avflg, "INTERVAL", &c_b851, cover1, (ftnlen)
 		1024, (ftnlen)8);
 
 /*        If we got an empty window back, report an error. If not, */
@@ -2503,7 +2521,7 @@ static doublereal c_b1112 = 1e-8;
 /*              this CK. */
 
 		scardd_(&c__0, covera);
-		ckcovr_(hkrnam, cfrcid, avflg, "INTERVAL", &c_b849, covera, (
+		ckcovr_(hkrnam, cfrcid, avflg, "INTERVAL", &c_b851, covera, (
 			ftnlen)1024, (ftnlen)8);
 
 /*              Merge auxiliary coverage with the total coverage for */
@@ -2699,7 +2717,7 @@ static doublereal c_b1112 = 1e-8;
 /*        Get ET coverage window adjusted for round off, at interval */
 /*        level, with zero tolerance, and angular rate flag set earlier. */
 
-	ckcovr_(kernam + kernam_len, &cfrcid[1], avflg, "INTERVAL", &c_b849, 
+	ckcovr_(kernam + kernam_len, &cfrcid[1], avflg, "INTERVAL", &c_b851, 
 		cover2, kernam_len, (ftnlen)8);
 
 /*        If we got an empty window back, report an error. If not, */
@@ -2867,7 +2885,7 @@ static doublereal c_b1112 = 1e-8;
 /*              this CK. */
 
 		scardd_(&c__0, covera);
-		ckcovr_(hkrnam, &cfrcid[1], avflg, "INTERVAL", &c_b849, 
+		ckcovr_(hkrnam, &cfrcid[1], avflg, "INTERVAL", &c_b851, 
 			covera, (ftnlen)1024, (ftnlen)8);
 
 /*              Merge auxiliary coverage with the total coverage for */
@@ -3165,9 +3183,9 @@ static doublereal c_b1112 = 1e-8;
     s_copy(diftyp, "basic", diftyp_len, (ftnlen)5);
     i__ = isrchc_("-t", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)3297)]) {
+	    i__1, "chwcml_", (ftnlen)3309)]) {
 	s_copy(diftyp, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		s_rnge("clvals", i__1, "chwcml_", (ftnlen)3299)) << 10), 
+		s_rnge("clvals", i__1, "chwcml_", (ftnlen)3311)) << 10), 
 		diftyp_len, (ftnlen)1024);
 	if (! (eqstr_(diftyp, "basic", diftyp_len, (ftnlen)5) || eqstr_(
 		diftyp, "stats", diftyp_len, (ftnlen)5) || eqstr_(diftyp, 
@@ -3181,7 +3199,7 @@ static doublereal c_b1112 = 1e-8;
 		    "ed. Recognized output types are '#', '#', '#', '#', '#',"
 		    " '#', '#', '#', and '#'.", (ftnlen)135);
 	    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 :
-		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)3316)) << 10), 
+		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)3328)) << 10), 
 		    (ftnlen)1, (ftnlen)1024);
 	    errch_("#", "-t", (ftnlen)1, (ftnlen)2);
 	    errch_("#", "basic", (ftnlen)1, (ftnlen)5);
@@ -3207,12 +3225,12 @@ static doublereal c_b1112 = 1e-8;
     *nitr = 1000;
     i__ = isrchc_("-s", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
     if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag", 
-	    i__1, "chwcml_", (ftnlen)3345)]) {
+	    i__1, "chwcml_", (ftnlen)3357)]) {
 
 /*        Is the step a DP number? */
 
 	nparsd_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge(
-		"clvals", i__1, "chwcml_", (ftnlen)3350)) << 10), step, error,
+		"clvals", i__1, "chwcml_", (ftnlen)3362)) << 10), step, error,
 		 &ptr, (ftnlen)1024, (ftnlen)1024);
 	if (ptr == 0) {
 
@@ -3223,10 +3241,10 @@ static doublereal c_b1112 = 1e-8;
 		setmsg_("Time step '#' specified after '#' key is smaller th"
 			"an # seconds.", (ftnlen)64);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3362)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3374)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-s", (ftnlen)1, (ftnlen)2);
-		errdp_("#", &c_b1112, (ftnlen)1);
+		errdp_("#", &c_b1114, (ftnlen)1);
 		sigerr_("SPICE(STEPTOOSMALL1)", (ftnlen)20);
 	    }
 
@@ -3341,7 +3359,7 @@ static doublereal c_b1112 = 1e-8;
 	    setmsg_("Time step '#' specified after '#' key is not a DP numbe"
 		    "r.", (ftnlen)57);
 	    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 :
-		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)3489)) << 10), 
+		     s_rnge("clvals", i__1, "chwcml_", (ftnlen)3501)) << 10), 
 		    (ftnlen)1, (ftnlen)1024);
 	    errch_("#", "-s", (ftnlen)1, (ftnlen)2);
 	    sigerr_("SPICE(NOTANDPNUMBER)", (ftnlen)20);
@@ -3353,12 +3371,12 @@ static doublereal c_b1112 = 1e-8;
 
 	i__ = isrchc_("-n", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
 	if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag"
-		, i__1, "chwcml_", (ftnlen)3502)]) {
+		, i__1, "chwcml_", (ftnlen)3514)]) {
 
 /*           Is the number of step an integer number? */
 
 	    nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)3507)) << 10), 
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)3519)) << 10), 
 		    nitr, error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	    if (ptr == 0) {
 		if (*nitr < 1 || *nitr > 1000000) {
@@ -3375,7 +3393,7 @@ static doublereal c_b1112 = 1e-8;
 		setmsg_("Number of points '#' specified after '#'  key is no"
 			"t an integer number.", (ftnlen)71);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3528)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3540)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-n", (ftnlen)1, (ftnlen)2);
 		sigerr_("SPICE(NOTANINTEGERNUMBER)", (ftnlen)25);
@@ -3398,9 +3416,9 @@ static doublereal c_b1112 = 1e-8;
 	    "dumpg", diftyp_len, (ftnlen)5)) {
 	i__ = isrchc_("-f", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
 	if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag"
-		, i__1, "chwcml_", (ftnlen)3556)]) {
+		, i__1, "chwcml_", (ftnlen)3568)]) {
 	    s_copy(timfmt, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3558)) <<
+		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3570)) <<
 		     10), timfmt_len, (ftnlen)1024);
 
 /*           Time format should be either one of the recognized values */
@@ -3503,7 +3521,7 @@ static doublereal c_b1112 = 1e-8;
 			    ftnlen)141);
 		    errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 
 			    ? i__1 : s_rnge("clvals", i__1, "chwcml_", (
-			    ftnlen)3634)) << 10), (ftnlen)1, (ftnlen)1024);
+			    ftnlen)3646)) << 10), (ftnlen)1, (ftnlen)1024);
 		    errch_("#", "-f", (ftnlen)1, (ftnlen)2);
 		    errch_("#", tfrnam, (ftnlen)1, tfrnam_len);
 		    errch_("#", tfrnam + tfrnam_len, (ftnlen)1, tfrnam_len);
@@ -3639,9 +3657,9 @@ static doublereal c_b1112 = 1e-8;
 
 	i__ = isrchc_("-o", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
 	if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag"
-		, i__1, "chwcml_", (ftnlen)3771)]) {
+		, i__1, "chwcml_", (ftnlen)3783)]) {
 	    s_copy(hline, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3773)) <<
+		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3785)) <<
 		     10), (ftnlen)1024, (ftnlen)1024);
 
 /*           Check if the order is a list of three space-delimited */
@@ -3658,15 +3676,15 @@ static doublereal c_b1112 = 1e-8;
 			    32);
 		    if (eqstr_(hword, "x", (ftnlen)32, (ftnlen)1)) {
 			axes[(i__1 = i__ - 1) < 3 && 0 <= i__1 ? i__1 : 
-				s_rnge("axes", i__1, "chwcml_", (ftnlen)3791)]
+				s_rnge("axes", i__1, "chwcml_", (ftnlen)3803)]
 				 = 1;
 		    } else if (eqstr_(hword, "y", (ftnlen)32, (ftnlen)1)) {
 			axes[(i__1 = i__ - 1) < 3 && 0 <= i__1 ? i__1 : 
-				s_rnge("axes", i__1, "chwcml_", (ftnlen)3793)]
+				s_rnge("axes", i__1, "chwcml_", (ftnlen)3805)]
 				 = 2;
 		    } else if (eqstr_(hword, "z", (ftnlen)32, (ftnlen)1)) {
 			axes[(i__1 = i__ - 1) < 3 && 0 <= i__1 ? i__1 : 
-				s_rnge("axes", i__1, "chwcml_", (ftnlen)3795)]
+				s_rnge("axes", i__1, "chwcml_", (ftnlen)3807)]
 				 = 3;
 		    } else {
 			setmsg_("Token '#' in the rotation order  '#' specif"
@@ -3711,9 +3729,9 @@ static doublereal c_b1112 = 1e-8;
 
 	i__ = isrchc_("-x", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
 	if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag"
-		, i__1, "chwcml_", (ftnlen)3848)]) {
+		, i__1, "chwcml_", (ftnlen)3860)]) {
 	    s_copy(aunits, clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3850)) <<
+		    i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3862)) <<
 		     10), aunits_len, (ftnlen)1024);
 
 /*           Check against the following set of units supported by */
@@ -3750,12 +3768,12 @@ static doublereal c_b1112 = 1e-8;
 	    "dumpg", diftyp_len, (ftnlen)5)) {
 	i__ = isrchc_("-d", &c__25, clkeys, (ftnlen)2, (ftnlen)32);
 	if (clflag[(i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : s_rnge("clflag"
-		, i__1, "chwcml_", (ftnlen)3897)]) {
+		, i__1, "chwcml_", (ftnlen)3909)]) {
 
 /*           Is the number of digits an integer number? */
 
 	    nparsi_(clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? i__1 : 
-		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)3902)) << 10), 
+		    s_rnge("clvals", i__1, "chwcml_", (ftnlen)3914)) << 10), 
 		    sigdig, error, &ptr, (ftnlen)1024, (ftnlen)1024);
 	    if (ptr == 0) {
 		if (*sigdig < 6 || *sigdig > 17) {
@@ -3772,7 +3790,7 @@ static doublereal c_b1112 = 1e-8;
 		setmsg_("The number of significant digits '#' specified afte"
 			"r '#'  key is not an integer number.", (ftnlen)87);
 		errch_("#", clvals + (((i__1 = i__ - 1) < 25 && 0 <= i__1 ? 
-			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3922)
+			i__1 : s_rnge("clvals", i__1, "chwcml_", (ftnlen)3934)
 			) << 10), (ftnlen)1, (ftnlen)1024);
 		errch_("#", "-d", (ftnlen)1, (ftnlen)2);
 		sigerr_("SPICE(NOTINTEGERNUMBER2)", (ftnlen)24);

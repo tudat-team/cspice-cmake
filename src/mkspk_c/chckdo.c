@@ -270,7 +270,7 @@ static integer c__9 = 9;
 
 /*     If the set of input parameters does not contain some of the */
 /*     required tokens, then the error 'SPICE(MISSINGDATAORDERTK)' */
-/*     will be signalled. */
+/*     will be signaled. */
 
 /* $ Files */
 
@@ -294,10 +294,18 @@ static integer c__9 = 9;
 
 /* $ Author_and_Institution */
 
-/*     N.G. Khavenson (IKI RAS, Russia) */
-/*     B.V. Semenov   (NAIF, JPL) */
+/*     N.G. Khavenson  (IKI RAS, Russia) */
+/*     J. Diaz del Rio (ODC Space) */
+/*     B.V. Semenov    (NAIF, JPL) */
 
 /* $ Version */
+
+/* -    Version 1.1.0, 20-JAN-2016 (JDR,BVS). */
+
+/*        BUG FIX: added substitution of the data order keyword into the */
+/*        output error message prior to checks for dM/dt, dNOD/dt, and */
+/*        dPER/dt being present in the data order setup keyword value */
+/*        for the output type 17. */
 
 /* -    Version 1.0.3, 29-MAR-1999 (NGK). */
 
@@ -454,6 +462,8 @@ static integer c__9 = 9;
 		") required when output SPK type is 17 is(are) missing in the"
 		" value of the setup file keyword '#':", (ftnlen)512, (ftnlen)
 		149);
+	repmc_(errlin, "#", "DATA_ORDER", errlin, (ftnlen)512, (ftnlen)1, (
+		ftnlen)10, (ftnlen)512);
 	for (l = 27; l <= 29; ++l) {
 	    if (isrchi_(&l, nparam, param) == 0) {
 		i__1 = rtrim_(errlin, (ftnlen)512) + 1;

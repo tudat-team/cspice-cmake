@@ -44,7 +44,7 @@ static integer c__1 = 1;
     address a__1[2], a__2[8];
     integer i__1[2], i__2, i__3, i__4[8];
     doublereal d__1;
-    char ch__1[71], ch__2[2], ch__3[693];
+    char ch__1[72], ch__2[2], ch__3[693];
     cllist cl__1;
 
     /* Builtin functions */
@@ -58,10 +58,12 @@ static integer c__1 = 1;
 	    doublereal);
 
     /* Local variables */
-    extern /* Subroutine */ int bodmat_(integer *, doublereal *, doublereal *)
-	    , recrad_(doublereal *, doublereal *, doublereal *, doublereal *),
-	     remlad_(integer *, integer *, doublereal *, integer *), spkcls_(
-	    integer *), chkout_(char *, ftnlen), byebye_(char *, ftnlen);
+    extern /* Subroutine */ int sxform_(char *, char *, doublereal *, 
+	    doublereal *, ftnlen, ftnlen), bodmat_(integer *, doublereal *, 
+	    doublereal *), recrad_(doublereal *, doublereal *, doublereal *, 
+	    doublereal *), remlad_(integer *, integer *, doublereal *, 
+	    integer *), spkcls_(integer *), chkout_(char *, ftnlen), byebye_(
+	    char *, ftnlen);
     static char arch[32];
     static doublereal eqel[9];
     static char line[512];
@@ -159,7 +161,7 @@ static integer c__1 = 1;
 	    , cosinc;
     extern integer pos_(char *, char *, integer *, ftnlen, ftnlen);
     static logical statfl, stotfl, errflg, appflg;
-    static integer itpidx, otpidx, par, ptr, padsts, recidx;
+    static integer itpidx, otpidx, par, ptr, padsts, recidx, segcnt;
     static char astrln[80], tstamp[80], verstr[12];
     static integer tlidvl[2];
     static char covtyp[32*2];
@@ -180,7 +182,7 @@ static integer c__1 = 1;
 	    *, integer *, integer *, ftnlen, ftnlen), ssizec_(integer *, char 
 	    *, ftnlen), txtopr_(char *, integer *, ftnlen), readln_(integer *,
 	     char *, logical *, ftnlen), scardc_(integer *, char *, ftnlen), 
-	    spcacb_(integer *, char *, ftnlen), cputim_(doublereal *), 
+	    spcacc_(integer *, char *, ftnlen), cputim_(doublereal *), 
 	    tle2spk_(char *, integer *, integer *, char *, char *, integer *, 
 	    doublereal *, char *, ftnlen, ftnlen, ftnlen, ftnlen), dafcls_(
 	    integer *), delfil_(char *, ftnlen), redbuf_(integer *, char *, 
@@ -191,8 +193,7 @@ static integer c__1 = 1;
 	    logical *, char *, ftnlen), conics_(doublereal *, doublereal *, 
 	    doublereal *), oscelt_(doublereal *, doublereal *, doublereal *, 
 	    doublereal *), timout_(doublereal *, char *, char *, ftnlen, 
-	    ftnlen), sxform_(char *, char *, doublereal *, doublereal *, 
-	    ftnlen, ftnlen);
+	    ftnlen);
 
 /* $ Abstract */
 
@@ -385,6 +386,27 @@ static integer c__1 = 1;
 /*        longer than 40 characters, then the error */
 /*        'SPICE(SEGIDTOOLONG)' will be signaled. */
 
+/*     28) If the setup file does not exist, then an error will be */
+/*        signaled by a routine in a call tree of this routine. */
+
+/*     29) If the setup file does not follow the text kernel syntax, */
+/*        then an error will be signaled by a routine in a call tree of */
+/*        this routine */
+
+/*     30) If the degree of Hermit polynomial specified in the setup */
+/*        keyword is an even number, then the error */
+/*        'SPICE(EVENHERMITDEGREE)' will be signaled. */
+
+/*     31) If no segments were written to the output SPK due to */
+/*        insufficient input data or improperly terminated input data */
+/*        file lines, then the error 'SPICE(INSUFFICIENTDATA)' will be */
+/*        signaled. */
+
+/*     32) If no complete records were extracted from the input file due */
+/*        to insufficient input data or improperly terminated input data */
+/*        file lines, then the error 'SPICE(INSUFFICIENTDATA2)' will be */
+/*        signaled. */
+
 /* $ Files */
 
 /*     The program requires: */
@@ -527,10 +549,41 @@ static integer c__1 = 1;
 /* $ Author_and_Institution */
 
 /*     N.G. Khavenson  (IKI RAS, Russia) */
+/*     J. Diaz del Rio (ODC Space) */
 /*     B.V. Semenov    (NAIF, JPL) */
 /*     E.D. Wright     (NAIF, JPL) */
 
 /* $ Version */
+
+/* -    Version 6.1.0, 08-NOV-2016 (BVS) */
+
+/*        BUG FIX: in the main program: added exception for cases */
+/*        when the input file contains insufficient data retrieve */
+/*        even one complete data record. */
+
+/*        BUG FIX: in the main program: changed logic in adding */
+/*        contents of the comment and setup files to the comment */
+/*        area to prevent dropping every 500th line. */
+
+/*        BUG FIX: in SETUP entry SETUPI: corrected input record line */
+/*        count value substitution in the SPICE(BADLINEPERRECCOUNT) */
+/*        error. */
+
+/*        BUG FIX: in CHCKDO: added substitution of the data order */
+/*        keyword into the output error message prior to checks for */
+/*        dM/dt, dNOD/dt, and dPER/dt being present in the data order */
+/*        setup keyword value for the output type 17. */
+
+/*        Changed the order of exception checks for the input */
+/*        polynomial degree for types 12 and 13 to do the check */
+/*        for the 1-to-MAXDEG range first and the check for evenness */
+/*        second. */
+
+/*        Updated to count segments that were written to the output SPK */
+/*        file and to signal an error at the end of the run if none were */
+/*        added. */
+
+/*        Documented exceptions 28), 29), 30), 31). */
 
 /* -    Version 6.0.0, 06-JAN-2014 (BVS) */
 
@@ -545,7 +598,7 @@ static integer c__1 = 1;
 /*        TLE2SPK.) */
 
 /*        BUG FIX: fixed to adjust longitude of the ascending node and */
-/*        argument of periapse for the time of the nearest periapsis for */
+/*        argument of periapsis for the time of the nearest periapsis for */
 /*        elliptic orbit cases for type 15 inputs that are not at the */
 /*        time of periapsis. */
 
@@ -1030,6 +1083,10 @@ static integer c__1 = 1;
     angcof = 1.;
     dstcof = 1.;
 
+/*     We haven't yet written any segments to the output SPK. */
+
+    segcnt = 0;
+
 /*     Comment area separator line. */
 
     s_copy(astrln, "********************************************************"
@@ -1048,11 +1105,11 @@ static integer c__1 = 1;
     tkvrsn_("TOOLKIT", verstr, (ftnlen)7, (ftnlen)12);
     tostdo_(" ", (ftnlen)1);
 /* Writing concatenation */
-    i__1[0] = 59, a__1[0] = "MKSPK -- Version 6.0.0, January 6, 2014 -- Tool"
-	    "kit Version ";
+    i__1[0] = 60, a__1[0] = "MKSPK -- Version 6.1.0, November 8, 2016 -- Too"
+	    "lkit Version ";
     i__1[1] = rtrim_(verstr, (ftnlen)12), a__1[1] = verstr;
-    s_cat(ch__1, a__1, i__1, &c__2, (ftnlen)71);
-    tostdo_(ch__1, rtrim_(verstr, (ftnlen)12) + 59);
+    s_cat(ch__1, a__1, i__1, &c__2, (ftnlen)72);
+    tostdo_(ch__1, rtrim_(verstr, (ftnlen)12) + 60);
     tostdo_(" ", (ftnlen)1);
 
 /*     Get command line arguments. */
@@ -1116,7 +1173,7 @@ static integer c__1 = 1;
 /*        Let's see if they match. */
 
 	if (! iotype[(i__2 = itpidx + (otpidx << 2) - 5) < 32 && 0 <= i__2 ? 
-		i__2 : s_rnge("iotype", i__2, "mkspk_", (ftnlen)1021)]) {
+		i__2 : s_rnge("iotype", i__2, "mkspk_", (ftnlen)1079)]) {
 	    setmsg_("SPK type # cannot be created from '#' input. See MKSPK "
 		    "User's Guide for the list of legitimate input/output typ"
 		    "e pairs.", (ftnlen)119);
@@ -1483,17 +1540,10 @@ static integer c__1 = 1;
 		}
 	    }
 
-/*           We also need polynomial degree which must be an odd number. */
+/*           We also need polynomial degree, which must be an odd number */
+/*           between 1 and MAXDEG. */
 
 	    setupi_("POLYNOMIAL DEGREE", &pldgvl, &found, (ftnlen)17);
-	    if (! odd_(&pldgvl)) {
-		setmsg_("The degree of Hermit polynomial specified in the se"
-			"tup keyword '#' must be an odd number. It was #. ", (
-			ftnlen)100);
-		errch_("#", "POLYNOM_DEGREE", (ftnlen)1, (ftnlen)14);
-		errint_("#", &pldgvl, (ftnlen)1);
-		sigerr_("SPICE(EVENHEMITDEGREE)", (ftnlen)22);
-	    }
 	    if (pldgvl <= 0 || pldgvl > 15) {
 		setmsg_("The degree of Hermit polynomial specified in the se"
 			"tup keyword '#' must be a positive number less than "
@@ -1502,6 +1552,14 @@ static integer c__1 = 1;
 		errint_("#", &c__16, (ftnlen)1);
 		errint_("#", &pldgvl, (ftnlen)1);
 		sigerr_("SPICE(BADHERMITDEGREE)", (ftnlen)22);
+	    }
+	    if (! odd_(&pldgvl)) {
+		setmsg_("The degree of Hermit polynomial specified in the se"
+			"tup keyword '#' must be an odd number. It was #. ", (
+			ftnlen)100);
+		errch_("#", "POLYNOM_DEGREE", (ftnlen)1, (ftnlen)14);
+		errint_("#", &pldgvl, (ftnlen)1);
+		sigerr_("SPICE(EVENHERMITDEGREE)", (ftnlen)23);
 	    }
 
 
@@ -1534,17 +1592,10 @@ static integer c__1 = 1;
 		}
 	    }
 
-/*           We also need polynomial degree which must be an odd number. */
+/*           We also need polynomial degree, which must be an odd number */
+/*           between 1 and MAXDEG. */
 
 	    setupi_("POLYNOMIAL DEGREE", &pldgvl, &found, (ftnlen)17);
-	    if (! odd_(&pldgvl)) {
-		setmsg_("The degree of Hermit polynomial specified in the se"
-			"tup keyword '#' must be an odd number. It was #. ", (
-			ftnlen)100);
-		errch_("#", "POLYNOM_DEGREE", (ftnlen)1, (ftnlen)14);
-		errint_("#", &pldgvl, (ftnlen)1);
-		sigerr_("SPICE(EVENHEMITDEGREE)", (ftnlen)22);
-	    }
 	    if (pldgvl <= 0 || pldgvl > 15) {
 		setmsg_("The degree of Hermit polynomial specified in the se"
 			"tup keyword '#' must be a positive number less than "
@@ -1553,6 +1604,14 @@ static integer c__1 = 1;
 		errint_("#", &c__16, (ftnlen)1);
 		errint_("#", &pldgvl, (ftnlen)1);
 		sigerr_("SPICE(BADHERMITDEGREE)", (ftnlen)22);
+	    }
+	    if (! odd_(&pldgvl)) {
+		setmsg_("The degree of Hermit polynomial specified in the se"
+			"tup keyword '#' must be an odd number. It was #. ", (
+			ftnlen)100);
+		errch_("#", "POLYNOM_DEGREE", (ftnlen)1, (ftnlen)14);
+		errint_("#", &pldgvl, (ftnlen)1);
+		sigerr_("SPICE(EVENHERMITDEGREE)", (ftnlen)23);
 	    }
 
 /*           Same as for type 12: for Type 13 SPKs we set the number of */
@@ -1795,18 +1854,23 @@ static integer c__1 = 1;
 
 		    ++l;
 		    s_copy(cmnbuf + ((i__2 = l + 5) < 506 && 0 <= i__2 ? i__2 
-			    : s_rnge("cmnbuf", i__2, "mkspk_", (ftnlen)1871)) 
+			    : s_rnge("cmnbuf", i__2, "mkspk_", (ftnlen)1935)) 
 			    * 255, line, (ftnlen)255, rtrim_(line, (ftnlen)
 			    512));
 		} else {
 
 /*                 Buffer is full. Set the cardinality of the comment */
 /*                 buffer and write it to SPK comment area. Reset */
-/*                 counter. */
+/*                 counter and store the last line that we have obtained */
+/*                 in the first line of the buffer. */
 
 		    scardc_(&l, cmnbuf, (ftnlen)255);
-		    spcacb_(&handle, cmnbuf, (ftnlen)255);
-		    l = 0;
+		    spcacc_(&handle, cmnbuf, (ftnlen)255);
+		    l = 1;
+		    s_copy(cmnbuf + ((i__2 = l + 5) < 506 && 0 <= i__2 ? i__2 
+			    : s_rnge("cmnbuf", i__2, "mkspk_", (ftnlen)1949)) 
+			    * 255, line, (ftnlen)255, rtrim_(line, (ftnlen)
+			    512));
 		}
 	    }
 	}
@@ -1823,7 +1887,7 @@ static integer c__1 = 1;
 
     if (l != 0) {
 	scardc_(&l, cmnbuf, (ftnlen)255);
-	spcacb_(&handle, cmnbuf, (ftnlen)255);
+	spcacc_(&handle, cmnbuf, (ftnlen)255);
 	l = 0;
     }
 
@@ -1895,7 +1959,7 @@ static integer c__1 = 1;
 
 		++l;
 		s_copy(cmnbuf + ((i__2 = l + 5) < 506 && 0 <= i__2 ? i__2 : 
-			s_rnge("cmnbuf", i__2, "mkspk_", (ftnlen)1969)) * 255,
+			s_rnge("cmnbuf", i__2, "mkspk_", (ftnlen)2035)) * 255,
 			 line, (ftnlen)255, rtrim_(line, (ftnlen)512));
 	    } else {
 
@@ -1905,8 +1969,11 @@ static integer c__1 = 1;
 /*              first line of the buffer. */
 
 		scardc_(&l, cmnbuf, (ftnlen)255);
-		spcacb_(&handle, cmnbuf, (ftnlen)255);
-		l = 0;
+		spcacc_(&handle, cmnbuf, (ftnlen)255);
+		l = 1;
+		s_copy(cmnbuf + ((i__2 = l + 5) < 506 && 0 <= i__2 ? i__2 : 
+			s_rnge("cmnbuf", i__2, "mkspk_", (ftnlen)2049)) * 255,
+			 line, (ftnlen)255, rtrim_(line, (ftnlen)512));
 	    }
 	}
     }
@@ -1919,10 +1986,10 @@ static integer c__1 = 1;
 
     if (l <= 498) {
 	s_copy(cmnbuf + ((i__2 = l + 6) < 506 && 0 <= i__2 ? i__2 : s_rnge(
-		"cmnbuf", i__2, "mkspk_", (ftnlen)1997)) * 255, " ", (ftnlen)
+		"cmnbuf", i__2, "mkspk_", (ftnlen)2064)) * 255, " ", (ftnlen)
 		255, (ftnlen)1);
 	s_copy(cmnbuf + ((i__2 = l + 7) < 506 && 0 <= i__2 ? i__2 : s_rnge(
-		"cmnbuf", i__2, "mkspk_", (ftnlen)1998)) * 255, astrln, (
+		"cmnbuf", i__2, "mkspk_", (ftnlen)2065)) * 255, astrln, (
 		ftnlen)255, (ftnlen)80);
 	l += 2;
     } else {
@@ -1931,7 +1998,7 @@ static integer c__1 = 1;
 /*        that stick separator at the top of the buffer. */
 
 	scardc_(&l, cmnbuf, (ftnlen)255);
-	spcacb_(&handle, cmnbuf, (ftnlen)255);
+	spcacc_(&handle, cmnbuf, (ftnlen)255);
 	s_copy(cmnbuf + 1530, " ", (ftnlen)255, (ftnlen)1);
 	s_copy(cmnbuf + 1785, astrln, (ftnlen)255, (ftnlen)80);
 	l = 2;
@@ -1941,7 +2008,7 @@ static integer c__1 = 1;
 
     if (l > 0) {
 	scardc_(&l, cmnbuf, (ftnlen)255);
-	spcacb_(&handle, cmnbuf, (ftnlen)255);
+	spcacc_(&handle, cmnbuf, (ftnlen)255);
     }
 
 /*     Start processing input data. */
@@ -1955,6 +2022,11 @@ static integer c__1 = 1;
 
 	tle2spk_(inpfn, tlidvl, &cnidvl, frnmvl, sgidvl, &handle, covval, 
 		covtyp, (ftnlen)255, (ftnlen)80, (ftnlen)80, (ftnlen)32);
+
+/*        If TLE2SPK did not fail and stop the program, it must have */
+/*        written at least one segment. */
+
+	++segcnt;
     } else {
 
 /*        Process other than two-line element data. */
@@ -2027,7 +2099,7 @@ static integer c__1 = 1;
 /*              Should we skip current value? */
 
 		if (param[(i__2 = n - 1) < 50 && 0 <= i__2 ? i__2 : s_rnge(
-			"param", i__2, "mkspk_", (ftnlen)2134)] == 30) {
+			"param", i__2, "mkspk_", (ftnlen)2207)] == 30) {
 
 /*                 Yes, so skip it without parsing and reset FIRST to be */
 /*                 beginning of the next value in the buffer. */
@@ -2056,10 +2128,10 @@ static integer c__1 = 1;
 /*                    length" initial position. */
 
 			if (param[(i__2 = n - 1) < 50 && 0 <= i__2 ? i__2 : 
-				s_rnge("param", i__2, "mkspk_", (ftnlen)2161)]
+				s_rnge("param", i__2, "mkspk_", (ftnlen)2234)]
 				 == 1 || param[(i__3 = n - 1) < 50 && 0 <= 
 				i__3 ? i__3 : s_rnge("param", i__3, "mkspk_", 
-				(ftnlen)2161)] == 19) {
+				(ftnlen)2234)] == 19) {
 
 /*                       Position of the delimiter for time string value. */
 
@@ -2093,7 +2165,7 @@ static integer c__1 = 1;
 /*                    be present in each record in this situation. */
 
 			if (param[(i__2 = n - 1) < 50 && 0 <= i__2 ? i__2 : 
-				s_rnge("param", i__2, "mkspk_", (ftnlen)2201)]
+				s_rnge("param", i__2, "mkspk_", (ftnlen)2274)]
 				 == 1) {
 
 /*                       Our current value is EPOCH -- we need to find */
@@ -2105,7 +2177,7 @@ static integer c__1 = 1;
 			    npar = nparam;
 			    par = param[(i__2 = npar - 1) < 50 && 0 <= i__2 ? 
 				    i__2 : s_rnge("param", i__2, "mkspk_", (
-				    ftnlen)2210)];
+				    ftnlen)2283)];
 
 /*                       Lets see if our epoch is the last parameter in */
 /*                       the record. */
@@ -2147,7 +2219,7 @@ static integer c__1 = 1;
 				    --npar;
 				    par = param[(i__2 = npar - 1) < 50 && 0 <=
 					     i__2 ? i__2 : s_rnge("param", 
-					    i__2, "mkspk_", (ftnlen)2259)];
+					    i__2, "mkspk_", (ftnlen)2332)];
 				}
 				npos = neor + 1;
 			    } else {
@@ -2186,10 +2258,10 @@ static integer c__1 = 1;
 /*                 Is current value a time string or a number? */
 
 		    if (param[(i__2 = n - 1) < 50 && 0 <= i__2 ? i__2 : 
-			    s_rnge("param", i__2, "mkspk_", (ftnlen)2302)] == 
+			    s_rnge("param", i__2, "mkspk_", (ftnlen)2375)] == 
 			    1 || param[(i__3 = n - 1) < 50 && 0 <= i__3 ? 
 			    i__3 : s_rnge("param", i__3, "mkspk_", (ftnlen)
-			    2302)] == 19) {
+			    2375)] == 19) {
 
 /*                    Are times given as ET seconds past J2000? */
 
@@ -2199,9 +2271,9 @@ static integer c__1 = 1;
 
 			    nparsd_(wrkchr, &dvl[(i__3 = param[(i__2 = n - 1) 
 				    < 50 && 0 <= i__2 ? i__2 : s_rnge("param",
-				     i__2, "mkspk_", (ftnlen)2314)] - 1) < 50 
+				     i__2, "mkspk_", (ftnlen)2387)] - 1) < 50 
 				    && 0 <= i__3 ? i__3 : s_rnge("dvl", i__3, 
-				    "mkspk_", (ftnlen)2314)], error, &ptr, (
+				    "mkspk_", (ftnlen)2387)], error, &ptr, (
 				    ftnlen)512, (ftnlen)512);
 			    if (ptr != 0) {
 
@@ -2219,9 +2291,9 @@ static integer c__1 = 1;
 				errch_("#", doval + ((i__3 = param[(i__2 = n 
 					- 1) < 50 && 0 <= i__2 ? i__2 : 
 					s_rnge("param", i__2, "mkspk_", (
-					ftnlen)2333)] - 1) < 50 && 0 <= i__3 ?
+					ftnlen)2406)] - 1) < 50 && 0 <= i__3 ?
 					 i__3 : s_rnge("doval", i__3, "mkspk_"
-					, (ftnlen)2333)) * 12, (ftnlen)1, (
+					, (ftnlen)2406)) * 12, (ftnlen)1, (
 					ftnlen)12);
 				sigerr_("SPICE(NOTADPNUMBER)", (ftnlen)19);
 			    }
@@ -2234,9 +2306,9 @@ static integer c__1 = 1;
 				    ftnlen)1, (ftnlen)512, (ftnlen)512);
 			    str2et_(htime, &dvl[(i__3 = param[(i__2 = n - 1) <
 				     50 && 0 <= i__2 ? i__2 : s_rnge("param", 
-				    i__2, "mkspk_", (ftnlen)2344)] - 1) < 50 
+				    i__2, "mkspk_", (ftnlen)2417)] - 1) < 50 
 				    && 0 <= i__3 ? i__3 : s_rnge("dvl", i__3, 
-				    "mkspk_", (ftnlen)2344)], (ftnlen)512);
+				    "mkspk_", (ftnlen)2417)], (ftnlen)512);
 			}
 		    } else {
 
@@ -2244,9 +2316,9 @@ static integer c__1 = 1;
 
 			nparsd_(wrkchr, &dvl[(i__3 = param[(i__2 = n - 1) < 
 				50 && 0 <= i__2 ? i__2 : s_rnge("param", i__2,
-				 "mkspk_", (ftnlen)2353)] - 1) < 50 && 0 <= 
+				 "mkspk_", (ftnlen)2426)] - 1) < 50 && 0 <= 
 				i__3 ? i__3 : s_rnge("dvl", i__3, "mkspk_", (
-				ftnlen)2353)], error, &ptr, (ftnlen)512, (
+				ftnlen)2426)], error, &ptr, (ftnlen)512, (
 				ftnlen)512);
 			if (ptr != 0) {
 
@@ -2262,9 +2334,9 @@ static integer c__1 = 1;
 			    errch_("#", inpfn, (ftnlen)1, (ftnlen)255);
 			    errch_("#", doval + ((i__3 = param[(i__2 = n - 1) 
 				    < 50 && 0 <= i__2 ? i__2 : s_rnge("param",
-				     i__2, "mkspk_", (ftnlen)2371)] - 1) < 50 
+				     i__2, "mkspk_", (ftnlen)2444)] - 1) < 50 
 				    && 0 <= i__3 ? i__3 : s_rnge("doval", 
-				    i__3, "mkspk_", (ftnlen)2371)) * 12, (
+				    i__3, "mkspk_", (ftnlen)2444)) * 12, (
 				    ftnlen)1, (ftnlen)12);
 			    sigerr_("SPICE(NOTADPNUMBER)", (ftnlen)19);
 			}
@@ -2328,12 +2400,12 @@ static integer c__1 = 1;
 
 			conics_(elts, dvl, &state[(i__2 = j * 6 - 6) < 60000 
 				&& 0 <= i__2 ? i__2 : s_rnge("state", i__2, 
-				"mkspk_", (ftnlen)2433)]);
+				"mkspk_", (ftnlen)2506)]);
 
 /*                    Accumulate epoch in EPOCH buffer. */
 
 			epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? i__2 : 
-				s_rnge("epoch", i__2, "mkspk_", (ftnlen)2438)]
+				s_rnge("epoch", i__2, "mkspk_", (ftnlen)2511)]
 				 = dvl[0];
 		    } else if (s_cmp(indtvl, "STATES", rtrim_(indtvl, (ftnlen)
 			    80), (ftnlen)6) == 0) {
@@ -2344,15 +2416,15 @@ static integer c__1 = 1;
 			for (l = 1; l <= 6; ++l) {
 			    state[(i__2 = l + j * 6 - 7) < 60000 && 0 <= i__2 
 				    ? i__2 : s_rnge("state", i__2, "mkspk_", (
-				    ftnlen)2448)] = dvl[(i__3 = l) < 50 && 0 
+				    ftnlen)2521)] = dvl[(i__3 = l) < 50 && 0 
 				    <= i__3 ? i__3 : s_rnge("dvl", i__3, 
-				    "mkspk_", (ftnlen)2448)] * dstcof;
+				    "mkspk_", (ftnlen)2521)] * dstcof;
 			}
 
 /*                    Accumulate epoch in EPOCH buffer. */
 
 			epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? i__2 : 
-				s_rnge("epoch", i__2, "mkspk_", (ftnlen)2455)]
+				s_rnge("epoch", i__2, "mkspk_", (ftnlen)2528)]
 				 = dvl[0];
 
 /*                    For output SPK types 15 and 17 we need to convert */
@@ -2362,9 +2434,9 @@ static integer c__1 = 1;
 			if (outtvl == 15 || outtvl == 17) {
 			    oscelt_(&state[(i__2 = j * 6 - 6) < 60000 && 0 <= 
 				    i__2 ? i__2 : s_rnge("state", i__2, "mks"
-				    "pk_", (ftnlen)2464)], &epoch[(i__3 = j - 
+				    "pk_", (ftnlen)2537)], &epoch[(i__3 = j - 
 				    1) < 10000 && 0 <= i__3 ? i__3 : s_rnge(
-				    "epoch", i__3, "mkspk_", (ftnlen)2464)], &
+				    "epoch", i__3, "mkspk_", (ftnlen)2537)], &
 				    cngmvl, elts);
 			}
 		    } else {
@@ -2374,14 +2446,14 @@ static integer c__1 = 1;
 /*                    parameters in the DVAL array. */
 
 			epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? i__2 : 
-				s_rnge("epoch", i__2, "mkspk_", (ftnlen)2476)]
+				s_rnge("epoch", i__2, "mkspk_", (ftnlen)2549)]
 				 = dvl[0];
 		    }
 
 /*                 Now we do additional processing depending on the */
 /*                 output SPK type. There are two cases here: SPK */
 /*                 type 15 for which we may need to compute the elements */
-/*                 for the time of periapsis amd SPK 8 and 12 for which */
+/*                 for the time of periapsis and SPK 8 and 12 for which */
 /*                 we need to verify equal spacing between data points. */
 
 		    if (outtvl == 15) {
@@ -2396,7 +2468,7 @@ static integer c__1 = 1;
 /*                          Case of elliptical orbit. */
 
 /*                          Start with determining the time of the */
-/*                          nearest periapse. */
+/*                          nearest periapsis. */
 
 				wrkel = (1. - elts[1]) / elts[0];
 				meanm = sqrt(elts[7] * wrkel) * wrkel;
@@ -2406,7 +2478,7 @@ static integer c__1 = 1;
 				}
 				epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
 					i__2 : s_rnge("epoch", i__2, "mkspk_",
-					 (ftnlen)2512)] = elts[6] - m0 / 
+					 (ftnlen)2585)] = elts[6] - m0 / 
 					meanm;
 
 /*                          Like SPKE15, use brute-force to compute true */
@@ -2414,11 +2486,11 @@ static integer c__1 = 1;
 
 				conics_(elts, &epoch[(i__2 = j - 1) < 10000 &&
 					 0 <= i__2 ? i__2 : s_rnge("epoch", 
-					i__2, "mkspk_", (ftnlen)2518)], 
+					i__2, "mkspk_", (ftnlen)2591)], 
 					hstate);
 				ta = vsep_(hstate, &state[(i__2 = j * 6 - 6) <
 					 60000 && 0 <= i__2 ? i__2 : s_rnge(
-					"state", i__2, "mkspk_", (ftnlen)2519)
+					"state", i__2, "mkspk_", (ftnlen)2592)
 					]);
 				ta = d_sign(&ta, &m0);
 
@@ -2439,7 +2511,7 @@ static integer c__1 = 1;
 /*                          elements as directed by the precession flag. */
 /*                          If the flag is 3, do no adjustments. If the */
 /*                          flag is not 1, adjust the argument of */
-/*                          periapse. If the flag is not 2, adjust the */
+/*                          periapsis. If the flag is not 2, adjust the */
 /*                          longitude of the ascending node. */
 
 				if (j2flg != 3.) {
@@ -2458,7 +2530,7 @@ static integer c__1 = 1;
 				meanm = sqrt(elts[7] * wrkel) * wrkel;
 				epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
 					i__2 : s_rnge("epoch", i__2, "mkspk_",
-					 (ftnlen)2562)] = elts[6] - elts[5] / 
+					 (ftnlen)2635)] = elts[6] - elts[5] / 
 					meanm;
 			    } else {
 
@@ -2468,7 +2540,7 @@ static integer c__1 = 1;
 					;
 				epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
 					i__2 : s_rnge("epoch", i__2, "mkspk_",
-					 (ftnlen)2572)] = elts[6] - elts[5] / 
+					 (ftnlen)2645)] = elts[6] - elts[5] / 
 					meanm;
 			    }
 
@@ -2477,13 +2549,13 @@ static integer c__1 = 1;
 			    elts[5] = 0.;
 			    elts[6] = epoch[(i__2 = j - 1) < 10000 && 0 <= 
 				    i__2 ? i__2 : s_rnge("epoch", i__2, "mks"
-				    "pk_", (ftnlen)2580)];
+				    "pk_", (ftnlen)2653)];
 			    conics_(elts, &epoch[(i__2 = j - 1) < 10000 && 0 
 				    <= i__2 ? i__2 : s_rnge("epoch", i__2, 
-				    "mkspk_", (ftnlen)2582)], &state[(i__3 = 
+				    "mkspk_", (ftnlen)2655)], &state[(i__3 = 
 				    j * 6 - 6) < 60000 && 0 <= i__3 ? i__3 : 
 				    s_rnge("state", i__3, "mkspk_", (ftnlen)
-				    2582)]);
+				    2655)]);
 			}
 		    } else if (outtvl == 8 || outtvl == 12) {
 
@@ -2494,9 +2566,9 @@ static integer c__1 = 1;
 			if (j > 2) {
 			    tmpdp = epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 
 				    ? i__2 : s_rnge("epoch", i__2, "mkspk_", (
-				    ftnlen)2596)] - epoch[(i__3 = j - 2) < 
+				    ftnlen)2669)] - epoch[(i__3 = j - 2) < 
 				    10000 && 0 <= i__3 ? i__3 : s_rnge("epoch"
-				    , i__3, "mkspk_", (ftnlen)2596)];
+				    , i__3, "mkspk_", (ftnlen)2669)];
 			    if ((d__1 = tmpdp - tstep, abs(d__1)) > .001) {
 
 /*                          Time step changed. Signal an error and exit. */
@@ -2515,19 +2587,19 @@ static integer c__1 = 1;
 				errint_("#", &recidx, (ftnlen)1);
 				timout_(&epoch[(i__2 = j - 3) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2616)], "YYYY-MM-D"
+					"mkspk_", (ftnlen)2689)], "YYYY-MM-D"
 					"DTHR:MN:SC.### ::RND", error, (ftnlen)
 					29, (ftnlen)512);
 				errch_("#", error, (ftnlen)1, (ftnlen)512);
 				timout_(&epoch[(i__2 = j - 2) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2619)], "YYYY-MM-D"
+					"mkspk_", (ftnlen)2692)], "YYYY-MM-D"
 					"DTHR:MN:SC.### ::RND", error, (ftnlen)
 					29, (ftnlen)512);
 				errch_("#", error, (ftnlen)1, (ftnlen)512);
 				timout_(&epoch[(i__2 = j - 1) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2622)], "YYYY-MM-D"
+					"mkspk_", (ftnlen)2695)], "YYYY-MM-D"
 					"DTHR:MN:SC.### ::RND", error, (ftnlen)
 					29, (ftnlen)512);
 				errch_("#", error, (ftnlen)1, (ftnlen)512);
@@ -2540,9 +2612,9 @@ static integer c__1 = 1;
 			if (j > 1) {
 			    tstep = epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 
 				    ? i__2 : s_rnge("epoch", i__2, "mkspk_", (
-				    ftnlen)2636)] - epoch[(i__3 = j - 2) < 
+				    ftnlen)2709)] - epoch[(i__3 = j - 2) < 
 				    10000 && 0 <= i__3 ? i__3 : s_rnge("epoch"
-				    , i__3, "mkspk_", (ftnlen)2636)];
+				    , i__3, "mkspk_", (ftnlen)2709)];
 			}
 		    }
 
@@ -2565,16 +2637,16 @@ static integer c__1 = 1;
 
 			    sxform_("J2000", frnmvl, &epoch[(i__2 = j - 1) < 
 				    10000 && 0 <= i__2 ? i__2 : s_rnge("epoch"
-				    , i__2, "mkspk_", (ftnlen)2663)], xfrm, (
+				    , i__2, "mkspk_", (ftnlen)2736)], xfrm, (
 				    ftnlen)5, (ftnlen)80);
 			    for (l = 1; l <= 3; ++l) {
 				for (m = 1; m <= 3; ++m) {
 				    mwor[(i__2 = l + m * 3 - 4) < 9 && 0 <= 
 					    i__2 ? i__2 : s_rnge("mwor", i__2,
-					     "mkspk_", (ftnlen)2667)] = xfrm[(
+					     "mkspk_", (ftnlen)2740)] = xfrm[(
 					    i__3 = l + m * 6 - 7) < 36 && 0 <=
 					     i__3 ? i__3 : s_rnge("xfrm", 
-					    i__3, "mkspk_", (ftnlen)2667)];
+					    i__3, "mkspk_", (ftnlen)2740)];
 				}
 			    }
 
@@ -2585,7 +2657,7 @@ static integer c__1 = 1;
 
 			    bodmat_(&cnidvl, &epoch[(i__2 = j - 1) < 10000 && 
 				    0 <= i__2 ? i__2 : s_rnge("epoch", i__2, 
-				    "mkspk_", (ftnlen)2677)], tipm);
+				    "mkspk_", (ftnlen)2750)], tipm);
 			    mxmt_(mwor, tipm, mpol);
 			    pv[0] = mpol[6];
 			    pv[1] = mpol[7];
@@ -2601,13 +2673,13 @@ static integer c__1 = 1;
 			    e = elts[1];
 			    ucrss_(&state[(i__2 = j * 6 - 6) < 60000 && 0 <= 
 				    i__2 ? i__2 : s_rnge("state", i__2, "mks"
-				    "pk_", (ftnlen)2697)], &state[(i__3 = j * 
+				    "pk_", (ftnlen)2770)], &state[(i__3 = j * 
 				    6 - 3) < 60000 && 0 <= i__3 ? i__3 : 
 				    s_rnge("state", i__3, "mkspk_", (ftnlen)
-				    2697)], tp);
+				    2770)], tp);
 			    vhat_(&state[(i__2 = j * 6 - 6) < 60000 && 0 <= 
 				    i__2 ? i__2 : s_rnge("state", i__2, "mks"
-				    "pk_", (ftnlen)2698)], pa);
+				    "pk_", (ftnlen)2771)], pa);
 
 /*                       We also set "end of segment data collection" */
 /*                       flag because for output type 15 we need only */
@@ -2743,14 +2815,14 @@ static integer c__1 = 1;
 			if (j > 1) {
 			    if (epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
 				    i__2 : s_rnge("epoch", i__2, "mkspk_", (
-				    ftnlen)2858)] == epoch[(i__3 = j - 2) < 
+				    ftnlen)2931)] == epoch[(i__3 = j - 2) < 
 				    10000 && 0 <= i__3 ? i__3 : s_rnge("epoch"
-				    , i__3, "mkspk_", (ftnlen)2858)]) {
+				    , i__3, "mkspk_", (ftnlen)2931)]) {
 				dafcls_(&handle);
 				delfil_(outfn, (ftnlen)255);
 				timout_(&epoch[(i__2 = j - 1) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2861)], "YYYY-MM-D"
+					"mkspk_", (ftnlen)2934)], "YYYY-MM-D"
 					"DTHR:MN:SC.### ::RND", error, (ftnlen)
 					29, (ftnlen)512);
 				setmsg_("The epoch of the input data record "
@@ -2766,9 +2838,9 @@ static integer c__1 = 1;
 			    }
 			    if (epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
 				    i__2 : s_rnge("epoch", i__2, "mkspk_", (
-				    ftnlen)2874)] < epoch[(i__3 = j - 2) < 
+				    ftnlen)2947)] < epoch[(i__3 = j - 2) < 
 				    10000 && 0 <= i__3 ? i__3 : s_rnge("epoch"
-				    , i__3, "mkspk_", (ftnlen)2874)]) {
+				    , i__3, "mkspk_", (ftnlen)2947)]) {
 				dafcls_(&handle);
 				delfil_(outfn, (ftnlen)255);
 				setmsg_("The epoch of the input data record "
@@ -2780,14 +2852,14 @@ static integer c__1 = 1;
 				errint_("#", &i__2, (ftnlen)1);
 				timout_(&epoch[(i__2 = j - 2) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2883)], "YYYY-MM-D"
+					"mkspk_", (ftnlen)2956)], "YYYY-MM-D"
 					"DTHR:MN:SC.### ::RND", error, (ftnlen)
 					29, (ftnlen)512);
 				errch_("#", error, (ftnlen)1, (ftnlen)512);
 				errint_("#", &recidx, (ftnlen)1);
 				timout_(&epoch[(i__2 = j - 1) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2887)], "YYYY-MM-D"
+					"mkspk_", (ftnlen)2960)], "YYYY-MM-D"
 					"DTHR:MN:SC.### ::RND", error, (ftnlen)
 					29, (ftnlen)512);
 				errch_("#", error, (ftnlen)1, (ftnlen)512);
@@ -2810,7 +2882,7 @@ static integer c__1 = 1;
 
 				if (epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 
 					? i__2 : s_rnge("epoch", i__2, "mksp"
-					"k_", (ftnlen)2911)] >= etbeg) {
+					"k_", (ftnlen)2984)] >= etbeg) {
 
 /*                             It is. We memorize the coverage start */
 /*                             time and set the flag indicating that we */
@@ -2840,7 +2912,7 @@ static integer c__1 = 1;
 			    if (staepo) {
 				etfst = epoch[(i__2 = j - 1) < 10000 && 0 <= 
 					i__2 ? i__2 : s_rnge("epoch", i__2, 
-					"mkspk_", (ftnlen)2947)];
+					"mkspk_", (ftnlen)3020)];
 				staepo = FALSE_;
 			    }
 			}
@@ -2859,7 +2931,7 @@ static integer c__1 = 1;
 
 				if (epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 
 					? i__2 : s_rnge("epoch", i__2, "mksp"
-					"k_", (ftnlen)2969)] > etend) {
+					"k_", (ftnlen)3042)] > etend) {
 
 /*                             It is. Memorize its index (as the */
 /*                             temporary index of the last state we will */
@@ -2886,7 +2958,7 @@ static integer c__1 = 1;
 				    jlepoc = j;
 				    etlst = epoch[(i__2 = j - 1) < 10000 && 0 
 					    <= i__2 ? i__2 : s_rnge("epoch", 
-					    i__2, "mkspk_", (ftnlen)2999)];
+					    i__2, "mkspk_", (ftnlen)3072)];
 				}
 			    } else {
 
@@ -2908,7 +2980,7 @@ static integer c__1 = 1;
 			    jlepoc = j;
 			    etlst = epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 
 				    ? i__2 : s_rnge("epoch", i__2, "mkspk_", (
-				    ftnlen)3026)];
+				    ftnlen)3099)];
 			}
 		    }
 
@@ -2945,7 +3017,7 @@ static integer c__1 = 1;
 			if (jlepoc > 1) {
 			    timstp = (epoch[(i__2 = jlepoc - 1) < 10000 && 0 
 				    <= i__2 ? i__2 : s_rnge("epoch", i__2, 
-				    "mkspk_", (ftnlen)3066)] - epoch[0]) / (
+				    "mkspk_", (ftnlen)3139)] - epoch[0]) / (
 				    doublereal) (jlepoc - 1);
 			} else {
 			    timstp = 0.;
@@ -2961,16 +3033,18 @@ static integer c__1 = 1;
 			if (! eosgmr) {
 			    etlst = epoch[(i__2 = jlepoc - padsts - 1) < 
 				    10000 && 0 <= i__2 ? i__2 : s_rnge("epoch"
-				    , i__2, "mkspk_", (ftnlen)3082)];
+				    , i__2, "mkspk_", (ftnlen)3155)];
 			}
 
 /*                    We will call corresponding SPKWxx depending on */
-/*                    our output SPK type. */
+/*                    our output SPK type. We will count segments */
+/*                    that we wrote to output file. */
 
 			if (outtvl == 5) {
 			    spkw05_(&handle, &obidvl, &cnidvl, frnmvl, &etfst,
 				     &etlst, sgidvl, &cngmvl, &jlepoc, state, 
 				    epoch, (ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			} else if (outtvl == 8) {
 
 /*                       Adjust descriptor end time to make sure that */
@@ -2982,10 +3056,12 @@ static integer c__1 = 1;
 			    spkw08_(&handle, &obidvl, &cnidvl, frnmvl, &etfst,
 				     &etlst, sgidvl, &pldgvl, &jlepoc, state, 
 				    epoch, &timstp, (ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			} else if (outtvl == 9) {
 			    spkw09_(&handle, &obidvl, &cnidvl, frnmvl, &etfst,
 				     &etlst, sgidvl, &pldgvl, &jlepoc, state, 
 				    epoch, (ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			} else if (outtvl == 12) {
 
 /*                       Adjust descriptor end time to make sure that */
@@ -2997,19 +3073,23 @@ static integer c__1 = 1;
 			    spkw12_(&handle, &obidvl, &cnidvl, frnmvl, &etfst,
 				     &etlst, sgidvl, &pldgvl, &jlepoc, state, 
 				    epoch, &timstp, (ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			} else if (outtvl == 13) {
 			    spkw13_(&handle, &obidvl, &cnidvl, frnmvl, &etfst,
 				     &etlst, sgidvl, &pldgvl, &jlepoc, state, 
 				    epoch, (ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			} else if (outtvl == 15) {
 			    spkw15_(&handle, &obidvl, &cnidvl, frnmvl, &etbeg,
 				     &etend, sgidvl, epoch, tp, pa, &p, &e, &
 				    j2flg, pv, &cngmvl, &cnj2vl, &requat, (
 				    ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			} else if (outtvl == 17) {
 			    spkw17_(&handle, &obidvl, &cnidvl, frnmvl, &etbeg,
 				     &etend, sgidvl, epoch, eqel, &rapol, &
 				    depol, (ftnlen)80, (ftnlen)80);
+			    ++segcnt;
 			}
 
 /*                    Postambule for table types when we have filled the */
@@ -3024,7 +3104,7 @@ static integer c__1 = 1;
 
 			    etfst = epoch[(i__2 = jlepoc - padsts - 1) < 
 				    10000 && 0 <= i__2 ? i__2 : s_rnge("epoch"
-				    , i__2, "mkspk_", (ftnlen)3167)];
+				    , i__2, "mkspk_", (ftnlen)3255)];
 
 /*                       Delete first (JLEPOC-2*PADSTS-1) states and */
 /*                       epochs from the buffers. */
@@ -3043,7 +3123,7 @@ static integer c__1 = 1;
 			    j = jlepoc;
 			    etlst = epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 
 				    ? i__2 : s_rnge("epoch", i__2, "mkspk_", (
-				    ftnlen)3187)];
+				    ftnlen)3275)];
 			}
 
 /*                    End of the segment writing block. */
@@ -3103,6 +3183,23 @@ static integer c__1 = 1;
 
 	}
 
+/*        Before moving on let's check if we have parsed enough data */
+/*        for at least one complete data record. It not, let the user */
+/*        know that we didn't have sufficient input data. */
+
+	if (recidx == 0) {
+	    dafcls_(&handle);
+	    delfil_(outfn, (ftnlen)255);
+	    setmsg_("Data provided in the input file '#' was not sufficient "
+		    "to for even one complete input data record. Check that t"
+		    "he input file contains enough data items and that all li"
+		    "nes in the input file, including the last line, are term"
+		    "inated with the line terminator native to this computer "
+		    "platform.", (ftnlen)288);
+	    errch_("#", inpfn, (ftnlen)1, (ftnlen)255);
+	    sigerr_("SPICE(INSUFFICIENTDATA2)", (ftnlen)24);
+	}
+
 /*        Check if we still have some data in the data buffer and should */
 /*        write the last segment. */
 
@@ -3133,7 +3230,7 @@ static integer c__1 = 1;
 
 	    if (outtvl == 8 || outtvl == 9 || outtvl == 12 || outtvl == 13) {
 		if (statfl && epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
-			i__2 : s_rnge("epoch", i__2, "mkspk_", (ftnlen)3296)] 
+			i__2 : s_rnge("epoch", i__2, "mkspk_", (ftnlen)3406)] 
 			< etbeg) {
 
 /*                 Epoch of last point of input data is less */
@@ -3148,7 +3245,7 @@ static integer c__1 = 1;
 		    sigerr_("SPICE(INCONSISTSTARTTIME)", (ftnlen)25);
 		}
 		if (stotfl && epoch[(i__2 = j - 1) < 10000 && 0 <= i__2 ? 
-			i__2 : s_rnge("epoch", i__2, "mkspk_", (ftnlen)3313)] 
+			i__2 : s_rnge("epoch", i__2, "mkspk_", (ftnlen)3423)] 
 			< etend) {
 
 /*                 Epoch of last point of input data is less */
@@ -3175,19 +3272,21 @@ static integer c__1 = 1;
 
 	    if (jlepoc > 1) {
 		timstp = (epoch[(i__2 = jlepoc - 1) < 10000 && 0 <= i__2 ? 
-			i__2 : s_rnge("epoch", i__2, "mkspk_", (ftnlen)3344)] 
+			i__2 : s_rnge("epoch", i__2, "mkspk_", (ftnlen)3454)] 
 			- epoch[0]) / (doublereal) (jlepoc - 1);
 	    } else {
 		timstp = 0.;
 	    }
 
 /*           We will call corresponding SPKWxx depending on our output */
-/*           SPK type. */
+/*           SPK type. We will count segments that we wrote to output */
+/*           file. */
 
 	    if (outtvl == 5) {
 		spkw05_(&handle, &obidvl, &cnidvl, frnmvl, &etfst, &etlst, 
 			sgidvl, &cngmvl, &jlepoc, state, epoch, (ftnlen)80, (
 			ftnlen)80);
+		++segcnt;
 	    } else if (outtvl == 8) {
 
 /*              Adjust descriptor end time to make sure that round off */
@@ -3199,10 +3298,12 @@ static integer c__1 = 1;
 		spkw08_(&handle, &obidvl, &cnidvl, frnmvl, &etfst, &etlst, 
 			sgidvl, &pldgvl, &jlepoc, state, epoch, &timstp, (
 			ftnlen)80, (ftnlen)80);
+		++segcnt;
 	    } else if (outtvl == 9) {
 		spkw09_(&handle, &obidvl, &cnidvl, frnmvl, &etfst, &etlst, 
 			sgidvl, &pldgvl, &jlepoc, state, epoch, (ftnlen)80, (
 			ftnlen)80);
+		++segcnt;
 	    } else if (outtvl == 12) {
 
 /*              Adjust descriptor end time to make sure that round off */
@@ -3214,10 +3315,12 @@ static integer c__1 = 1;
 		spkw12_(&handle, &obidvl, &cnidvl, frnmvl, &etfst, &etlst, 
 			sgidvl, &pldgvl, &jlepoc, state, epoch, &timstp, (
 			ftnlen)80, (ftnlen)80);
+		++segcnt;
 	    } else if (outtvl == 13) {
 		spkw13_(&handle, &obidvl, &cnidvl, frnmvl, &etfst, &etlst, 
 			sgidvl, &pldgvl, &jlepoc, state, epoch, (ftnlen)80, (
 			ftnlen)80);
+		++segcnt;
 	    }
 	}
 
@@ -3227,6 +3330,22 @@ static integer c__1 = 1;
 	cl__1.cunit = inpunt;
 	cl__1.csta = 0;
 	f_clos(&cl__1);
+    }
+
+/*     Before attempting to close the output SPK file let's check if we */
+/*     wrote any segments. It not, let the user know that we didn't have */
+/*     sufficient input data. */
+
+    if (segcnt == 0) {
+	dafcls_(&handle);
+	delfil_(outfn, (ftnlen)255);
+	setmsg_("Data provided in the input file '#' was not sufficient to g"
+		"enerate even one SPK segment. Check that the input file cont"
+		"ains enough data items and that all lines in the input file,"
+		" including the last line, are terminated with the line termi"
+		"nator native to this computer platform.", (ftnlen)278);
+	errch_("#", inpfn, (ftnlen)1, (ftnlen)255);
+	sigerr_("SPICE(INSUFFICIENTDATA)", (ftnlen)23);
     }
 
 /*     Close the output SPK file. */

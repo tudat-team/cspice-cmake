@@ -15,8 +15,10 @@
     doublereal d__1, d__2, d__3;
 
     /* Local variables */
-    extern /* Subroutine */ int sce2c_(integer *, doublereal *, doublereal *),
-	     sct2e_(integer *, doublereal *, doublereal *);
+    doublereal sign;
+    extern /* Subroutine */ int sce2c_(integer *, doublereal *, doublereal *);
+    doublereal sclk1;
+    extern /* Subroutine */ int sct2e_(integer *, doublereal *, doublereal *);
     integer i__;
     extern /* Subroutine */ int chkin_(char *, ftnlen), ckcov_(char *, 
 	    integer *, logical *, char *, doublereal *, char *, doublereal *, 
@@ -25,16 +27,19 @@
     doublereal maxdif;
     integer sclkid;
     extern integer wncard_(doublereal *);
+    extern doublereal touchd_(doublereal *);
     extern /* Subroutine */ int wncond_(doublereal *, doublereal *, 
 	    doublereal *), chkout_(char *, ftnlen);
+    doublereal et1, et2;
     extern logical return_(void);
     doublereal hdp1, hdp2;
 
 /* $ Abstract */
 
-/*     Find the ET coverage window adjusted for SCLK -> ET -> SCLK */
+/*     Find the ET coverage window adjusted for SCLK <-> ET */
 /*     conversion round off for a specified object in a specified CK */
-/*     file. */
+/*     file such the CK attitude is guaranteed to be computable */
+/*     using PXFORM/SXFORM at all output window intervals ends. */
 
 /* $ Disclaimer */
 
@@ -89,11 +94,11 @@
 
 /* $ Detailed_Input */
 
-/*     TBD. */
+/*     See Brief_I/O. */
 
 /* $ Detailed_Output */
 
-/*     TBD. */
+/*     See Brief_I/O. */
 
 /* $ Parameters */
 
@@ -106,7 +111,11 @@
 
 /* $ Files */
 
-/*     TBD. */
+/*     Input CK file should exist. */
+
+/*     LSK and SCLK files needed to do time conversions for the SCLK */
+/*     ID associated with the input CK ID should be loaded prior to */
+/*     calling this routine. */
 
 /* $ Particulars */
 
@@ -114,6 +123,8 @@
 /*     coverage window out of it, does SCLK -> ET -> SCLK conversion for */
 /*     each interval endpoint, computes the difference between each */
 /*     source and resulting SCLK, saves the maximum difference, */
+/*     if needed, increases this difference to a value that results in a */
+/*     difference in ETs corresponding to adjusted and un-adjusted SCLKs, */
 /*     contracts SCLK window by this difference multiplied by a factor, */
 /*     and then convert the resulting SCLK to ET for output. */
 
@@ -123,11 +134,15 @@
 
 /* $ Examples */
 
-/*     TBD. */
+/*     None. */
 
 /* $ Restrictions */
 
-/*     TBD. */
+/*     This routine is intended to be called only the FRMDIFF */
+/*     program. */
+
+/*     This routine is intended to be called with SPICE error */
+/*     handling mode set to ABORT. */
 
 /* $ Literature_References */
 
@@ -138,6 +153,11 @@
 /*     B.V. Semenov   (JPL) */
 
 /* $ Version */
+
+/* -    SPICELIB Version 1.2.0, 08-MAR-2017 (BVS) */
+
+/*        Modified to increase the maximum round off delta */
+/*        to guarantee to produce a change in ETs, if needed. */
 
 /* -    SPICELIB Version 1.1.0, 13-MAR-2012 (BVS) */
 
@@ -188,6 +208,32 @@
 /* Computing MAX */
 	d__2 = maxdif, d__3 = (d__1 = cover[i__ + 5] - hdp2, abs(d__1));
 	maxdif = max(d__2,d__3);
+    }
+
+/*     Increase the maximum round off if needed to produce */
+/*     change in ETs. */
+
+    if (maxdif != 0.) {
+	sct2e_(&sclkid, &cover[6], &et1);
+	sct2e_(&sclkid, &cover[(wncard_(cover) << 1) + 5], &et2);
+	if (abs(et1) > abs(et2)) {
+	    d__1 = abs(et1);
+	    et1 = touchd_(&d__1);
+	    sclk1 = cover[6];
+	    sign = 1.;
+	} else {
+	    d__1 = abs(et2);
+	    et1 = touchd_(&d__1);
+	    sclk1 = cover[(wncard_(cover) << 1) + 5];
+	    sign = -1.;
+	}
+	d__1 = sclk1 + sign * maxdif;
+	sct2e_(&sclkid, &d__1, &et2);
+	while(et1 == et2) {
+	    maxdif *= 2.;
+	    d__1 = sclk1 + sign * maxdif;
+	    sct2e_(&sclkid, &d__1, &et2);
+	}
     }
 
 /*     If there is a roundoff, contract window on each side by factor * */

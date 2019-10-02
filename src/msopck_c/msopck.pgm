@@ -512,6 +512,13 @@ static integer c__300 = 300;
 
 /* $ Version */
 
+/* -    Version 6.3.0, 2017-02-09 (BVS) */
+
+/*        BUG FIX: fixed the long error message for the */
+/*        SPICE(IDENTICALTIMES2) exception to show correct ET time; */
+/*        previously it was showing the next time after the duplicate */
+/*        time which triggered the error. */
+
 /* -    Version 6.2.0, 2013-07-01 (BVS) */
 
 /*        BUG FIX: changed the algorithm that determines the clock rate */
@@ -730,8 +737,8 @@ static integer c__300 = 300;
     tkvrsn_("TOOLKIT", word, (ftnlen)7, (ftnlen)40);
     tostdo_(" ", (ftnlen)1);
 /* Writing concatenation */
-    i__1[0] = 70, a__1[0] = "MSOPCK Utility Program, Version 6.2.0, 2013-07-"
-	    "01; SPICE Toolkit Ver. ";
+    i__1[0] = 70, a__1[0] = "MSOPCK Utility Program, Version 6.3.0, 2017-02-"
+	    "09; SPICE Toolkit Ver. ";
     i__1[1] = rtrim_(word, (ftnlen)40), a__1[1] = word;
     s_cat(ch__1, a__1, i__1, &c__2, (ftnlen)110);
     tostdo_(ch__1, rtrim_(word, (ftnlen)40) + 70);
@@ -765,7 +772,7 @@ static integer c__300 = 300;
 	    s_copy(templt + 400, " ", (ftnlen)80, (ftnlen)1);
 	    for (i__ = 1; i__ <= 6; ++i__) {
 		tostdo_(templt + ((i__2 = i__ - 1) < 49 && 0 <= i__2 ? i__2 : 
-			s_rnge("templt", i__2, "msopck_", (ftnlen)933)) * 80, 
+			s_rnge("templt", i__2, "msopck_", (ftnlen)940)) * 80, 
 			(ftnlen)80);
 	    }
 	} else if (pos_(line, " -T ", &c__1, (ftnlen)265, (ftnlen)4) != 0 || 
@@ -858,7 +865,7 @@ static integer c__300 = 300;
 	    s_copy(templt + 3840, " ", (ftnlen)80, (ftnlen)1);
 	    for (i__ = 1; i__ <= 49; ++i__) {
 		tostdo_(templt + ((i__2 = i__ - 1) < 49 && 0 <= i__2 ? i__2 : 
-			s_rnge("templt", i__2, "msopck_", (ftnlen)1028)) * 80,
+			s_rnge("templt", i__2, "msopck_", (ftnlen)1035)) * 80,
 			 (ftnlen)80);
 	    }
 	} else {
@@ -1216,14 +1223,14 @@ static integer c__300 = 300;
 		    found, (ftnlen)22);
 	    for (i__ = 1; i__ <= 3; ++i__) {
 		if (rerror[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : s_rnge(
-			"rerror", i__2, "msopck_", (ftnlen)1464)] <= 0.) {
+			"rerror", i__2, "msopck_", (ftnlen)1471)] <= 0.) {
 		    setmsg_("The maximum angular rate value '#' provided in "
 			    "the setup file using the keyword '#' doesn't mak"
 			    "e sense. It should be greater than 0.", (ftnlen)
 			    132);
 		    errdp_("#", &rerror[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? 
 			    i__2 : s_rnge("rerror", i__2, "msopck_", (ftnlen)
-			    1470)], (ftnlen)1);
+			    1477)], (ftnlen)1);
 		    errch_("#", "ANGULAR_RATE_THRESHOLD", (ftnlen)1, (ftnlen)
 			    22);
 		    sigerr_("SPICE(BADRATETHRESHOLD)", (ftnlen)23);
@@ -1492,29 +1499,29 @@ static integer c__300 = 300;
 		for (i__ = 1; i__ <= 3; ++i__) {
 		    if (eqstr_(eaxis + ((i__2 = i__ - 1) < 3 && 0 <= i__2 ? 
 			    i__2 : s_rnge("eaxis", i__2, "msopck_", (ftnlen)
-			    1785)), "X", (ftnlen)1, (ftnlen)1)) {
+			    1792)), "X", (ftnlen)1, (ftnlen)1)) {
 			eulaxs[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
 				s_rnge("eulaxs", i__2, "msopck_", (ftnlen)
-				1786)] = 1;
+				1793)] = 1;
 		    } else if (eqstr_(eaxis + ((i__2 = i__ - 1) < 3 && 0 <= 
 			    i__2 ? i__2 : s_rnge("eaxis", i__2, "msopck_", (
-			    ftnlen)1787)), "Y", (ftnlen)1, (ftnlen)1)) {
+			    ftnlen)1794)), "Y", (ftnlen)1, (ftnlen)1)) {
 			eulaxs[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
 				s_rnge("eulaxs", i__2, "msopck_", (ftnlen)
-				1788)] = 2;
+				1795)] = 2;
 		    } else if (eqstr_(eaxis + ((i__2 = i__ - 1) < 3 && 0 <= 
 			    i__2 ? i__2 : s_rnge("eaxis", i__2, "msopck_", (
-			    ftnlen)1789)), "Z", (ftnlen)1, (ftnlen)1)) {
+			    ftnlen)1796)), "Z", (ftnlen)1, (ftnlen)1)) {
 			eulaxs[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
 				s_rnge("eulaxs", i__2, "msopck_", (ftnlen)
-				1790)] = 3;
+				1797)] = 3;
 		    } else {
 			setmsg_("The element '#' of the Euler rotations orde"
 				"r provided using the setup file keyword '#' "
 				"is  not 'X', 'Y' or 'Z'.", (ftnlen)111);
 			errch_("#", eaxis + ((i__2 = i__ - 1) < 3 && 0 <= 
 				i__2 ? i__2 : s_rnge("eaxis", i__2, "msopck_",
-				 (ftnlen)1796)), (ftnlen)1, (ftnlen)1);
+				 (ftnlen)1803)), (ftnlen)1, (ftnlen)1);
 			errch_("#", "EULER_ROTATIONS_ORDER", (ftnlen)1, (
 				ftnlen)21);
 			sigerr_("SPICE(BADROTATIONAXISXYZ)", (ftnlen)25);
@@ -1525,16 +1532,16 @@ static integer c__300 = 300;
 			found, (ftnlen)21);
 		for (i__ = 1; i__ <= 3; ++i__) {
 		    if (eulaxs[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
-			    s_rnge("eulaxs", i__2, "msopck_", (ftnlen)1804)] 
+			    s_rnge("eulaxs", i__2, "msopck_", (ftnlen)1811)] 
 			    <= 0 || eulaxs[(i__3 = i__ - 1) < 3 && 0 <= i__3 ?
 			     i__3 : s_rnge("eulaxs", i__3, "msopck_", (ftnlen)
-			    1804)] >= 4) {
+			    1811)] >= 4) {
 			setmsg_("The element # of the Euler rotations order "
 				"provided using the setup file keyword '#' is"
 				" not 1, 2 or 3.", (ftnlen)102);
 			errint_("#", &eulaxs[(i__2 = i__ - 1) < 3 && 0 <= 
 				i__2 ? i__2 : s_rnge("eulaxs", i__2, "msopck_"
-				, (ftnlen)1809)], (ftnlen)1);
+				, (ftnlen)1816)], (ftnlen)1);
 			errch_("#", "EULER_ROTATIONS_ORDER", (ftnlen)1, (
 				ftnlen)21);
 			sigerr_("SPICE(BADROTATIONAXIS123)", (ftnlen)25);
@@ -1648,29 +1655,29 @@ static integer c__300 = 300;
 		for (i__ = 1; i__ <= 3; ++i__) {
 		    if (eqstr_(offaxs + ((i__2 = i__ - 1) < 3 && 0 <= i__2 ? 
 			    i__2 : s_rnge("offaxs", i__2, "msopck_", (ftnlen)
-			    1938)), "X", (ftnlen)1, (ftnlen)1)) {
+			    1945)), "X", (ftnlen)1, (ftnlen)1)) {
 			offaxi[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
 				s_rnge("offaxi", i__2, "msopck_", (ftnlen)
-				1939)] = 1;
+				1946)] = 1;
 		    } else if (eqstr_(offaxs + ((i__2 = i__ - 1) < 3 && 0 <= 
 			    i__2 ? i__2 : s_rnge("offaxs", i__2, "msopck_", (
-			    ftnlen)1940)), "Y", (ftnlen)1, (ftnlen)1)) {
+			    ftnlen)1947)), "Y", (ftnlen)1, (ftnlen)1)) {
 			offaxi[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
 				s_rnge("offaxi", i__2, "msopck_", (ftnlen)
-				1941)] = 2;
+				1948)] = 2;
 		    } else if (eqstr_(offaxs + ((i__2 = i__ - 1) < 3 && 0 <= 
 			    i__2 ? i__2 : s_rnge("offaxs", i__2, "msopck_", (
-			    ftnlen)1942)), "Z", (ftnlen)1, (ftnlen)1)) {
+			    ftnlen)1949)), "Z", (ftnlen)1, (ftnlen)1)) {
 			offaxi[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
 				s_rnge("offaxi", i__2, "msopck_", (ftnlen)
-				1943)] = 3;
+				1950)] = 3;
 		    } else {
 			setmsg_("The element '#' of the offset rotations ord"
 				"er provided using the setup file keyword '#'"
 				" is not 'X', 'Y' or 'Z'.", (ftnlen)111);
 			errch_("#", offaxs + ((i__2 = i__ - 1) < 3 && 0 <= 
 				i__2 ? i__2 : s_rnge("offaxs", i__2, "msopck_"
-				, (ftnlen)1949)), (ftnlen)1, (ftnlen)1);
+				, (ftnlen)1956)), (ftnlen)1, (ftnlen)1);
 			errch_("#", "OFFSET_ROTATION_AXES", (ftnlen)1, (
 				ftnlen)20);
 			sigerr_("SPICE(BADOFFSETAXISXYZ)", (ftnlen)23);
@@ -1681,16 +1688,16 @@ static integer c__300 = 300;
 			found, (ftnlen)20);
 		for (i__ = 1; i__ <= 3; ++i__) {
 		    if (offaxi[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : 
-			    s_rnge("offaxi", i__2, "msopck_", (ftnlen)1957)] 
+			    s_rnge("offaxi", i__2, "msopck_", (ftnlen)1964)] 
 			    <= 0 || offaxi[(i__3 = i__ - 1) < 3 && 0 <= i__3 ?
 			     i__3 : s_rnge("offaxi", i__3, "msopck_", (ftnlen)
-			    1957)] >= 4) {
+			    1964)] >= 4) {
 			setmsg_("The element # of the Euler rotations order "
 				"provided using the setup file keyword '#' is"
 				" not 1, 2 or 3.", (ftnlen)102);
 			errint_("#", &offaxi[(i__2 = i__ - 1) < 3 && 0 <= 
 				i__2 ? i__2 : s_rnge("offaxi", i__2, "msopck_"
-				, (ftnlen)1962)], (ftnlen)1);
+				, (ftnlen)1969)], (ftnlen)1);
 			errch_("#", "OFFSET_ROTATION_AXES", (ftnlen)1, (
 				ftnlen)20);
 			sigerr_("SPICE(BADOFFSETAXIS123)", (ftnlen)23);
@@ -1729,9 +1736,9 @@ static integer c__300 = 300;
 
 		for (i__ = 1; i__ <= 3; ++i__) {
 		    offang[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? i__2 : s_rnge(
-			    "offang", i__2, "msopck_", (ftnlen)2002)] = 
+			    "offang", i__2, "msopck_", (ftnlen)2009)] = 
 			    offang[(i__3 = i__ - 1) < 3 && 0 <= i__3 ? i__3 : 
-			    s_rnge("offang", i__3, "msopck_", (ftnlen)2002)] *
+			    s_rnge("offang", i__3, "msopck_", (ftnlen)2009)] *
 			     rpd_();
 		}
 	    } else if (eqstr_(word, "RADIANS", (ftnlen)40, (ftnlen)7)) {
@@ -1916,11 +1923,11 @@ static integer c__300 = 300;
 		scencd_(&scid, word, &sclkdp, (ftnlen)40);
 		sct2e_(&scid, &sclkdp, &startt[(i__2 = index - 1) < 100000 && 
 			0 <= i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", (
-			ftnlen)2215)]);
+			ftnlen)2222)]);
 	    } else if (eqstr_(ttype, "UTC", (ftnlen)40, (ftnlen)3)) {
 		str2et_(word, &startt[(i__2 = index - 1) < 100000 && 0 <= 
 			i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", (
-			ftnlen)2219)], (ftnlen)40);
+			ftnlen)2226)], (ftnlen)40);
 	    } else if (eqstr_(ttype, "TICKS", (ftnlen)40, (ftnlen)5)) {
 		nparsd_(word, &sclkdp, error, &ptr, (ftnlen)40, (ftnlen)265);
 		if (ptr != 0) {
@@ -1932,11 +1939,11 @@ static integer c__300 = 300;
 		}
 		sct2e_(&scid, &sclkdp, &startt[(i__2 = index - 1) < 100000 && 
 			0 <= i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", (
-			ftnlen)2234)]);
+			ftnlen)2241)]);
 	    } else if (eqstr_(ttype, "ET", (ftnlen)40, (ftnlen)2)) {
 		nparsd_(word, &startt[(i__2 = index - 1) < 100000 && 0 <= 
 			i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", (
-			ftnlen)2238)], error, &ptr, (ftnlen)40, (ftnlen)265);
+			ftnlen)2245)], error, &ptr, (ftnlen)40, (ftnlen)265);
 		if (ptr != 0) {
 		    setmsg_("The ET seconds past J2000 time '#' from the lin"
 			    "e # of the input file is not a number.", (ftnlen)
@@ -1982,7 +1989,7 @@ static integer c__300 = 300;
 		sclkdp += clkfrc;
 		sct2e_(&scid, &sclkdp, &startt[(i__2 = index - 1) < 100000 && 
 			0 <= i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", (
-			ftnlen)2286)]);
+			ftnlen)2293)]);
 	    }
 
 /*           If requested, check for time-ordered input. Signal an */
@@ -1990,7 +1997,7 @@ static integer c__300 = 300;
 
 	    if (chkto) {
 		if (startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? i__2 : 
-			s_rnge("startt", i__2, "msopck_", (ftnlen)2296)] <= 
+			s_rnge("startt", i__2, "msopck_", (ftnlen)2303)] <= 
 			prevt) {
 		    setmsg_("The time '#' from the line # of the input file "
 			    "is less than or equal to the time from the previ"
@@ -2001,16 +2008,16 @@ static integer c__300 = 300;
 		    sigerr_("SPICE(TIMESOUTOFORDER)", (ftnlen)22);
 		}
 		prevt = startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
-			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)2308)
+			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)2315)
 			];
 	    }
 
 /*           Add time bias (TIMCOR is 0 if no correction was requested.) */
 
 	    startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? i__2 : s_rnge(
-		    "startt", i__2, "msopck_", (ftnlen)2315)] = startt[(i__3 =
+		    "startt", i__2, "msopck_", (ftnlen)2322)] = startt[(i__3 =
 		     index - 1) < 100000 && 0 <= i__3 ? i__3 : s_rnge("startt"
-		    , i__3, "msopck_", (ftnlen)2315)] + timcor;
+		    , i__3, "msopck_", (ftnlen)2322)] + timcor;
 
 /*           For type 2 there is a second time tag, but only if */
 /*           we have real angular rates provided on the input. If */
@@ -2024,11 +2031,11 @@ static integer c__300 = 300;
 		    scencd_(&scid, word, &sclkdp, (ftnlen)40);
 		    sct2e_(&scid, &sclkdp, &stopt[(i__2 = index - 1) < 100000 
 			    && 0 <= i__2 ? i__2 : s_rnge("stopt", i__2, "mso"
-			    "pck_", (ftnlen)2330)]);
+			    "pck_", (ftnlen)2337)]);
 		} else if (eqstr_(ttype, "UTC", (ftnlen)40, (ftnlen)3)) {
 		    str2et_(word, &stopt[(i__2 = index - 1) < 100000 && 0 <= 
 			    i__2 ? i__2 : s_rnge("stopt", i__2, "msopck_", (
-			    ftnlen)2334)], (ftnlen)40);
+			    ftnlen)2341)], (ftnlen)40);
 		} else if (eqstr_(ttype, "TICKS", (ftnlen)40, (ftnlen)5)) {
 		    nparsd_(word, &sclkdp, error, &ptr, (ftnlen)40, (ftnlen)
 			    265);
@@ -2042,11 +2049,11 @@ static integer c__300 = 300;
 		    }
 		    sct2e_(&scid, &sclkdp, &stopt[(i__2 = index - 1) < 100000 
 			    && 0 <= i__2 ? i__2 : s_rnge("stopt", i__2, "mso"
-			    "pck_", (ftnlen)2349)]);
+			    "pck_", (ftnlen)2356)]);
 		} else if (eqstr_(ttype, "ET", (ftnlen)40, (ftnlen)2)) {
 		    nparsd_(word, &stopt[(i__2 = index - 1) < 100000 && 0 <= 
 			    i__2 ? i__2 : s_rnge("stopt", i__2, "msopck_", (
-			    ftnlen)2353)], error, &ptr, (ftnlen)40, (ftnlen)
+			    ftnlen)2360)], error, &ptr, (ftnlen)40, (ftnlen)
 			    265);
 		    if (ptr != 0) {
 			setmsg_("The ET seconds past J2000 time '#' from the"
@@ -2095,16 +2102,16 @@ static integer c__300 = 300;
 		    sclkdp += clkfrc;
 		    sct2e_(&scid, &sclkdp, &stopt[(i__2 = index - 1) < 100000 
 			    && 0 <= i__2 ? i__2 : s_rnge("stopt", i__2, "mso"
-			    "pck_", (ftnlen)2402)]);
+			    "pck_", (ftnlen)2409)]);
 		}
 
 /*              Add time bias (TIMCOR is 0 if no correction was */
 /*              requested.) */
 
 		stopt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? i__2 : 
-			s_rnge("stopt", i__2, "msopck_", (ftnlen)2410)] = 
+			s_rnge("stopt", i__2, "msopck_", (ftnlen)2417)] = 
 			stopt[(i__3 = index - 1) < 100000 && 0 <= i__3 ? i__3 
-			: s_rnge("stopt", i__3, "msopck_", (ftnlen)2410)] + 
+			: s_rnge("stopt", i__3, "msopck_", (ftnlen)2417)] + 
 			timcor;
 	    }
 
@@ -2122,7 +2129,7 @@ static integer c__300 = 300;
 			    ftnlen)265);
 		    nparsd_(word, &hquat[(i__2 = i__ - 1) < 4 && 0 <= i__2 ? 
 			    i__2 : s_rnge("hquat", i__2, "msopck_", (ftnlen)
-			    2427)], error, &ptr, (ftnlen)40, (ftnlen)265);
+			    2434)], error, &ptr, (ftnlen)40, (ftnlen)265);
 		    if (ptr != 0) {
 			setmsg_("The quaternion component '#' from the line "
 				"# of the input file is not a number.", (
@@ -2137,16 +2144,16 @@ static integer c__300 = 300;
 /*              conjugate (shift/negate) it along the way. */
 
 		quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= i__2 ? i__2 :
-			 s_rnge("quats", i__2, "msopck_", (ftnlen)2441)] = 
+			 s_rnge("quats", i__2, "msopck_", (ftnlen)2448)] = 
 			hquat[3];
 		quats[(i__2 = (index << 2) - 3) < 400000 && 0 <= i__2 ? i__2 :
-			 s_rnge("quats", i__2, "msopck_", (ftnlen)2442)] = 
+			 s_rnge("quats", i__2, "msopck_", (ftnlen)2449)] = 
 			-hquat[0];
 		quats[(i__2 = (index << 2) - 2) < 400000 && 0 <= i__2 ? i__2 :
-			 s_rnge("quats", i__2, "msopck_", (ftnlen)2443)] = 
+			 s_rnge("quats", i__2, "msopck_", (ftnlen)2450)] = 
 			-hquat[1];
 		quats[(i__2 = (index << 2) - 1) < 400000 && 0 <= i__2 ? i__2 :
-			 s_rnge("quats", i__2, "msopck_", (ftnlen)2444)] = 
+			 s_rnge("quats", i__2, "msopck_", (ftnlen)2451)] = 
 			-hquat[2];
 	    } else if (eqstr_(dtype, "SPICE QUATERNIONS", (ftnlen)40, (ftnlen)
 		    17)) {
@@ -2159,7 +2166,7 @@ static integer c__300 = 300;
 			    ftnlen)265);
 		    nparsd_(word, &quats[(i__2 = i__ + (index << 2) - 5) < 
 			    400000 && 0 <= i__2 ? i__2 : s_rnge("quats", i__2,
-			     "msopck_", (ftnlen)2453)], error, &ptr, (ftnlen)
+			     "msopck_", (ftnlen)2460)], error, &ptr, (ftnlen)
 			    40, (ftnlen)265);
 		    if (ptr != 0) {
 			setmsg_("The quaternion component '#' from the line "
@@ -2182,7 +2189,7 @@ static integer c__300 = 300;
 			    ftnlen)265);
 		    nparsd_(word, &eulang[(i__2 = i__ - 1) < 3 && 0 <= i__2 ? 
 			    i__2 : s_rnge("eulang", i__2, "msopck_", (ftnlen)
-			    2472)], error, &ptr, (ftnlen)40, (ftnlen)265);
+			    2479)], error, &ptr, (ftnlen)40, (ftnlen)265);
 		    if (ptr != 0) {
 			setmsg_("The angle '#' from the line # of the input "
 				"file is not a number.", (ftnlen)64);
@@ -2219,7 +2226,7 @@ static integer c__300 = 300;
 
 		m2q_(mat, &quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= 
 			i__2 ? i__2 : s_rnge("quats", i__2, "msopck_", (
-			ftnlen)2512)]);
+			ftnlen)2519)]);
 	    } else if (eqstr_(dtype, "MATRICES", (ftnlen)40, (ftnlen)8)) {
 
 /*              For matrices we extract them into an intermediate */
@@ -2233,7 +2240,7 @@ static integer c__300 = 300;
 				ftnlen)265);
 			nparsd_(word, &mat[(i__2 = i__ + j * 3 - 4) < 9 && 0 
 				<= i__2 ? i__2 : s_rnge("mat", i__2, "msopck_"
-				, (ftnlen)2525)], error, &ptr, (ftnlen)40, (
+				, (ftnlen)2532)], error, &ptr, (ftnlen)40, (
 				ftnlen)265);
 			if (ptr != 0) {
 			    setmsg_("The matrix element '#' from the line # "
@@ -2247,7 +2254,7 @@ static integer c__300 = 300;
 		}
 		m2q_(mat, &quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= 
 			i__2 ? i__2 : s_rnge("quats", i__2, "msopck_", (
-			ftnlen)2537)]);
+			ftnlen)2544)]);
 	    }
 
 /*           We are done with orientation data. Now it's time for */
@@ -2264,7 +2271,7 @@ static integer c__300 = 300;
 			    ftnlen)265);
 		    nparsd_(word, &avvs[(i__2 = i__ + index * 3 - 4) < 300000 
 			    && 0 <= i__2 ? i__2 : s_rnge("avvs", i__2, "msop"
-			    "ck_", (ftnlen)2553)], error, &ptr, (ftnlen)40, (
+			    "ck_", (ftnlen)2560)], error, &ptr, (ftnlen)40, (
 			    ftnlen)265);
 		    if (ptr != 0) {
 			setmsg_("The angular rate element '#' from the line "
@@ -2283,9 +2290,9 @@ static integer c__300 = 300;
 			     {
 			avvs[(i__2 = i__ + index * 3 - 4) < 300000 && 0 <= 
 				i__2 ? i__2 : s_rnge("avvs", i__2, "msopck_", 
-				(ftnlen)2569)] = avvs[(i__3 = i__ + index * 3 
+				(ftnlen)2576)] = avvs[(i__3 = i__ + index * 3 
 				- 4) < 300000 && 0 <= i__3 ? i__3 : s_rnge(
-				"avvs", i__3, "msopck_", (ftnlen)2569)] * 
+				"avvs", i__3, "msopck_", (ftnlen)2576)] * 
 				earate;
 		    }
 		}
@@ -2306,13 +2313,13 @@ static integer c__300 = 300;
 
 		vhatg_(&quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= i__2 
 			? i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)
-			2592)], &c__4, qn);
+			2599)], &c__4, qn);
 
 /*              Step 2: Calculate Norm of original Quaternion */
 
 		normq = vnormg_(&quats[(i__2 = (index << 2) - 4) < 400000 && 
 			0 <= i__2 ? i__2 : s_rnge("quats", i__2, "msopck_", (
-			ftnlen)2597)], &c__4);
+			ftnlen)2604)], &c__4);
 
 /*              Step 3: Check for goodness of quaternion components by */
 /*              comparison of each element with it's normalized element. */
@@ -2320,9 +2327,9 @@ static integer c__300 = 300;
 		for (j = 1; j <= 4; ++j) {
 		    if ((d__1 = quats[(i__2 = j + (index << 2) - 5) < 400000 
 			    && 0 <= i__2 ? i__2 : s_rnge("quats", i__2, "mso"
-			    "pck_", (ftnlen)2604)] - qn[(i__3 = j - 1) < 4 && 
+			    "pck_", (ftnlen)2611)] - qn[(i__3 = j - 1) < 4 && 
 			    0 <= i__3 ? i__3 : s_rnge("qn", i__3, "msopck_", (
-			    ftnlen)2604)], abs(d__1)) > qerror) {
+			    ftnlen)2611)], abs(d__1)) > qerror) {
 			badqua = TRUE_;
 		    }
 		}
@@ -2340,13 +2347,13 @@ static integer c__300 = 300;
 	    badrat = FALSE_;
 	    if (angrat && rfilter) {
 		if ((d__1 = avvs[(i__2 = index * 3 - 3) < 300000 && 0 <= i__2 
-			? i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2626)
+			? i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2633)
 			], abs(d__1)) > rerror[0] || (d__2 = avvs[(i__3 = 
 			index * 3 - 2) < 300000 && 0 <= i__3 ? i__3 : s_rnge(
-			"avvs", i__3, "msopck_", (ftnlen)2626)], abs(d__2)) > 
+			"avvs", i__3, "msopck_", (ftnlen)2633)], abs(d__2)) > 
 			rerror[1] || (d__3 = avvs[(i__4 = index * 3 - 1) < 
 			300000 && 0 <= i__4 ? i__4 : s_rnge("avvs", i__4, 
-			"msopck_", (ftnlen)2626)], abs(d__3)) > rerror[2]) {
+			"msopck_", (ftnlen)2633)], abs(d__3)) > rerror[2]) {
 
 /*                 One of the components of this rate doesn't */
 /*                 into specified threshold. */
@@ -2398,13 +2405,13 @@ static integer c__300 = 300;
 
 		    q2m_(&quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= 
 			    i__2 ? i__2 : s_rnge("quats", i__2, "msopck_", (
-			    ftnlen)2685)], mat);
+			    ftnlen)2692)], mat);
 		    mtxv_(mat, &avvs[(i__2 = index * 3 - 3) < 300000 && 0 <= 
 			    i__2 ? i__2 : s_rnge("avvs", i__2, "msopck_", (
-			    ftnlen)2686)], tmpvec);
+			    ftnlen)2693)], tmpvec);
 		    vequ_(tmpvec, &avvs[(i__2 = index * 3 - 3) < 300000 && 0 
 			    <= i__2 ? i__2 : s_rnge("avvs", i__2, "msopck_", (
-			    ftnlen)2687)]);
+			    ftnlen)2694)]);
 		}
 
 /*              Let's also see if there is an additional offset that */
@@ -2416,21 +2423,21 @@ static integer c__300 = 300;
 
 		    q2m_(&quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= 
 			    i__2 ? i__2 : s_rnge("quats", i__2, "msopck_", (
-			    ftnlen)2700)], mat);
+			    ftnlen)2707)], mat);
 		    mxm_(mat, offmat, tmpmat);
 		    m2q_(tmpmat, &quats[(i__2 = (index << 2) - 4) < 400000 && 
 			    0 <= i__2 ? i__2 : s_rnge("quats", i__2, "msopck_"
-			    , (ftnlen)2702)]);
+			    , (ftnlen)2709)]);
 
 /*                 Apply it to angular rate, if it's present. */
 
 		    if (angrat) {
 			mtxv_(offmat, &avvs[(i__2 = index * 3 - 3) < 300000 &&
 				 0 <= i__2 ? i__2 : s_rnge("avvs", i__2, 
-				"msopck_", (ftnlen)2708)], tmpvec);
+				"msopck_", (ftnlen)2715)], tmpvec);
 			vequ_(tmpvec, &avvs[(i__2 = index * 3 - 3) < 300000 &&
 				 0 <= i__2 ? i__2 : s_rnge("avvs", i__2, 
-				"msopck_", (ftnlen)2709)]);
+				"msopck_", (ftnlen)2716)]);
 		    }
 		}
 	    }
@@ -2511,19 +2518,19 @@ static integer c__300 = 300;
 		i__2 = index;
 		for (j = 1; j <= i__2; ++j) {
 		    hdparr[(i__3 = j - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("hdparr", i__3, "msopck_", (ftnlen)2807)] =
+			    s_rnge("hdparr", i__3, "msopck_", (ftnlen)2814)] =
 			     quats[(i__4 = i__ + (j << 2) - 5) < 400000 && 0 
 			    <= i__4 ? i__4 : s_rnge("quats", i__4, "msopck_", 
-			    (ftnlen)2807)];
+			    (ftnlen)2814)];
 		}
 		reordd_(iorder, &index, hdparr);
 		i__2 = index;
 		for (j = 1; j <= i__2; ++j) {
 		    quats[(i__3 = i__ + (j << 2) - 5) < 400000 && 0 <= i__3 ? 
 			    i__3 : s_rnge("quats", i__3, "msopck_", (ftnlen)
-			    2811)] = hdparr[(i__4 = j - 1) < 100000 && 0 <= 
+			    2818)] = hdparr[(i__4 = j - 1) < 100000 && 0 <= 
 			    i__4 ? i__4 : s_rnge("hdparr", i__4, "msopck_", (
-			    ftnlen)2811)];
+			    ftnlen)2818)];
 		}
 	    }
 
@@ -2533,19 +2540,19 @@ static integer c__300 = 300;
 		i__2 = index;
 		for (j = 1; j <= i__2; ++j) {
 		    hdparr[(i__3 = j - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("hdparr", i__3, "msopck_", (ftnlen)2820)] =
+			    s_rnge("hdparr", i__3, "msopck_", (ftnlen)2827)] =
 			     avvs[(i__4 = i__ + j * 3 - 4) < 300000 && 0 <= 
 			    i__4 ? i__4 : s_rnge("avvs", i__4, "msopck_", (
-			    ftnlen)2820)];
+			    ftnlen)2827)];
 		}
 		reordd_(iorder, &index, hdparr);
 		i__2 = index;
 		for (j = 1; j <= i__2; ++j) {
 		    avvs[(i__3 = i__ + j * 3 - 4) < 300000 && 0 <= i__3 ? 
 			    i__3 : s_rnge("avvs", i__3, "msopck_", (ftnlen)
-			    2824)] = hdparr[(i__4 = j - 1) < 100000 && 0 <= 
+			    2831)] = hdparr[(i__4 = j - 1) < 100000 && 0 <= 
 			    i__4 ? i__4 : s_rnge("hdparr", i__4, "msopck_", (
-			    ftnlen)2824)];
+			    ftnlen)2831)];
 		}
 	    }
 
@@ -2554,23 +2561,23 @@ static integer c__300 = 300;
 /*           such.) */
 
 	    sstrtt = startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? i__2 : 
-		    s_rnge("startt", i__2, "msopck_", (ftnlen)2833)];
+		    s_rnge("startt", i__2, "msopck_", (ftnlen)2840)];
 	    sstpt = stopt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? i__2 : 
-		    s_rnge("stopt", i__2, "msopck_", (ftnlen)2834)];
+		    s_rnge("stopt", i__2, "msopck_", (ftnlen)2841)];
 	    squat[0] = quats[(i__2 = (index << 2) - 4) < 400000 && 0 <= i__2 ?
-		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2836)];
+		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2843)];
 	    squat[1] = quats[(i__2 = (index << 2) - 3) < 400000 && 0 <= i__2 ?
-		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2837)];
+		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2844)];
 	    squat[2] = quats[(i__2 = (index << 2) - 2) < 400000 && 0 <= i__2 ?
-		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2838)];
+		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2845)];
 	    squat[3] = quats[(i__2 = (index << 2) - 1) < 400000 && 0 <= i__2 ?
-		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2839)];
+		     i__2 : s_rnge("quats", i__2, "msopck_", (ftnlen)2846)];
 	    savv[0] = avvs[(i__2 = index * 3 - 3) < 300000 && 0 <= i__2 ? 
-		    i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2841)];
+		    i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2848)];
 	    savv[1] = avvs[(i__2 = index * 3 - 2) < 300000 && 0 <= i__2 ? 
-		    i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2842)];
+		    i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2849)];
 	    savv[2] = avvs[(i__2 = index * 3 - 1) < 300000 && 0 <= i__2 ? 
-		    i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2843)];
+		    i__2 : s_rnge("avvs", i__2, "msopck_", (ftnlen)2850)];
 
 /*           For all CK segments we will create a coverage */
 /*           summary table in the comment area of the output */
@@ -2595,12 +2602,12 @@ static integer c__300 = 300;
 		    40, (ftnlen)265);
 	    if (cktype == 2 && ! muarat) {
 		timout_(&stopt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
-			i__2 : s_rnge("stopt", i__2, "msopck_", (ftnlen)2865)]
+			i__2 : s_rnge("stopt", i__2, "msopck_", (ftnlen)2872)]
 			, "YYYY-MM-DDTHR:MN:SC.###", hword, (ftnlen)23, (
 			ftnlen)40);
 	    } else {
 		timout_(&startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
-			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)2867)
+			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)2874)
 			], "YYYY-MM-DDTHR:MN:SC.###", hword, (ftnlen)23, (
 			ftnlen)40);
 	    }
@@ -2622,9 +2629,9 @@ static integer c__300 = 300;
 		for (i__ = 1; i__ <= i__2; ++i__) {
 		    sce2c_(&scid, &startt[(i__3 = i__ - 1) < 100000 && 0 <= 
 			    i__3 ? i__3 : s_rnge("startt", i__3, "msopck_", (
-			    ftnlen)2885)], &tmpdp);
+			    ftnlen)2892)], &tmpdp);
 		    startt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("startt", i__3, "msopck_", (ftnlen)2886)] =
+			    s_rnge("startt", i__3, "msopck_", (ftnlen)2893)] =
 			     tmpdp;
 		}
 
@@ -2672,9 +2679,9 @@ static integer c__300 = 300;
 
 			    if (startt[(i__3 = i__) < 100000 && 0 <= i__3 ? 
 				    i__3 : s_rnge("startt", i__3, "msopck_", (
-				    ftnlen)2935)] - startt[(i__4 = i__ - 1) < 
+				    ftnlen)2942)] - startt[(i__4 = i__ - 1) < 
 				    100000 && 0 <= i__4 ? i__4 : s_rnge("sta"
-				    "rtt", i__4, "msopck_", (ftnlen)2935)] <= 
+				    "rtt", i__4, "msopck_", (ftnlen)2942)] <= 
 				    intrvl) {
 
 /*                          We can interpolate between these points. */
@@ -2686,7 +2693,7 @@ static integer c__300 = 300;
 				    vhatg_(&quats[(i__3 = (i__ << 2) - 4) < 
 					    400000 && 0 <= i__3 ? i__3 : 
 					    s_rnge("quats", i__3, "msopck_", (
-					    ftnlen)2944)], &c__4, qn);
+					    ftnlen)2951)], &c__4, qn);
 				    q2m_(qn, curmat);
 				}
 
@@ -2695,7 +2702,7 @@ static integer c__300 = 300;
 				vhatg_(&quats[(i__3 = (i__ + 1 << 2) - 4) < 
 					400000 && 0 <= i__3 ? i__3 : s_rnge(
 					"quats", i__3, "msopck_", (ftnlen)
-					2951)], &c__4, qn);
+					2958)], &c__4, qn);
 				q2m_(qn, nxtmat);
 
 /*                          Compute scaled angular rate using LINROT_M */
@@ -2706,27 +2713,27 @@ static integer c__300 = 300;
 					scldav);
 				if (startt[(i__3 = i__) < 100000 && 0 <= i__3 
 					? i__3 : s_rnge("startt", i__3, "mso"
-					"pck_", (ftnlen)2962)] - startt[(i__4 =
+					"pck_", (ftnlen)2969)] - startt[(i__4 =
 					 i__ - 1) < 100000 && 0 <= i__4 ? 
 					i__4 : s_rnge("startt", i__4, "msopc"
-					"k_", (ftnlen)2962)] > 0.) {
+					"k_", (ftnlen)2969)] > 0.) {
 				    hrate = 1. / (startt[(i__3 = i__) < 
 					    100000 && 0 <= i__3 ? i__3 : 
 					    s_rnge("startt", i__3, "msopck_", 
-					    (ftnlen)2964)] - startt[(i__4 = 
+					    (ftnlen)2971)] - startt[(i__4 = 
 					    i__ - 1) < 100000 && 0 <= i__4 ? 
 					    i__4 : s_rnge("startt", i__4, 
-					    "msopck_", (ftnlen)2964)]);
+					    "msopck_", (ftnlen)2971)]);
 				    vscl_(&hrate, scldav, &avvs[(i__3 = i__ * 
 					    3 - 3) < 300000 && 0 <= i__3 ? 
 					    i__3 : s_rnge("avvs", i__3, "mso"
-					    "pck_", (ftnlen)2965)]);
+					    "pck_", (ftnlen)2972)]);
 				    stopt[(i__3 = i__ - 1) < 100000 && 0 <= 
 					    i__3 ? i__3 : s_rnge("stopt", 
-					    i__3, "msopck_", (ftnlen)2966)] = 
+					    i__3, "msopck_", (ftnlen)2973)] = 
 					    startt[(i__4 = i__) < 100000 && 0 
 					    <= i__4 ? i__4 : s_rnge("startt", 
-					    i__4, "msopck_", (ftnlen)2966)];
+					    i__4, "msopck_", (ftnlen)2973)];
 				} else {
 
 /*                             Current and next times are the same -- */
@@ -2739,7 +2746,7 @@ static integer c__300 = 300;
 				    errdp_("#", &startt[(i__3 = i__) < 100000 
 					    && 0 <= i__3 ? i__3 : s_rnge(
 					    "startt", i__3, "msopck_", (
-					    ftnlen)2979)], (ftnlen)1);
+					    ftnlen)2986)], (ftnlen)1);
 				    sigerr_("SPICE(IDENTICALTIMES1)", (ftnlen)
 					    22);
 				}
@@ -2752,19 +2759,19 @@ static integer c__300 = 300;
 
 				stopt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ?
 					 i__3 : s_rnge("stopt", i__3, "msopc"
-					"k_", (ftnlen)2992)] = startt[(i__4 = 
+					"k_", (ftnlen)2999)] = startt[(i__4 = 
 					i__ - 1) < 100000 && 0 <= i__4 ? i__4 
 					: s_rnge("startt", i__4, "msopck_", (
-					ftnlen)2992)] + 1e-6;
+					ftnlen)2999)] + 1e-6;
 				avvs[(i__3 = i__ * 3 - 3) < 300000 && 0 <= 
 					i__3 ? i__3 : s_rnge("avvs", i__3, 
-					"msopck_", (ftnlen)2993)] = 0.;
+					"msopck_", (ftnlen)3000)] = 0.;
 				avvs[(i__3 = i__ * 3 - 2) < 300000 && 0 <= 
 					i__3 ? i__3 : s_rnge("avvs", i__3, 
-					"msopck_", (ftnlen)2994)] = 0.;
+					"msopck_", (ftnlen)3001)] = 0.;
 				avvs[(i__3 = i__ * 3 - 1) < 300000 && 0 <= 
 					i__3 ? i__3 : s_rnge("avvs", i__3, 
-					"msopck_", (ftnlen)2995)] = 0.;
+					"msopck_", (ftnlen)3002)] = 0.;
 
 /*                          Compute matrix from the next quaternion */
 /*                          because it's going to get re-assigned and */
@@ -2773,7 +2780,7 @@ static integer c__300 = 300;
 				vhatg_(&quats[(i__3 = (i__ + 1 << 2) - 4) < 
 					400000 && 0 <= i__3 ? i__3 : s_rnge(
 					"quats", i__3, "msopck_", (ftnlen)
-					3002)], &c__4, qn);
+					3009)], &c__4, qn);
 				q2m_(qn, nxtmat);
 			    }
 
@@ -2787,18 +2794,18 @@ static integer c__300 = 300;
 /*                 stop time to start time + TIKTOL and rate to zero. */
 
 		    stopt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? i__2 : 
-			    s_rnge("stopt", i__2, "msopck_", (ftnlen)3020)] = 
+			    s_rnge("stopt", i__2, "msopck_", (ftnlen)3027)] = 
 			    startt[(i__3 = index - 1) < 100000 && 0 <= i__3 ? 
 			    i__3 : s_rnge("startt", i__3, "msopck_", (ftnlen)
-			    3020)] + 1e-6;
+			    3027)] + 1e-6;
 		    avvs[(i__2 = index * 3 - 3) < 300000 && 0 <= i__2 ? i__2 :
-			     s_rnge("avvs", i__2, "msopck_", (ftnlen)3021)] = 
+			     s_rnge("avvs", i__2, "msopck_", (ftnlen)3028)] = 
 			    0.;
 		    avvs[(i__2 = index * 3 - 2) < 300000 && 0 <= i__2 ? i__2 :
-			     s_rnge("avvs", i__2, "msopck_", (ftnlen)3022)] = 
+			     s_rnge("avvs", i__2, "msopck_", (ftnlen)3029)] = 
 			    0.;
 		    avvs[(i__2 = index * 3 - 1) < 300000 && 0 <= i__2 ? i__2 :
-			     s_rnge("avvs", i__2, "msopck_", (ftnlen)3023)] = 
+			     s_rnge("avvs", i__2, "msopck_", (ftnlen)3030)] = 
 			    0.;
 		}
 
@@ -2816,7 +2823,7 @@ static integer c__300 = 300;
 				1, (ftnlen)40, (ftnlen)265);
 			timout_(&stopt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 
 				? i__3 : s_rnge("stopt", i__3, "msopck_", (
-				ftnlen)3040)], "YYYY-MM-DDTHR:MN:SC.###", 
+				ftnlen)3047)], "YYYY-MM-DDTHR:MN:SC.###", 
 				hword, (ftnlen)23, (ftnlen)40);
 			repmc_(hline, "#", hword, hline, (ftnlen)265, (ftnlen)
 				1, (ftnlen)40, (ftnlen)265);
@@ -2824,9 +2831,9 @@ static integer c__300 = 300;
 		    } else {
 			if (stopt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? 
 				i__3 : s_rnge("stopt", i__3, "msopck_", (
-				ftnlen)3047)] < startt[(i__4 = i__) < 100000 
+				ftnlen)3054)] < startt[(i__4 = i__) < 100000 
 				&& 0 <= i__4 ? i__4 : s_rnge("startt", i__4, 
-				"msopck_", (ftnlen)3047)]) {
+				"msopck_", (ftnlen)3054)]) {
 			    s_copy(hline, "      #    #", (ftnlen)265, (
 				    ftnlen)12);
 			    timout_(&hrate, "YYYY-MM-DDTHR:MN:SC.###", hword, 
@@ -2835,14 +2842,14 @@ static integer c__300 = 300;
 				    ftnlen)1, (ftnlen)40, (ftnlen)265);
 			    timout_(&stopt[(i__3 = i__ - 1) < 100000 && 0 <= 
 				    i__3 ? i__3 : s_rnge("stopt", i__3, "mso"
-				    "pck_", (ftnlen)3053)], "YYYY-MM-DDTHR:MN"
+				    "pck_", (ftnlen)3060)], "YYYY-MM-DDTHR:MN"
 				    ":SC.###", hword, (ftnlen)23, (ftnlen)40);
 			    repmc_(hline, "#", hword, hline, (ftnlen)265, (
 				    ftnlen)1, (ftnlen)40, (ftnlen)265);
 			    writln_(hline, &silun, (ftnlen)265);
 			    hrate = startt[(i__3 = i__) < 100000 && 0 <= i__3 
 				    ? i__3 : s_rnge("startt", i__3, "msopck_",
-				     (ftnlen)3058)];
+				     (ftnlen)3065)];
 			}
 		    }
 		}
@@ -2854,28 +2861,28 @@ static integer c__300 = 300;
 		i__2 = index;
 		for (i__ = 1; i__ <= i__2; ++i__) {
 		    if (startt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 :
-			     s_rnge("startt", i__3, "msopck_", (ftnlen)3073)] 
+			     s_rnge("startt", i__3, "msopck_", (ftnlen)3080)] 
 			    >= stopt[(i__4 = i__ - 1) < 100000 && 0 <= i__4 ? 
 			    i__4 : s_rnge("stopt", i__4, "msopck_", (ftnlen)
-			    3073)]) {
+			    3080)]) {
 			setmsg_("Start time (# ET) of an input record is gre"
 				"ater than or equal to stop time (# ET). This"
 				" is not allowed for Type 2 CK input.", (
 				ftnlen)123);
 			errdp_("#", &startt[(i__3 = i__ - 1) < 100000 && 0 <= 
 				i__3 ? i__3 : s_rnge("startt", i__3, "msopck_"
-				, (ftnlen)3079)], (ftnlen)1);
+				, (ftnlen)3086)], (ftnlen)1);
 			errdp_("#", &stopt[(i__3 = i__ - 1) < 100000 && 0 <= 
 				i__3 ? i__3 : s_rnge("stopt", i__3, "msopck_",
-				 (ftnlen)3080)], (ftnlen)1);
+				 (ftnlen)3087)], (ftnlen)1);
 			sigerr_("SPICE(INCONSISTENTTIMES1)", (ftnlen)25);
 		    }
 		    sce2c_(&scid, &startt[(i__3 = i__ - 1) < 100000 && 0 <= 
 			    i__3 ? i__3 : s_rnge("startt", i__3, "msopck_", (
-			    ftnlen)3084)], &tmpdp1);
+			    ftnlen)3091)], &tmpdp1);
 		    sce2c_(&scid, &stopt[(i__3 = i__ - 1) < 100000 && 0 <= 
 			    i__3 ? i__3 : s_rnge("stopt", i__3, "msopck_", (
-			    ftnlen)3085)], &tmpdp2);
+			    ftnlen)3092)], &tmpdp2);
 		    if (tmpdp1 >= tmpdp2) {
 			setmsg_("Encoded ticks (#) corresponding to start ti"
 				"me (# ET) of an input record are greater tha"
@@ -2885,25 +2892,25 @@ static integer c__300 = 300;
 			errdp_("#", &tmpdp1, (ftnlen)1);
 			errdp_("#", &startt[(i__3 = i__ - 1) < 100000 && 0 <= 
 				i__3 ? i__3 : s_rnge("startt", i__3, "msopck_"
-				, (ftnlen)3098)], (ftnlen)1);
+				, (ftnlen)3105)], (ftnlen)1);
 			errdp_("#", &tmpdp2, (ftnlen)1);
 			errdp_("#", &stopt[(i__3 = i__ - 1) < 100000 && 0 <= 
 				i__3 ? i__3 : s_rnge("stopt", i__3, "msopck_",
-				 (ftnlen)3100)], (ftnlen)1);
+				 (ftnlen)3107)], (ftnlen)1);
 			sigerr_("SPICE(INCONSISTENTTIMES2)", (ftnlen)25);
 		    }
 		    rates[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("rates", i__3, "msopck_", (ftnlen)3104)] = 
+			    s_rnge("rates", i__3, "msopck_", (ftnlen)3111)] = 
 			    (stopt[(i__4 = i__ - 1) < 100000 && 0 <= i__4 ? 
 			    i__4 : s_rnge("stopt", i__4, "msopck_", (ftnlen)
-			    3104)] - startt[(i__5 = i__ - 1) < 100000 && 0 <= 
+			    3111)] - startt[(i__5 = i__ - 1) < 100000 && 0 <= 
 			    i__5 ? i__5 : s_rnge("startt", i__5, "msopck_", (
-			    ftnlen)3104)]) / (tmpdp2 - tmpdp1);
+			    ftnlen)3111)]) / (tmpdp2 - tmpdp1);
 		    startt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("startt", i__3, "msopck_", (ftnlen)3107)] =
+			    s_rnge("startt", i__3, "msopck_", (ftnlen)3114)] =
 			     tmpdp1;
 		    stopt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("stopt", i__3, "msopck_", (ftnlen)3108)] = 
+			    s_rnge("stopt", i__3, "msopck_", (ftnlen)3115)] = 
 			    tmpdp2;
 		}
 	    } else if (cktype == 3) {
@@ -2917,34 +2924,34 @@ static integer c__300 = 300;
 
 		nints = 1;
 		rates[(i__2 = nints - 1) < 100000 && 0 <= i__2 ? i__2 : 
-			s_rnge("rates", i__2, "msopck_", (ftnlen)3123)] = 
+			s_rnge("rates", i__2, "msopck_", (ftnlen)3130)] = 
 			startt[0];
 		if (index > 1) {
 		    i__2 = index;
 		    for (i__ = 2; i__ <= i__2; ++i__) {
 			if (startt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? 
 				i__3 : s_rnge("startt", i__3, "msopck_", (
-				ftnlen)3127)] - startt[(i__4 = i__ - 2) < 
+				ftnlen)3134)] - startt[(i__4 = i__ - 2) < 
 				100000 && 0 <= i__4 ? i__4 : s_rnge("startt", 
-				i__4, "msopck_", (ftnlen)3127)] > intrvl) {
+				i__4, "msopck_", (ftnlen)3134)] > intrvl) {
 			    ++nints;
 			    rates[(i__3 = nints - 1) < 100000 && 0 <= i__3 ? 
 				    i__3 : s_rnge("rates", i__3, "msopck_", (
-				    ftnlen)3129)] = startt[(i__4 = i__ - 1) < 
+				    ftnlen)3136)] = startt[(i__4 = i__ - 1) < 
 				    100000 && 0 <= i__4 ? i__4 : s_rnge("sta"
-				    "rtt", i__4, "msopck_", (ftnlen)3129)];
+				    "rtt", i__4, "msopck_", (ftnlen)3136)];
 			    stopt[(i__3 = nints - 2) < 100000 && 0 <= i__3 ? 
 				    i__3 : s_rnge("stopt", i__3, "msopck_", (
-				    ftnlen)3130)] = startt[(i__4 = i__ - 2) < 
+				    ftnlen)3137)] = startt[(i__4 = i__ - 2) < 
 				    100000 && 0 <= i__4 ? i__4 : s_rnge("sta"
-				    "rtt", i__4, "msopck_", (ftnlen)3130)];
+				    "rtt", i__4, "msopck_", (ftnlen)3137)];
 			}
 		    }
 		}
 		stopt[(i__2 = nints - 1) < 100000 && 0 <= i__2 ? i__2 : 
-			s_rnge("stopt", i__2, "msopck_", (ftnlen)3134)] = 
+			s_rnge("stopt", i__2, "msopck_", (ftnlen)3141)] = 
 			startt[(i__3 = index - 1) < 100000 && 0 <= i__3 ? 
-			i__3 : s_rnge("startt", i__3, "msopck_", (ftnlen)3134)
+			i__3 : s_rnge("startt", i__3, "msopck_", (ftnlen)3141)
 			];
 
 /*              Lets see whether we have got angular rates from the */
@@ -2973,7 +2980,7 @@ static integer c__300 = 300;
 				vhatg_(&quats[(i__3 = (i__ - 1 << 2) - 4) < 
 					400000 && 0 <= i__3 ? i__3 : s_rnge(
 					"quats", i__3, "msopck_", (ftnlen)
-					3162)], &c__4, qn);
+					3169)], &c__4, qn);
 				q2m_(qn, prvmat);
 			    }
 
@@ -2983,26 +2990,26 @@ static integer c__300 = 300;
 
 			    vhatg_(&quats[(i__3 = (i__ << 2) - 4) < 400000 && 
 				    0 <= i__3 ? i__3 : s_rnge("quats", i__3, 
-				    "msopck_", (ftnlen)3171)], &c__4, qn);
+				    "msopck_", (ftnlen)3178)], &c__4, qn);
 			    q2m_(qn, curmat);
 			    linrot_m__(prvmat, curmat, &c_b605, hmat, scldav);
 			    if (startt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 
 				    ? i__3 : s_rnge("startt", i__3, "msopck_",
-				     (ftnlen)3176)] - startt[(i__4 = i__ - 2) 
+				     (ftnlen)3183)] - startt[(i__4 = i__ - 2) 
 				    < 100000 && 0 <= i__4 ? i__4 : s_rnge(
-				    "startt", i__4, "msopck_", (ftnlen)3176)] 
+				    "startt", i__4, "msopck_", (ftnlen)3183)] 
 				    != 0.) {
 				hrate = 1. / (startt[(i__3 = i__ - 1) < 
 					100000 && 0 <= i__3 ? i__3 : s_rnge(
 					"startt", i__3, "msopck_", (ftnlen)
-					3178)] - startt[(i__4 = i__ - 2) < 
+					3185)] - startt[(i__4 = i__ - 2) < 
 					100000 && 0 <= i__4 ? i__4 : s_rnge(
 					"startt", i__4, "msopck_", (ftnlen)
-					3178)]);
+					3185)]);
 				vscl_(&hrate, scldav, &avvs[(i__3 = i__ * 3 - 
 					3) < 300000 && 0 <= i__3 ? i__3 : 
 					s_rnge("avvs", i__3, "msopck_", (
-					ftnlen)3179)]);
+					ftnlen)3186)]);
 			    } else {
 
 /*                          Current and next times are the same -- */
@@ -3011,9 +3018,9 @@ static integer c__300 = 300;
 				setmsg_("Two identical times (# ET) were pro"
 					"vided in the input file. Angular rat"
 					"es cannot be made up.", (ftnlen)92);
-				errdp_("#", &startt[(i__3 = i__) < 100000 && 
-					0 <= i__3 ? i__3 : s_rnge("startt", 
-					i__3, "msopck_", (ftnlen)3190)], (
+				errdp_("#", &startt[(i__3 = i__ - 1) < 100000 
+					&& 0 <= i__3 ? i__3 : s_rnge("startt",
+					 i__3, "msopck_", (ftnlen)3197)], (
 					ftnlen)1);
 				sigerr_("SPICE(IDENTICALTIMES2)", (ftnlen)22);
 			    }
@@ -3025,11 +3032,11 @@ static integer c__300 = 300;
 
 			    srtidx = isrchd_(&startt[(i__3 = i__ - 2) < 
 				    100000 && 0 <= i__3 ? i__3 : s_rnge("sta"
-				    "rtt", i__3, "msopck_", (ftnlen)3201)], &
+				    "rtt", i__3, "msopck_", (ftnlen)3208)], &
 				    nints, rates);
 			    stpidx = isrchd_(&startt[(i__3 = i__ - 2) < 
 				    100000 && 0 <= i__3 ? i__3 : s_rnge("sta"
-				    "rtt", i__3, "msopck_", (ftnlen)3202)], &
+				    "rtt", i__3, "msopck_", (ftnlen)3209)], &
 				    nints, stopt);
 			    if (srtidx != 0 && stpidx != 0) {
 
@@ -3040,13 +3047,13 @@ static integer c__300 = 300;
 
 				avvs[(i__3 = (i__ - 1) * 3 - 3) < 300000 && 0 
 					<= i__3 ? i__3 : s_rnge("avvs", i__3, 
-					"msopck_", (ftnlen)3212)] = 0.;
+					"msopck_", (ftnlen)3219)] = 0.;
 				avvs[(i__3 = (i__ - 1) * 3 - 2) < 300000 && 0 
 					<= i__3 ? i__3 : s_rnge("avvs", i__3, 
-					"msopck_", (ftnlen)3213)] = 0.;
+					"msopck_", (ftnlen)3220)] = 0.;
 				avvs[(i__3 = (i__ - 1) * 3 - 1) < 300000 && 0 
 					<= i__3 ? i__3 : s_rnge("avvs", i__3, 
-					"msopck_", (ftnlen)3214)] = 0.;
+					"msopck_", (ftnlen)3221)] = 0.;
 			    } else if (srtidx != 0) {
 
 /*                          Previous point is the start of some */
@@ -3057,10 +3064,10 @@ static integer c__300 = 300;
 
 				vequ_(&avvs[(i__3 = i__ * 3 - 3) < 300000 && 
 					0 <= i__3 ? i__3 : s_rnge("avvs", 
-					i__3, "msopck_", (ftnlen)3225)], &
+					i__3, "msopck_", (ftnlen)3232)], &
 					avvs[(i__4 = (i__ - 1) * 3 - 3) < 
 					300000 && 0 <= i__4 ? i__4 : s_rnge(
-					"avvs", i__4, "msopck_", (ftnlen)3225)
+					"avvs", i__4, "msopck_", (ftnlen)3232)
 					]);
 			    } else if (stpidx != 0) {
 
@@ -3093,14 +3100,14 @@ static integer c__300 = 300;
 				    vadd_(&avvs[(i__3 = (i__ - 1) * 3 - 3) < 
 					    300000 && 0 <= i__3 ? i__3 : 
 					    s_rnge("avvs", i__3, "msopck_", (
-					    ftnlen)3259)], &avvs[(i__4 = i__ *
+					    ftnlen)3266)], &avvs[(i__4 = i__ *
 					     3 - 3) < 300000 && 0 <= i__4 ? 
 					    i__4 : s_rnge("avvs", i__4, "mso"
-					    "pck_", (ftnlen)3259)], tmpvec);
+					    "pck_", (ftnlen)3266)], tmpvec);
 				    vscl_(&c_b968, tmpvec, &avvs[(i__3 = (i__ 
 					    - 1) * 3 - 3) < 300000 && 0 <= 
 					    i__3 ? i__3 : s_rnge("avvs", i__3,
-					     "msopck_", (ftnlen)3260)]);
+					     "msopck_", (ftnlen)3267)]);
 				} else {
 
 /*                             But it turned out that this averaging */
@@ -3115,10 +3122,10 @@ static integer c__300 = 300;
 				    vequ_(&avvs[(i__3 = i__ * 3 - 3) < 300000 
 					    && 0 <= i__3 ? i__3 : s_rnge(
 					    "avvs", i__3, "msopck_", (ftnlen)
-					    3274)], &avvs[(i__4 = (i__ - 1) * 
+					    3281)], &avvs[(i__4 = (i__ - 1) * 
 					    3 - 3) < 300000 && 0 <= i__4 ? 
 					    i__4 : s_rnge("avvs", i__4, "mso"
-					    "pck_", (ftnlen)3274)]);
+					    "pck_", (ftnlen)3281)]);
 				}
 			    }
 
@@ -3133,18 +3140,18 @@ static integer c__300 = 300;
 
 			if (startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
 				i__2 : s_rnge("startt", i__2, "msopck_", (
-				ftnlen)3292)] == rates[(i__3 = nints - 1) < 
+				ftnlen)3299)] == rates[(i__3 = nints - 1) < 
 				100000 && 0 <= i__3 ? i__3 : s_rnge("rates", 
-				i__3, "msopck_", (ftnlen)3292)]) {
+				i__3, "msopck_", (ftnlen)3299)]) {
 			    avvs[(i__2 = index * 3 - 3) < 300000 && 0 <= i__2 
 				    ? i__2 : s_rnge("avvs", i__2, "msopck_", (
-				    ftnlen)3294)] = 0.;
+				    ftnlen)3301)] = 0.;
 			    avvs[(i__2 = index * 3 - 2) < 300000 && 0 <= i__2 
 				    ? i__2 : s_rnge("avvs", i__2, "msopck_", (
-				    ftnlen)3295)] = 0.;
+				    ftnlen)3302)] = 0.;
 			    avvs[(i__2 = index * 3 - 1) < 300000 && 0 <= i__2 
 				    ? i__2 : s_rnge("avvs", i__2, "msopck_", (
-				    ftnlen)3296)] = 0.;
+				    ftnlen)3303)] = 0.;
 			}
 		    } else {
 
@@ -3152,13 +3159,13 @@ static integer c__300 = 300;
 
 			avvs[(i__2 = index * 3 - 3) < 300000 && 0 <= i__2 ? 
 				i__2 : s_rnge("avvs", i__2, "msopck_", (
-				ftnlen)3305)] = 0.;
+				ftnlen)3312)] = 0.;
 			avvs[(i__2 = index * 3 - 2) < 300000 && 0 <= i__2 ? 
 				i__2 : s_rnge("avvs", i__2, "msopck_", (
-				ftnlen)3306)] = 0.;
+				ftnlen)3313)] = 0.;
 			avvs[(i__2 = index * 3 - 1) < 300000 && 0 <= i__2 ? 
 				i__2 : s_rnge("avvs", i__2, "msopck_", (
-				ftnlen)3307)] = 0.;
+				ftnlen)3314)] = 0.;
 		    }
 		}
 
@@ -3168,9 +3175,9 @@ static integer c__300 = 300;
 		for (i__ = 1; i__ <= i__2; ++i__) {
 		    sce2c_(&scid, &startt[(i__3 = i__ - 1) < 100000 && 0 <= 
 			    i__3 ? i__3 : s_rnge("startt", i__3, "msopck_", (
-			    ftnlen)3317)], &tmpdp);
+			    ftnlen)3324)], &tmpdp);
 		    startt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("startt", i__3, "msopck_", (ftnlen)3318)] =
+			    s_rnge("startt", i__3, "msopck_", (ftnlen)3325)] =
 			     tmpdp;
 		}
 
@@ -3181,13 +3188,13 @@ static integer c__300 = 300;
 		    s_copy(hline, "      #    #", (ftnlen)265, (ftnlen)12);
 		    timout_(&rates[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? 
 			    i__3 : s_rnge("rates", i__3, "msopck_", (ftnlen)
-			    3326)], "YYYY-MM-DDTHR:MN:SC.###", hword, (ftnlen)
+			    3333)], "YYYY-MM-DDTHR:MN:SC.###", hword, (ftnlen)
 			    23, (ftnlen)40);
 		    repmc_(hline, "#", hword, hline, (ftnlen)265, (ftnlen)1, (
 			    ftnlen)40, (ftnlen)265);
 		    timout_(&stopt[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? 
 			    i__3 : s_rnge("stopt", i__3, "msopck_", (ftnlen)
-			    3328)], "YYYY-MM-DDTHR:MN:SC.###", hword, (ftnlen)
+			    3335)], "YYYY-MM-DDTHR:MN:SC.###", hword, (ftnlen)
 			    23, (ftnlen)40);
 		    repmc_(hline, "#", hword, hline, (ftnlen)265, (ftnlen)1, (
 			    ftnlen)40, (ftnlen)265);
@@ -3200,9 +3207,9 @@ static integer c__300 = 300;
 		for (i__ = 1; i__ <= i__2; ++i__) {
 		    sce2c_(&scid, &rates[(i__3 = i__ - 1) < 100000 && 0 <= 
 			    i__3 ? i__3 : s_rnge("rates", i__3, "msopck_", (
-			    ftnlen)3337)], &tmpdp);
+			    ftnlen)3344)], &tmpdp);
 		    rates[(i__3 = i__ - 1) < 100000 && 0 <= i__3 ? i__3 : 
-			    s_rnge("rates", i__3, "msopck_", (ftnlen)3338)] = 
+			    s_rnge("rates", i__3, "msopck_", (ftnlen)3345)] = 
 			    tmpdp;
 		}
 	    }
@@ -3247,18 +3254,18 @@ static integer c__300 = 300;
 	    if (cktype == 1) {
 		ckw01_(&handle, startt, &startt[(i__2 = index - 1) < 100000 &&
 			 0 <= i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", 
-			(ftnlen)3387)], &instid, frmnam, &angrat, segid, &
+			(ftnlen)3394)], &instid, frmnam, &angrat, segid, &
 			index, startt, quats, avvs, (ftnlen)40, (ftnlen)40);
 		endtim = startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
-			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)3391)
+			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)3398)
 			];
 	    } else if (cktype == 2) {
 		ckw02_(&handle, startt, &stopt[(i__2 = index - 1) < 100000 && 
 			0 <= i__2 ? i__2 : s_rnge("stopt", i__2, "msopck_", (
-			ftnlen)3395)], &instid, frmnam, segid, &index, startt,
+			ftnlen)3402)], &instid, frmnam, segid, &index, startt,
 			 stopt, quats, avvs, rates, (ftnlen)40, (ftnlen)40);
 		endtim = stopt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
-			i__2 : s_rnge("stopt", i__2, "msopck_", (ftnlen)3400)]
+			i__2 : s_rnge("stopt", i__2, "msopck_", (ftnlen)3407)]
 			;
 	    } else if (cktype == 3) {
 		arflag = angrat || muarat;
@@ -3268,11 +3275,11 @@ static integer c__300 = 300;
 		}
 		ckw03_(&handle, startt, &startt[(i__2 = index - 1) < 100000 &&
 			 0 <= i__2 ? i__2 : s_rnge("startt", i__2, "msopck_", 
-			(ftnlen)3412)], &instid, frmnam, &arflag, segid, &
+			(ftnlen)3419)], &instid, frmnam, &arflag, segid, &
 			index, startt, quats, avvs, &nints, rates, (ftnlen)40,
 			 (ftnlen)40);
 		endtim = startt[(i__2 = index - 1) < 100000 && 0 <= i__2 ? 
-			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)3417)
+			i__2 : s_rnge("startt", i__2, "msopck_", (ftnlen)3424)
 			];
 	    }
 

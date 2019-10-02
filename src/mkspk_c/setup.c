@@ -463,11 +463,19 @@ static doublereal c_b259 = 1.;
 
 /* $ Author_and_Institution */
 
-/*     N.G. Khavenson (IKI RAS, Russia) */
-/*     B.V. Semenov   (NAIF, JPL) */
-/*     E.D. Wright    (NAIF) */
+/*     N.G. Khavenson  (IKI RAS, Russia) */
+/*     J. Diaz del Rio (ODC Space) */
+/*     B.V. Semenov    (NAIF, JPL) */
+/*     E.D. Wright     (NAIF, JPL) */
 
 /* $ Version */
+
+/* -    Version 1.3.0, 20-JAN-2016 (JDR,BVS) */
+
+/*        BUG FIX: in entry SETUPI: corrected input record line */
+/*        count value substitution in the SPICE(BADLINEPERRECCOUNT) */
+/*        error: CALL ERRCH ( '#', WRKCHR ) -> CALL ERRINT ( '#', */
+/*        INTVAL ). */
 
 /* -    Version 1.2.0, 24-FEB-2012 (BVS) */
 
@@ -1125,10 +1133,17 @@ L_setupi:
 
 /* $ Author_and_Institution */
 
-/*     N.G. Khavenson (IKI RAS, Russia) */
-/*     B.V. Semenov   (NAIF, JPL) */
+/*     N.G. Khavenson  (IKI RAS, Russia) */
+/*     J. Diaz del Rio (ODC Space) */
+/*     B.V. Semenov    (NAIF, JPL) */
 
 /* $ Version */
+
+/* -    Version 1.1.0, 20-JAN-2016 (JDR,BVS) */
+
+/*        BUG FIX: corrected input record line count value substitution */
+/*        in the SPICE(BADLINEPERRECCOUNT) error: CALL ERRCH ( '#', */
+/*        WRKCHR ) -> CALL ERRINT ( '#', INTVAL ). */
 
 /* -    Version 1.0.9, 12-FEB-2012 (BVS) */
 
@@ -1373,7 +1388,7 @@ L_setupi:
 		setmsg_("Number of lines, which a single input file record o"
 			"ccupies '#', specified in the setup file keyword '#'"
 			" is not a positive integer number . ", (ftnlen)139);
-		errch_("#", wrkchr, (ftnlen)1, (ftnlen)512);
+		errint_("#", intval, (ftnlen)1);
 		errch_("#", "LINES_PER_RECORD", (ftnlen)1, (ftnlen)16);
 		sigerr_("SPICE(BADLINEPERRECCOUNT)", (ftnlen)25);
 	    }
