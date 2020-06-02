@@ -28,6 +28,7 @@ static doublereal c_b8 = 1.;
     extern doublereal spd_(void);
     doublereal hdp1, hdp2, hdp3;
 
+
 /* $ Abstract */
 
 /*     Converts input duration in seconds to DDDAYS:HR:MN:SC.###### */
