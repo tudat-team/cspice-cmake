@@ -58,11 +58,11 @@ build*/
 *.idea
 
 # Common build output folders
-cmake-build-debug/
-cmake-build-release/
+/cmake-build-debug/
+/cmake-build-release/
 build/
 .build/
-cmake_build-debug/
-cmake_build-release/
+/cmake-build-debug/
+/cmake-build-release/
 install_test/
 /install_test/
