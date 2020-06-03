@@ -65,3 +65,4 @@ build/
 cmake_build-debug/
 cmake_build-release/
 install_test/
+/install_test/
