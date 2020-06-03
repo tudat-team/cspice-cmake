@@ -37,6 +37,26 @@
 					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="install">
 				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
 				<Option type="4"/>
@@ -47,18 +67,8 @@
 					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="list_install_components">
-				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
-					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="cspice">
-				<Option output="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/libcspice.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/lib/libcspice.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -79,7 +89,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="cspice/fast">
-				<Option output="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/libcspice.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/lib/libcspice.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -99,21 +109,11 @@
 					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
+			<Target title="list_install_components">
 				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
 					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j16 -f &quot;/home/ggarrett/Repositories/new/tudat_bundle/cspice/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
