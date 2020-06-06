@@ -7,6 +7,13 @@ sudo: required
 branches:
   except: /pr\/.*/
 
+before_install:
+  - sudo apt-get update
+  - chmod +x build.sh
+  - chmod +x ./tools/install_deps.sh && chmod +x ./tools/install_travis.sh
+#  - sudo apt-get -y install libxml2-dev
+
+
 matrix:
   include:
     - env: BUILD_TYPE="OSXDebug"
