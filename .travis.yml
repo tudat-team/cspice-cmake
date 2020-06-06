@@ -8,8 +8,13 @@ branches:
   except: /pr\/.*/
 
 before_install:
-#  - sudo apt-get update
-  - chmod +x ./tools/install_deps.sh && chmod +x ./tools/install_travis.sh
+  #  - sudo apt-get update
+  - chmod +x ./tools/install_deps.sh
+  - chmod +x ./tools/install_travis.sh
+  - chmod +x ./.travis_scripts/conda_setup.sh
+  - chmod +x ./.travis_scripts/lib_version.sh
+  - chmod +x ./.travis_scripts/build_test.sh
+  - chmod +x ./.travis_scripts/deploy.sh
 #  - sudo apt-get -y install libxml2-dev
 
 
@@ -22,15 +27,33 @@ matrix:
       os: osx
       osx_image: xcode9.4
 
-script:
-  - mkdir build
-  - cd build
-  # NOTE: currently, travis does not stop automatically if one of these
-  # 2 scripts returns an error code. Thus, we run them together as a single
-  # command, so that if install_deps.sh fails the whole build fails immediately
-  # rather than executing install_travis.sh as well. See
-  # https://github.com/travis-ci/travis-ci/issues/1066
-  - ../tools/install_deps.sh && ../tools/install_travis.sh
+jobs:
+  include:
+    - stage: "Install dependencies and setup"
+    - name: "Install miniconda 3"
+      script: ./.travis_scripts/install_miniconda.sh
+    - name: "Initialise conda"
+      script: ./.travis_scripts/conda_setup.sh
+    - name: "Get lib versions"
+      script: ./.travis_scripts/lib_version.sh
+    - name: "Download and install miniconda"
+      script: ./.travis_scripts/conda_setup.sh
+    - stage: "Build, test and deploy (master/develop)"
+      script: ./.travis_scripts/build_test.sh
+    - stage: "Deploy (master/develop)"
+      script: ./.travis_scripts/deploy.sh
+
+#    - stage: ""
+#     script:
+#        - mkdir build
+#        - cd build
+#        # NOTE: currently, travis does not stop automatically if one of these
+#        # 2 scripts returns an error code. Thus, we run them together as a single
+#        # command, so that if install_deps.sh fails the whole build fails immediately
+#        # rather than executing install_travis.sh as well. See
+#        # https://github.com/travis-ci/travis-ci/issues/1066
+#        - ../tools/install_deps.sh && ../tools/install_travis.sh
+
 
 #notifications:
 #  email: false
