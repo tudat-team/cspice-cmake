@@ -8,13 +8,14 @@ branches:
   except: /pr\/.*/
 
 before_install:
-  #  - sudo apt-get update
-  - chmod +x ./tools/install_deps.sh
-  - chmod +x ./tools/install_travis.sh
   - chmod +x ./.travis_scripts/conda_setup.sh
   - chmod +x ./.travis_scripts/lib_version.sh
   - chmod +x ./.travis_scripts/build_test.sh
   - chmod +x ./.travis_scripts/deploy.sh
+  #  - sudo apt-get update
+#  - chmod +x ./tools/install_deps.sh
+#  - chmod +x ./tools/install_travis.sh
+
 #  - sudo apt-get -y install libxml2-dev
 
 
