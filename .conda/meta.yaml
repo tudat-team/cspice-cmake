@@ -1,36 +1,22 @@
-{% set name = "tudat-cspice" %}
+{% set name = "cspice-cmake" %}
 
 package:
   name: "{{ name }}"
-  version: {{ environ.get('NEW_GIT_TAG', 'dev') }}
+  version: 66.0
 
 source:
-  path: ../
-#  git_rev: aaf8afe3fdf16be1da09612d7e71f169605d0703
-#  git_url: https://github.com/ggarrett13/sofa.git
+  git_rev: 31b8c106024454a4e09935b0081da375f6565f0a
+  git_url: https://github.com/tudat-team/cspice-cmake.git
 
 requirements:
     build:
         - cmake
         - {{ compiler('c') }}              # [not win]
-        - m2w64-gcc                        # [win]
+#        - mingw                            # [win]
         - vs2017_{{ target_platform  }}    # [win]
 
-#outputs:
-#  - name: "{{ name }}"
-#    files:
-#      - lib/libsofa*{{ SHLIB_EXT }}   # [not win]
-#      - lib/libsofa.so.*              # [linux]
-#      - lib/libsofa.*.dylib           # [osx]
-#      - Library/bin/sofa.dll          # [win]
-#      - include/sofa            # [not win]
-#      - lib/cmake/sofa          # [not win]
-#      - Library/include/sofa    # [win]
-#      - Library/lib/sofa.lib    # [win]
-#      - Library/lib/cmake/sofa  # [win]
-
 about:
-  home: https://github.com/ggarrett13/cspice
+  home: https://github.com/tudat-team/cspice-cmake
   license: BSD
   license_family: BSD
   summary: Mirror of SPICE Toolbox sourcecode with additional CMake files for building along the tudatBundle.

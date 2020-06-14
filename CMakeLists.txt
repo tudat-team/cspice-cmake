@@ -105,19 +105,21 @@ target_include_directories(cspice PUBLIC
 # Setup of namespaced library.
 add_library(CSpice::cspice ALIAS cspice)
 
-# Silence warnings.
-set_property(TARGET cspice APPEND PROPERTY COMPILE_OPTIONS
-        "-fPIC"
-        "-Wno-implicit-int"
-        "-Wunused-result"
-        "-Wno-incompatible-pointer-types"
-        "-Wno-pointer-to-int-cast"
-        "-Wno-shift-op-parentheses"
-        "-Wno-logical-op-parentheses"
-        "-Wno-parentheses"
-        "-Wno-tautological-compare"
-        "-Wno-format"
-        "-Wno-unsequenced")
+# Silence warnings.'
+if(NOT MSVC)
+    set_property(TARGET cspice APPEND PROPERTY COMPILE_OPTIONS
+            "-fPIC"
+            "-Wno-implicit-int"
+            "-Wunused-result"
+            "-Wno-incompatible-pointer-types"
+            "-Wno-pointer-to-int-cast"
+            "-Wno-shift-op-parentheses"
+            "-Wno-logical-op-parentheses"
+            "-Wno-parentheses"
+            "-Wno-tautological-compare"
+            "-Wno-format"
+            "-Wno-unsequenced")
+endif(NOT MSVC)
 
 set_target_properties(cspice
         PROPERTIES
