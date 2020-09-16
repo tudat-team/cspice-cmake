@@ -108,7 +108,6 @@ add_library(CSpice::cspice ALIAS cspice)
 # Silence warnings.'
 if(NOT MSVC)
     set_property(TARGET cspice APPEND PROPERTY COMPILE_OPTIONS
-            "-fPIC"
             "-Wno-implicit-int"
             "-Wunused-result"
             "-Wno-incompatible-pointer-types"
