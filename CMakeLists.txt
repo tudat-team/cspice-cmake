@@ -23,19 +23,25 @@ endif ()
 cmake_policy(SET CMP0069 NEW)
 
 # Specific project name.
-project(CSpice VERSION 1.0.0 LANGUAGES C)
+project(CSpice VERSION 66 LANGUAGES C)
 
 # Get lower string name of PROJECT_NAME for directory configuration.
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 set(POSITION_INDEPENDENT_CODE True)
 
+if (WIN32)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
+endif ()
+
+message(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
+
 # +============================================================================
 # BUILD OPTIONS
 #  Offer the user the choice of defining the build variation.
 # +============================================================================
 # Build static library instead of dynamic.
-option(CSPICE_BUILD_STATIC_LIBRARY "Build sofa as a static library, instead of dynamic." ON)
+option(CSPICE_BUILD_STATIC_LIBRARY "Build sofa as a static library, instead of dynamic." OFF)
 
 # +============================================================================
 # INSTALL TREE CONFIGURATION (Project name independent)
@@ -106,7 +112,7 @@ target_include_directories(cspice PUBLIC
 add_library(CSpice::cspice ALIAS cspice)
 
 # Silence warnings.'
-if(NOT MSVC)
+if (NOT MSVC)
     set_property(TARGET cspice APPEND PROPERTY COMPILE_OPTIONS
             "-Wno-implicit-int"
             "-Wunused-result"
@@ -118,7 +124,18 @@ if(NOT MSVC)
             "-Wno-tautological-compare"
             "-Wno-format"
             "-Wno-unsequenced")
-endif(NOT MSVC)
+elseif (MSVC)
+    set_property(TARGET cspice APPEND PROPERTY COMPILE_OPTIONS
+            "-wd4267"
+            "-wd4554"
+            "-wd4723"
+            "-wd4244"
+            "-wd4273"
+            "-wd4477"
+            "-wd4996"
+            "-wd4311"
+            )
+endif (NOT MSVC)
 
 set_target_properties(cspice
         PROPERTIES
