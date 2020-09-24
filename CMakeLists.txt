@@ -41,7 +41,7 @@ elseif (UNIX AND NOT APPLE)
 elseif (UNIX)
 #    set(TKCOMPILEOPTIONS "-m64 -c -std=c99 -fPIC -DNON_UNIX_STDIO")
     set(TKCOMPILEOPTIONS "-m64 -std=c99 -O2 -fPIC -DNON_UNIX_STDIO")
-    set(TKLINKOPTIONS "-m64 -Wl,--whole-archive -lm -Wl,--no-whole-archive")
+    set(TKLINKOPTIONS "-m64")
 endif ()
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TKCOMPILEOPTIONS} ${TKLINKOPTIONS}")
@@ -143,6 +143,9 @@ elseif (MSVC)
             "-wd4477"
             "-wd4996"
             "-wd4311"
+            "-wd4013" # src\cspice\err.c(202): warning C4013: 'isatty' undefined; assuming extern returning int (due to fix)
+            "-wd4101" # src\cspice\inquire.c(16): warning C4101: 'n': unreferenced local variable
+            "-wd4018" # src\cspice\zzfcstring.c(354): warning C4018: '>=': signed/unsigned mismatch
             )
 endif (NOT MSVC)
 
