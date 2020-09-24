@@ -12,7 +12,7 @@
 #
 
 # Specify minimum CMake version required to compile CSpice.
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.4)
 
 # Trick for recompiling changes for BUILD-TREE.
 if (EXISTS "${CMAKE_BINARY_DIR}/CMakeCache.txt")
@@ -30,29 +30,32 @@ string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 set(POSITION_INDEPENDENT_CODE True)
 
-if (WIN32)
-#    set(TKCOMPILEOPTIONS "/c /O2 /nologo -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
-    set(TKCOMPILEOPTIONS "/O2 /nologo -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
-    set(TKLINKOPTIONS "")
-elseif (UNIX AND NOT APPLE)
-#    set(TKCOMPILEOPTIONS "-c -std=c99 -m64 -fPIC -DNON_UNIX_STDIO")
-    set(TKCOMPILEOPTIONS "-std=c99 -m64 -O2 -fPIC -DNON_UNIX_STDIO")
-    set(TKLINKOPTIONS "-Wl,--whole-archive -lm -Wl,--no-whole-archive -m64")
-elseif (UNIX)
-#    set(TKCOMPILEOPTIONS "-m64 -c -std=c99 -fPIC -DNON_UNIX_STDIO")
-    set(TKCOMPILEOPTIONS "-m64 -std=c99 -O2 -fPIC -DNON_UNIX_STDIO")
-    set(TKLINKOPTIONS "-m64")
-endif ()
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TKCOMPILEOPTIONS} ${TKLINKOPTIONS}")
-message(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
-
 # +============================================================================
 # BUILD OPTIONS
 #  Offer the user the choice of defining the build variation.
 # +============================================================================
 # Build static library instead of dynamic.
 option(CSPICE_BUILD_STATIC_LIBRARY "Build sofa as a static library, instead of dynamic." OFF)
+
+if (WIN32)
+    #    set(TKCOMPILEOPTIONS "/c /O2 /nologo -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
+    set(TKCOMPILEOPTIONS "/O2 /nologo -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
+    set(TKLINKOPTIONS "")
+    if (NOT CSPICE_BUILD_STATIC_LIBRARY)
+        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
+    endif ()
+elseif (UNIX AND NOT APPLE)
+    #    set(TKCOMPILEOPTIONS "-c -std=c99 -m64 -fPIC -DNON_UNIX_STDIO")
+    set(TKCOMPILEOPTIONS "-std=c99 -m64 -O2 -fPIC -DNON_UNIX_STDIO")
+    set(TKLINKOPTIONS "-Wl,--whole-archive -lm -Wl,--no-whole-archive -m64")
+elseif (UNIX)
+    #    set(TKCOMPILEOPTIONS "-m64 -c -std=c99 -fPIC -DNON_UNIX_STDIO")
+    set(TKCOMPILEOPTIONS "-m64 -std=c99 -O2 -fPIC -DNON_UNIX_STDIO")
+    set(TKLINKOPTIONS "-m64")
+endif ()
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TKCOMPILEOPTIONS} ${TKLINKOPTIONS}")
+message(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 
 # +============================================================================
 # INSTALL TREE CONFIGURATION (Project name independent)
@@ -160,12 +163,19 @@ set_target_properties(cspice
 # Add test
 add_executable(test_cspice "${CMAKE_CURRENT_SOURCE_DIR}/test/test_cspice.c")
 target_link_libraries(test_cspice PUBLIC cspice)
+set_target_properties(test_cspice
+        PROPERTIES
+        LINKER_LANGUAGE C
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        )
 target_include_directories(test_cspice PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>  # <prefix>/include/mylib
         )
 enable_testing()
-add_test(test_cspice ${CMAKE_CURRENT_BINARY_DIR}/test_cspice)
+add_test(test_cspice ${CMAKE_CURRENT_BINARY_DIR}/bin/test_cspice)
 
 # Installation of the library.
 install(TARGETS cspice
@@ -185,6 +195,8 @@ endif ()
 
 # Installation of the header files.
 install(DIRECTORY include/ DESTINATION "${INSTALL_INCLUDE_DIR}")
+
+install(DIRECTORY test/ DESTINATION "${INSTALL_INCLUDE_DIR}")
 
 # Installation of the data files.
 install(DIRECTORY data/ DESTINATION "${INSTALL_DATA_DIR}/${PROJECT_NAME_LOWER}")
