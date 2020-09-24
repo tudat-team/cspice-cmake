@@ -31,9 +31,20 @@ string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 set(POSITION_INDEPENDENT_CODE True)
 
 if (WIN32)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
+#    set(TKCOMPILEOPTIONS "/c /O2 /nologo -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
+    set(TKCOMPILEOPTIONS "/O2 /nologo -D_COMPLEX_DEFINED -DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO")
+    set(TKLINKOPTIONS "")
+elseif (UNIX AND NOT APPLE)
+#    set(TKCOMPILEOPTIONS "-c -std=c99 -m64 -fPIC -DNON_UNIX_STDIO")
+    set(TKCOMPILEOPTIONS "-std=c99 -m64 -O2 -fPIC -DNON_UNIX_STDIO")
+    set(TKLINKOPTIONS "-Wl,--whole-archive -lm -Wl,--no-whole-archive -m64")
+elseif (UNIX)
+#    set(TKCOMPILEOPTIONS "-m64 -c -std=c99 -fPIC -DNON_UNIX_STDIO")
+    set(TKCOMPILEOPTIONS "-m64 -std=c99 -O2 -fPIC -DNON_UNIX_STDIO")
+    set(TKLINKOPTIONS "-m64 -Wl,--whole-archive -lm -Wl,--no-whole-archive")
 endif ()
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TKCOMPILEOPTIONS} ${TKLINKOPTIONS}")
 message(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 
 # +============================================================================
@@ -89,11 +100,9 @@ endforeach ()
 #set(${PROJECT_NAME_UPPER}_BINARY_CMAKE_DIR    "${BINARY_LIB_DIR}/cmake/${PROJECT_NAME_LOWER}"       CACHE PATH "Build directory for cmake config files")
 
 # Set the source and header files.
-file(GLOB_RECURSE CSPICE_HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice
-        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h)
-file(GLOB_RECURSE CSPICE_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice
-        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.c)
-
+file(GLOB_RECURSE CSPICE_HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice*.h)
+file(GLOB_RECURSE CSPICE_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice/*.c)
+message(STATUS CSPICE_SOURCE_FILES ${CSPICE_SOURCE_FILES})
 # Setup of library.
 
 if (CSPICE_BUILD_STATIC_LIBRARY)
@@ -144,6 +153,16 @@ set_target_properties(cspice
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
+
+# Add test
+add_executable(test_cspice "${CMAKE_CURRENT_SOURCE_DIR}/test/test_cspice.c")
+target_link_libraries(test_cspice PUBLIC cspice)
+target_include_directories(test_cspice PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>  # <prefix>/include/mylib
+        )
+enable_testing()
+add_test(test_cspice ${CMAKE_CURRENT_BINARY_DIR}/test_cspice)
 
 # Installation of the library.
 install(TARGETS cspice
