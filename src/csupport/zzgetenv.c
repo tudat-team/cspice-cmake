@@ -73,7 +73,7 @@
 /*     --------  ---  -------------------------------------------------- */
 /*     ENVVAR     I   The name of the environment variable or symbol. */
 /*     VALUE      O   The value of the environment variable or symbol. */
-/*     ENVLEN     P   Maximum length of an environemt variable or symbol. */
+/*     ENVLEN     P   Maximum length of an environment variable or symbol */
 /*     VALLEN     P   Maximum length of a value. */
 
 /* $ Detailed_Input */
@@ -173,6 +173,10 @@
 /*     K.R. Gehringer     (JPL) */
 
 /* $ Version */
+
+/* -    SPICELIB Version 2.26.0, 28-NOV-2021 (BVS) */
+
+/*        Updated for MAC-OSX-M1-64BIT-CLANG_C. */
 
 /* -    SPICELIB Version 2.25.0, 10-MAR-2014 (BVS) */
 
@@ -281,7 +285,7 @@
 /* -    SPICELIB Version 2.0.4, 08-OCT-1999 (WLT) */
 
 /*        The environment lines were expanded so that the supported */
-/*        environments are now explicitely given.  New */
+/*        environments are now explicitly given.  New */
 /*        environments are WIN-NT */
 
 /* -    SPICELIB Version 2.0.3, 21-SEP-1999 (NJB) */

@@ -178,6 +178,10 @@ static integer c__1 = 1;
 
 /* $ Version */
 
+/* -    Beta Version 2.28.0, 28-NOV-2021 (BVS) */
+
+/*        Updated for MAC-OSX-M1-64BIT-CLANG_C. */
+
 /* -    Beta Version 2.27.0, 10-MAR-2014 (BVS) */
 
 /*        Updated for SUN-SOLARIS-64BIT-INTEL. */
@@ -285,7 +289,7 @@ static integer c__1 = 1;
 /* -    Beta Version 2.2.4, 08-OCT-1999 (WLT) */
 
 /*        The environment lines were expanded so that the supported */
-/*        environments are now explicitely given.  New */
+/*        environments are now explicitly given.  New */
 /*        environments are WIN-NT */
 
 /* -    Beta Version 2.2.3, 20-SEP-1999 (NJB) */

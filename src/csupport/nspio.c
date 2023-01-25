@@ -205,19 +205,18 @@ static integer c__6 = 6;
 
 /*     None. */
 
+/* $ Exceptions */
+
+/*     1) If the bogus entry point NSPIO is called directly, then the */
+/*        error NSPIO(BOGUSENTRY) is signaled. */
+
+/*     2) See entry points for exceptions specific to them. */
+
 /* $ Files */
 
 /*     1) This umbrella may be configured to simultaneously access */
 /*        NPORTS number of files.  They are all opened using the */
 /*        SPICELIB routine TXTOPN. */
-
-/* $ Exceptions */
-
-/*     1) If the bogus entry point NSPIO is called directly, then the */
-/*        error NSPIO(BOGUSENTRY) is signalled. */
-
-/*     2) See entry points «Entry Points» for exceptions specific to */
-/*        them. */
 
 /* $ Particulars */
 
@@ -286,16 +285,22 @@ static integer c__6 = 6;
 
 /*     None. */
 
+/* $ Literature_References */
+
+/*     None. */
+
 /* $ Author_and_Institution */
 
 /*     W.L. Taber      (JPL) */
 /*     F.S. Turner     (JPL) */
 
-/* $ Literature_References */
-
-/*     None. */
-
 /* $ Version */
+
+/* -    NSPIO Version 2.0.1, 06-DEC-2021 (BVS) */
+
+/*        Cleaned up non-printing characters. */
+
+/*        Re-ordered header sections. */
 
 /* -    NSPIO Version 2.0.0, 01-FEB-2000 (FST) */
 
@@ -463,14 +468,6 @@ L_nspopn:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     1) If PORT is a file-based port then this routine will open */
-/*        a file with the SPICE routine TXTOPN. */
-
-/*     2) If PORT is already attached to a file, then this file */
-/*        is closed before PORT is attached to a new file. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
@@ -483,11 +480,19 @@ L_nspopn:
 /*     3) If PORT is 'SCREEN', then this entry point does nothing. */
 
 /*     4) If PORT is 'ERROR', then if an error occurs opening the */
-/*        file, this routine simply leaves the port unopen and */
+/*        file, this routine simply leaves the port un-open and */
 /*        returns. */
 
 /*     4) Any errors that occur in opening the files not associated with */
 /*        the 'SCREEN' and 'ERROR' ports are processed by TXTOPN. */
+
+/* $ Files */
+
+/*     1) If PORT is a file-based port then this routine will open */
+/*        a file with the SPICE routine TXTOPN. */
+
+/*     2) If PORT is already attached to a file, then this file */
+/*        is closed before PORT is attached to a new file. */
 
 /* $ Particulars */
 
@@ -499,19 +504,19 @@ L_nspopn:
 
 /* $ Restrictions */
 
-/*     1) NAME should point to a non-existant file that can be opened */
+/*     1) NAME should point to a non-existent file that can be opened */
 /*        for write access. */
 
 /*     2) NAME should be a string of less than SIZFIL characters in */
 /*        length. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -552,27 +557,27 @@ L_nspopn:
 /*     port.  Check first to see if it is already open. */
 
     if (open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, 
-	    "nspio_", (ftnlen)540)]) {
+	    "nspio_", (ftnlen)545)]) {
 
 /*        If the file attached to PORT is already open, close it */
 /*        before attaching this new file to it. */
 
 	cl__1.cerr = 0;
 	cl__1.cunit = units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		"units", i__1, "nspio_", (ftnlen)546)];
+		"units", i__1, "nspio_", (ftnlen)551)];
 	cl__1.csta = 0;
 	f_clos(&cl__1);
 
 /*        Now reset PORT's status. */
 
 	active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		i__1, "nspio_", (ftnlen)551)] = FALSE_;
+		i__1, "nspio_", (ftnlen)556)] = FALSE_;
 	open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, 
-		"nspio_", (ftnlen)552)] = FALSE_;
+		"nspio_", (ftnlen)557)] = FALSE_;
 	suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-		i__1, "nspio_", (ftnlen)553)] = FALSE_;
+		i__1, "nspio_", (ftnlen)558)] = FALSE_;
 	s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		"files", i__1, "nspio_", (ftnlen)554)) * 255, " ", (ftnlen)
+		"files", i__1, "nspio_", (ftnlen)559)) * 255, " ", (ftnlen)
 		255, (ftnlen)1);
     }
 
@@ -591,24 +596,24 @@ L_nspopn:
 
 	r__ = rtrim_(name__, name_len);
 	zztxtopn_(name__, &units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : 
-		s_rnge("units", i__1, "nspio_", (ftnlen)575)], &openok, r__);
+		s_rnge("units", i__1, "nspio_", (ftnlen)580)], &openok, r__);
 
 /*        If the OPEN process failed, then clear the status of the */
 /*        port and return. */
 
 	if (! openok) {
 	    active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		    i__1, "nspio_", (ftnlen)583)] = FALSE_;
+		    i__1, "nspio_", (ftnlen)588)] = FALSE_;
 	    open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", 
-		    i__1, "nspio_", (ftnlen)584)] = FALSE_;
+		    i__1, "nspio_", (ftnlen)589)] = FALSE_;
 	    suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-		    i__1, "nspio_", (ftnlen)585)] = FALSE_;
+		    i__1, "nspio_", (ftnlen)590)] = FALSE_;
 
 /*           Leave FILES(ID) set, so that the name of the file can */
 /*           be reported. */
 
 	    s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		    "files", i__1, "nspio_", (ftnlen)592)) * 255, name__, (
+		    "files", i__1, "nspio_", (ftnlen)597)) * 255, name__, (
 		    ftnlen)255, name_len);
 
 /*           Before returning, set ERROPF to .TRUE., since */
@@ -629,20 +634,20 @@ L_nspopn:
 
 	r__ = rtrim_(name__, name_len);
 	txtopn_(name__, &units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : 
-		s_rnge("units", i__1, "nspio_", (ftnlen)615)], r__);
+		s_rnge("units", i__1, "nspio_", (ftnlen)620)], r__);
 
 /*        Check FAILED(). If an error has occurred, clear PORT status, */
 /*        check out and return. */
 
 	if (failed_()) {
 	    active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		    i__1, "nspio_", (ftnlen)623)] = FALSE_;
+		    i__1, "nspio_", (ftnlen)628)] = FALSE_;
 	    open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", 
-		    i__1, "nspio_", (ftnlen)624)] = FALSE_;
+		    i__1, "nspio_", (ftnlen)629)] = FALSE_;
 	    suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-		    i__1, "nspio_", (ftnlen)625)] = FALSE_;
+		    i__1, "nspio_", (ftnlen)630)] = FALSE_;
 	    s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		    "files", i__1, "nspio_", (ftnlen)626)) * 255, " ", (
+		    "files", i__1, "nspio_", (ftnlen)631)) * 255, " ", (
 		    ftnlen)255, (ftnlen)1);
 	    chkout_("NSPOPN", (ftnlen)6);
 	    return 0;
@@ -653,13 +658,13 @@ L_nspopn:
 /*     Set PORT status to reflect successful open. */
 
     active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", i__1, 
-	    "nspio_", (ftnlen)638)] = TRUE_;
+	    "nspio_", (ftnlen)643)] = TRUE_;
     open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, "nsp"
-	    "io_", (ftnlen)639)] = TRUE_;
+	    "io_", (ftnlen)644)] = TRUE_;
     suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", i__1, 
-	    "nspio_", (ftnlen)640)] = FALSE_;
+	    "nspio_", (ftnlen)645)] = FALSE_;
     s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("files", 
-	    i__1, "nspio_", (ftnlen)641)) * 255, name__, (ftnlen)255, 
+	    i__1, "nspio_", (ftnlen)646)) * 255, name__, (ftnlen)255, 
 	    name_len);
     chkout_("NSPOPN", (ftnlen)6);
     return 0;
@@ -741,16 +746,16 @@ L_nspioh:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
 /*        is signaled by ZZNSPPOK. */
 
 /*     2) If PORT is already inhibited, then it remains inhibited. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -764,13 +769,13 @@ L_nspioh:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -797,7 +802,7 @@ L_nspioh:
 
     if (! failed_()) {
 	active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		i__1, "nspio_", (ftnlen)787)] = FALSE_;
+		i__1, "nspio_", (ftnlen)792)] = FALSE_;
     }
     chkout_("NSPIOH", (ftnlen)6);
     return 0;
@@ -879,16 +884,16 @@ L_nspioa:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
 /*        is signaled by ZZNSPPOK. */
 
 /*     2) If PORT is already active, then PORT remains active. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -902,13 +907,13 @@ L_nspioa:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -934,7 +939,7 @@ L_nspioa:
 
     if (! failed_()) {
 	active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		i__1, "nspio_", (ftnlen)934)] = TRUE_;
+		i__1, "nspio_", (ftnlen)939)] = TRUE_;
     }
     chkout_("NSPIOA", (ftnlen)6);
     return 0;
@@ -1032,15 +1037,15 @@ L_nspgst:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
 /*        is signaled by ZZNSPPOK.  In the event this happens */
 /*        the routine does not alter the contents of STATUS. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -1054,13 +1059,13 @@ L_nspgst:
 
 /*     1) STATUS must be an array with space for 3 logicals. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -1085,11 +1090,11 @@ L_nspgst:
 
     if (! failed_()) {
 	status[0] = active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		"active", i__1, "nspio_", (ftnlen)1094)];
+		"active", i__1, "nspio_", (ftnlen)1099)];
 	status[1] = open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		"open", i__1, "nspio_", (ftnlen)1095)];
+		"open", i__1, "nspio_", (ftnlen)1100)];
 	status[2] = suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		"suspnd", i__1, "nspio_", (ftnlen)1096)];
+		"suspnd", i__1, "nspio_", (ftnlen)1101)];
     }
     chkout_("NSPGST", (ftnlen)6);
     return 0;
@@ -1188,15 +1193,15 @@ L_nsppst:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
 /*        is signaled by ZZNSPPOK.  In the event this happens */
 /*        the routine does not alter the status of any PORT. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -1210,13 +1215,13 @@ L_nsppst:
 
 /*     1) The STATUS array must provide at least 3 logicals. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -1241,11 +1246,11 @@ L_nsppst:
 
     if (! failed_()) {
 	active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		i__1, "nspio_", (ftnlen)1258)] = status[0];
+		i__1, "nspio_", (ftnlen)1263)] = status[0];
 	open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, 
-		"nspio_", (ftnlen)1259)] = status[1];
+		"nspio_", (ftnlen)1264)] = status[1];
 	suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-		i__1, "nspio_", (ftnlen)1260)] = status[2];
+		i__1, "nspio_", (ftnlen)1265)] = status[2];
     }
     chkout_("NSPPST", (ftnlen)6);
     return 0;
@@ -1327,10 +1332,6 @@ L_nspioc:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
@@ -1341,6 +1342,10 @@ L_nspioc:
 /*        and simply returns. */
 
 /*     3) Attempting to "close" the screen port will have no effect. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -1354,13 +1359,13 @@ L_nspioc:
 
 /*     1) PORT must refer to a file based port. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -1394,7 +1399,7 @@ L_nspioc:
 /*     requested port to close is the SCREEN port. */
 
     if (! open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, 
-	    "nspio_", (ftnlen)1420)] || id == 1) {
+	    "nspio_", (ftnlen)1425)] || id == 1) {
 	chkout_("NSPIOC", (ftnlen)6);
 	return 0;
     }
@@ -1404,17 +1409,17 @@ L_nspioc:
 
     cl__1.cerr = 0;
     cl__1.cunit = units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-	    "units", i__1, "nspio_", (ftnlen)1431)];
+	    "units", i__1, "nspio_", (ftnlen)1436)];
     cl__1.csta = 0;
     f_clos(&cl__1);
     active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", i__1, 
-	    "nspio_", (ftnlen)1432)] = FALSE_;
+	    "nspio_", (ftnlen)1437)] = FALSE_;
     open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, "nsp"
-	    "io_", (ftnlen)1433)] = FALSE_;
+	    "io_", (ftnlen)1438)] = FALSE_;
     suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", i__1, 
-	    "nspio_", (ftnlen)1434)] = FALSE_;
+	    "nspio_", (ftnlen)1439)] = FALSE_;
     s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("files", 
-	    i__1, "nspio_", (ftnlen)1435)) * 255, " ", (ftnlen)255, (ftnlen)1)
+	    i__1, "nspio_", (ftnlen)1440)) * 255, " ", (ftnlen)255, (ftnlen)1)
 	    ;
 
 /*     If we have closed the error file, then clear ERROPF. */
@@ -1502,10 +1507,6 @@ L_nspios:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
@@ -1514,6 +1515,10 @@ L_nspios:
 
 /*     2) If PORT is already has it's I/O suspended, then it will */
 /*        remain suspended. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -1527,13 +1532,13 @@ L_nspios:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -1562,7 +1567,7 @@ L_nspios:
 /*        Suspend I/O on PORT. */
 
 	suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-		i__1, "nspio_", (ftnlen)1594)] = TRUE_;
+		i__1, "nspio_", (ftnlen)1599)] = TRUE_;
     }
     chkout_("NSPIOS", (ftnlen)6);
     return 0;
@@ -1647,10 +1652,6 @@ L_nspior:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
@@ -1658,6 +1659,10 @@ L_nspior:
 
 /*     2) If PORT is already not suspended, then PORT remains so and */
 /*        OK is returned as .FALSE. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -1671,13 +1676,13 @@ L_nspior:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -1709,7 +1714,7 @@ L_nspior:
 /*     Check to see if PORT is currently suspended. */
 
     if (! suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-	    i__1, "nspio_", (ftnlen)1753)]) {
+	    i__1, "nspio_", (ftnlen)1758)]) {
 
 /*        If it's not, then set OK to .FALSE. and return */
 
@@ -1721,7 +1726,7 @@ L_nspior:
 /*     Suspend I/O to this port. */
 
     suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", i__1, 
-	    "nspio_", (ftnlen)1767)] = FALSE_;
+	    "nspio_", (ftnlen)1772)] = FALSE_;
     chkout_("NSPIOR", (ftnlen)6);
     return 0;
 /* $Procedure NSPWLN ( Inspekt I/O Manager -- Write Line ) */
@@ -1788,12 +1793,6 @@ L_nspwln:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     1) This routine will write to any files associated with ports */
-/*        that are open, active, and not suspended when NSPWLN is */
-/*        called. */
-
 /* $ Exceptions */
 
 /*     1) If an error occurs writing the line to a particular port, */
@@ -1802,6 +1801,12 @@ L_nspwln:
 
 /*     2) Any errors are signaled by routines in the call tree of */
 /*        NSPWLN. */
+
+/* $ Files */
+
+/*     1) This routine will write to any files associated with ports */
+/*        that are open, active, and not suspended when NSPWLN is */
+/*        called. */
 
 /* $ Particulars */
 
@@ -1815,13 +1820,13 @@ L_nspwln:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -1842,15 +1847,15 @@ L_nspwln:
 
     for (id = 1; id <= 8; ++id) {
 	if (! suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd"
-		, i__1, "nspio_", (ftnlen)1896)] && active[(i__2 = id - 1) < 
+		, i__1, "nspio_", (ftnlen)1901)] && active[(i__2 = id - 1) < 
 		8 && 0 <= i__2 ? i__2 : s_rnge("active", i__2, "nspio_", (
-		ftnlen)1896)] && open[(i__3 = id - 1) < 8 && 0 <= i__3 ? i__3 
-		: s_rnge("open", i__3, "nspio_", (ftnlen)1896)]) {
+		ftnlen)1901)] && open[(i__3 = id - 1) < 8 && 0 <= i__3 ? i__3 
+		: s_rnge("open", i__3, "nspio_", (ftnlen)1901)]) {
 
 /*           Write the line to this port. */
 
 	    to = units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("uni"
-		    "ts", i__1, "nspio_", (ftnlen)1903)];
+		    "ts", i__1, "nspio_", (ftnlen)1908)];
 	    writln_(line, &to, line_len);
 
 /*           Check for and process any errors. */
@@ -1864,17 +1869,17 @@ L_nspwln:
 
 		cl__1.cerr = 0;
 		cl__1.cunit = units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : 
-			s_rnge("units", i__1, "nspio_", (ftnlen)1918)];
+			s_rnge("units", i__1, "nspio_", (ftnlen)1923)];
 		cl__1.csta = 0;
 		f_clos(&cl__1);
 		active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("act"
-			"ive", i__1, "nspio_", (ftnlen)1919)] = FALSE_;
+			"ive", i__1, "nspio_", (ftnlen)1924)] = FALSE_;
 		open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", 
-			i__1, "nspio_", (ftnlen)1920)] = FALSE_;
+			i__1, "nspio_", (ftnlen)1925)] = FALSE_;
 		suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("sus"
-			"pnd", i__1, "nspio_", (ftnlen)1921)] = FALSE_;
+			"pnd", i__1, "nspio_", (ftnlen)1926)] = FALSE_;
 		s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : 
-			s_rnge("files", i__1, "nspio_", (ftnlen)1922)) * 255, 
+			s_rnge("files", i__1, "nspio_", (ftnlen)1927)) * 255, 
 			" ", (ftnlen)255, (ftnlen)1);
 	    }
 	}
@@ -1944,14 +1949,14 @@ L_nspend:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     1) This routine closes the files attached to all open ports. */
-
 /* $ Exceptions */
 
 /*     1) If the SCREEN port is not open, it simply closes the port */
 /*        and does not write any notifications. */
+
+/* $ Files */
+
+/*     1) This routine closes the files attached to all open ports. */
 
 /* $ Particulars */
 
@@ -1965,13 +1970,13 @@ L_nspend:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -2065,10 +2070,10 @@ L_nspend:
 /*        Close the file associated with the port if it's open. */
 
 	if (open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", 
-		i__1, "nspio_", (ftnlen)2163)]) {
+		i__1, "nspio_", (ftnlen)2168)]) {
 	    cl__1.cerr = 0;
 	    cl__1.cunit = units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : 
-		    s_rnge("units", i__1, "nspio_", (ftnlen)2165)];
+		    s_rnge("units", i__1, "nspio_", (ftnlen)2170)];
 	    cl__1.csta = 0;
 	    f_clos(&cl__1);
 	}
@@ -2076,16 +2081,16 @@ L_nspend:
 /*        Restore original port status. */
 
 	units[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("units", i__1, 
-		"nspio_", (ftnlen)2171)] = 0;
+		"nspio_", (ftnlen)2176)] = 0;
 	s_copy(files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-		"files", i__1, "nspio_", (ftnlen)2172)) * 255, " ", (ftnlen)
+		"files", i__1, "nspio_", (ftnlen)2177)) * 255, " ", (ftnlen)
 		255, (ftnlen)1);
 	active[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("active", 
-		i__1, "nspio_", (ftnlen)2173)] = FALSE_;
+		i__1, "nspio_", (ftnlen)2178)] = FALSE_;
 	open[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("open", i__1, 
-		"nspio_", (ftnlen)2174)] = FALSE_;
+		"nspio_", (ftnlen)2179)] = FALSE_;
 	suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge("suspnd", 
-		i__1, "nspio_", (ftnlen)2175)] = FALSE_;
+		i__1, "nspio_", (ftnlen)2180)] = FALSE_;
     }
     chkout_("NSPEND", (ftnlen)6);
     return 0;
@@ -2170,10 +2175,6 @@ L_nsppfl:
 
 /*     See NSPIO. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     1) If PORT is improperly specified, the error NSPIO(UNKNOWNPORT) */
@@ -2183,6 +2184,10 @@ L_nsppfl:
 
 /*     3) If PORT is INACTIVE, SUSPENDED, or CLOSED, then NAME is */
 /*        returned as ' '. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -2196,13 +2201,13 @@ L_nsppfl:
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*     F.S. Turner     (JPL) */
-
 /* $ Literature_References */
 
 /*     None. */
+
+/* $ Author_and_Institution */
+
+/*     F.S. Turner     (JPL) */
 
 /* $ Version */
 
@@ -2236,12 +2241,12 @@ L_nsppfl:
 /*     is 'SCREEN', the corresponding entry in the FILES array is ' '. */
 
     } else if (! suspnd[(i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : s_rnge(
-	    "suspnd", i__1, "nspio_", (ftnlen)2338)] && active[(i__2 = id - 1)
+	    "suspnd", i__1, "nspio_", (ftnlen)2343)] && active[(i__2 = id - 1)
 	     < 8 && 0 <= i__2 ? i__2 : s_rnge("active", i__2, "nspio_", (
-	    ftnlen)2338)] && open[(i__3 = id - 1) < 8 && 0 <= i__3 ? i__3 : 
-	    s_rnge("open", i__3, "nspio_", (ftnlen)2338)]) {
+	    ftnlen)2343)] && open[(i__3 = id - 1) < 8 && 0 <= i__3 ? i__3 : 
+	    s_rnge("open", i__3, "nspio_", (ftnlen)2343)]) {
 	s_copy(name__, files + ((i__1 = id - 1) < 8 && 0 <= i__1 ? i__1 : 
-		s_rnge("files", i__1, "nspio_", (ftnlen)2342)) * 255, 
+		s_rnge("files", i__1, "nspio_", (ftnlen)2347)) * 255, 
 		name_len, (ftnlen)255);
 
 /*     If PORT is inactive, suspended or closed, set NAME to ' '. */

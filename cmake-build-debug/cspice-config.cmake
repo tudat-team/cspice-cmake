@@ -22,7 +22,7 @@ set (CSpice_DEFINITIONS "")
 include ("${CMAKE_CURRENT_LIST_DIR}/cspice_export.cmake")
 
 # These are IMPORTED targets created by NLOPTLibraryDepends.cmake
-set (CSpice_LIBRARIES "")
+set (CSpice_LIBRARIES "CSpice::cspice")
 
 if (CMAKE_VERSION VERSION_LESS 2.8.3)
   set (CMAKE_CURRENT_LIST_DIR)

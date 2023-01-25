@@ -186,7 +186,7 @@ static integer c__1 = 1;
 /*                 This variable may be at most 4 characters long. */
 
 /*     NUMBER      The logical unit number assigned to the file FILE */
-/*                 when opened.  An inyteger, returned to the calling */
+/*                 when opened.  An integer, returned to the calling */
 /*                 routine. */
 
 /* $ Parameters */
@@ -203,22 +203,22 @@ static integer c__1 = 1;
 /* $ Exceptions */
 
 /*      1)  If the inquire on the filename specified by FILE fails for */
-/*          some reason, the error SPICE(INQUIREERROR) will be signalled. */
+/*          some reason, the error SPICE(INQUIREERROR) will be signaled. */
 
 /*      2)  If the file specified by FILE is already open, the error */
-/*          SPICE(FILECURRENTLYOPEN) will be signalled. */
+/*          SPICE(FILECURRENTLYOPEN) will be signaled. */
 
 /*      3)  If the file specified by FILE does not exist, the error */
-/*          SPICE(NOSUCHFILE) will be signalled. */
+/*          SPICE(NOSUCHFILE) will be signaled. */
 
 /*      4)  If the attempt to open the file specified by FILE fails, the */
-/*          error SPICE(FILEOPENFAILED) will be signalled. */
+/*          error SPICE(FILEOPENFAILED) will be signaled. */
 
 /*      5)  If all attempts to open the file specified by FILE fail, the */
-/*          error SPICE(FILEOPENFAILED) will be signalled. */
+/*          error SPICE(FILEOPENFAILED) will be signaled. */
 
 /*      6)  If all attempts to read from the file specified be FILE */
-/*          fail, the error SPICE(FILEREADFAILED) will be signalled. */
+/*          fail, the error SPICE(FILEREADFAILED) will be signaled. */
 
 /* $ Files */
 
@@ -255,6 +255,10 @@ static integer c__1 = 1;
 /*     E.D. Wright     (JPL) */
 
 /* $ Version */
+
+/* -    Beta Version 1.26.0, 28-NOV-2021 (BVS) */
+
+/*        Updated for MAC-OSX-M1-64BIT-CLANG_C. */
 
 /* -    Beta Version 1.25.0, 10-MAR-2014 (BVS) */
 
@@ -363,7 +367,7 @@ static integer c__1 = 1;
 /* -    Beta Version 1.0.2, 08-OCT-1999 (WLT) */
 
 /*        The environment lines were expanded so that the supported */
-/*        environments are now explicitely given.  New */
+/*        environments are now explicitly given.  New */
 /*        environments are WIN-NT */
 
 /* -    Beta Version 1.0.1, 21-SEP-1999 (NJB) */
@@ -548,7 +552,7 @@ static integer c__1 = 1;
 /*     We opened the file successfully, so let's try to read from the */
 /*     file. We need to be sure to use the correct form of the read */
 /*     statement, depending on whether the file was opened with direct */
-/*     acces or sequential access. */
+/*     access or sequential access. */
 
     if (diropn) {
 	io___8.ciunit = *number;

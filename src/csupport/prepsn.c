@@ -97,13 +97,13 @@ static integer c__2 = 2;
 /*      MAXLEN    is the maximum length string that can be supported */
 /*                for pretty printing. */
 
-/* $ Files */
-
-/*      None. */
-
 /* $ Exceptions */
 
 /*     Error free. */
+
+/* $ Files */
+
+/*      None. */
 
 /* $ Particulars */
 
@@ -154,23 +154,30 @@ static integer c__2 = 2;
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*      W.L. Taber      (JPL) */
-
 /* $ Literature_References */
 
 /*      None. */
 
+/* $ Author_and_Institution */
+
+/*      W.L. Taber      (JPL) */
+
 /* $ Version */
 
-/* -     META/2 Configured Version 2.0.0, 9-MAY-1994 (WLT) */
+/* -     META/2 Configured Version 2.0.1, 06-DEC-2021 (BVS) */
+
+/*         Filled in $Index_Entries, cleaning up non-printing */
+/*         characters. */
+
+/*         Re-ordered header sections. */
+
+/* -     META/2 Configured Version 2.0.0, 09-MAY-1994 (WLT) */
 
 /*         This is the configured version of the Command Loop */
 /*         software as of May 9, 1994 */
 
 
-/* -     META/2 Configured Version 1.0.0, 9-MAY-1994 (WLT) */
+/* -     META/2 Configured Version 1.0.0, 09-MAY-1994 (WLT) */
 
 /*         This is the configured version of META/2 */
 /*         software as of May 9, 1994 */
@@ -179,7 +186,7 @@ static integer c__2 = 2;
 /* -& */
 /* $ Index_Entries */
 
-/*     «We need a permuted index entry */
+/*     pretty print syntax definition */
 
 /* -& */
 
@@ -191,7 +198,7 @@ static integer c__2 = 2;
 /*        INDBY  is the amount we've indented things. */
 /*        LONG   is our local string for creating the pretty print string */
 /*        OUTDNT is the string for controlling out-denting */
-/*        BEGIN  we have not begun processing a swithc */
+/*        BEGIN  we have not begun processing a switch */
 /*        INDENT we have not indented */
 /*        CRLAST we did not put a '/cr' in the last word we processed. */
 
@@ -205,7 +212,7 @@ static integer c__2 = 2;
     indent = FALSE_;
     crlast = FALSE_;
 
-/*     Process the string a word at a time  untill we've seen it all. */
+/*     Process the string a word at a time  until we've seen it all. */
 
     while(e != 0) {
 	fndnwd_(string, &start, &b, &e, string_len);
@@ -294,7 +301,7 @@ static integer c__2 = 2;
 		crlast = TRUE_;
 	    } else {
 
-/*              This word is to be treated as an ordinatry word. */
+/*              This word is to be treated as an ordinary word. */
 
 		s_copy(word, string + (b - 1), (ftnlen)63, e - (b - 1));
 		crlast = FALSE_;

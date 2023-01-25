@@ -243,6 +243,14 @@ static doublereal c_b38 = 1.;
 
 /* $ Version */
 
+
+/* -    Beta Version 1.3.0, 29-AUG-2019 (BVS) */
+
+/*        BUG FIX: changed to declare fit to be OK for cases when KEEPF */
+/*        and KEEPL points are next to each other but do not pass the */
+/*        too close to 180 degrees apart check. In such cases the */
+/*        algorithm went into indefinite loop. */
+
 /* -    Beta Version 1.2.0, 04-JUN-2012 (BVS) */
 
 /*        BUG FIX: changed the end-point selection algorithm to not */
@@ -465,6 +473,17 @@ static doublereal c_b38 = 1.;
 	    cosval = qkeepf[0] * qlinpt[0] + vdot_(&qkeepf[1], &qlinpt[1]);
 	    angle = acos(brcktd_(&cosval, &c_b37, &c_b38)) * 2.;
 	    fitok = (d__1 = pi_() - angle, abs(d__1)) > .001;
+
+/*           If KEEPF and KEEPL points are next to each other, we will */
+/*           declare the fit to be OK even if it does not pass the ``too */
+/*           close to 180 degrees apart'' test and set LEFT equal to */
+/*           RIGHT to move KEEPF forward. If we don't do this, the */
+/*           algorithm goes into indefinite loop. */
+
+	    if (keepf + 1 == keepl && ! fitok) {
+		fitok = TRUE_;
+		left = right;
+	    }
 	    j = keepf + 1;
 	    while(j <= keepl - 1 && fitok) {
 

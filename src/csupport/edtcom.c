@@ -189,15 +189,15 @@ static integer c__1 = 1;
 /*     must be able to create a file that the editor can edit. */
 
 /*     If this cannot be done one of the following errors will be */
-/*     signalled. */
+/*     signaled. */
 
 /*     1)   If the program cannot create a new file name that */
 /*          could hold the command to be edited, the error */
-/*          COMLOOP(NOFILECREATION) will be signalled. */
+/*          COMLOOP(NOFILECREATION) will be signaled. */
 
 /*     2)   If a new file name could be created but the file could */
 /*          not be opened, the error COMLOOP(COMMANDEDITFAILED) */
-/*          will be signalled. */
+/*          will be signaled. */
 
 
 /* $ Files */
@@ -233,6 +233,10 @@ static integer c__1 = 1;
 /*     W.L. Taber      (JPL) */
 
 /* $ Version */
+
+/* -    SPICELIB Version 1.30.0, 28-NOV-2021 (BVS) */
+
+/*        Updated for MAC-OSX-M1-64BIT-CLANG_C. */
 
 /* -    SPICELIB Version 1.29.0, 10-MAR-2014 (BVS) */
 
@@ -341,7 +345,7 @@ static integer c__1 = 1;
 /* -    SPICELIB Version 1.4.4, 08-OCT-1999 (WLT) */
 
 /*        The environment lines were expanded so that the supported */
-/*        environments are now explicitely given.  New */
+/*        environments are now explicitly given.  New */
 /*        environments are WIN-NT */
 
 /* -    SPICELIB Version 1.4.3, 20-SEP-1999 (NJB) */
@@ -366,13 +370,13 @@ static integer c__1 = 1;
 
 /*        Added minimal support for the MAC version. When the user */
 /*        requests EDIT, the routine displays the matching item */
-/*        that should be editted.  This is the only option available */
+/*        that should be edited.  This is the only option available */
 /*        at the moment on the MAC.  When something better comes along */
 /*        we'll do something more creative. */
 
 /* -    SPICELIB Version 1.3.0, 5-Dec-1995 (WLT) */
 
-/*        Fixed the bug that occured if you typed RECALL x and */
+/*        Fixed the bug that occurred if you typed RECALL x and */
 /*        there was no matching command (probably should have done */
 /*        thins in version 1.2.0) EDTCOM now pronounces that this */
 /*        is an error. */
@@ -521,7 +525,7 @@ static integer c__1 = 1;
 		i__1[0] = 3, a__1[0] = "   ";
 		i__1[1] = 132, a__1[1] = buffer + ((i__3 = i__ + 5) < 86 && 0 
 			<= i__3 ? i__3 : s_rnge("buffer", i__3, "edtcom_", (
-			ftnlen)528)) * 132;
+			ftnlen)532)) * 132;
 		s_cat(line, a__1, i__1, &c__2, (ftnlen)132);
 		nspwln_(line, (ftnlen)132);
 	    }
@@ -560,7 +564,7 @@ static integer c__1 = 1;
 	    i__1[0] = 3, a__1[0] = "   ";
 	    i__1[1] = 132, a__1[1] = buffer + ((i__3 = i__ + 5) < 86 && 0 <= 
 		    i__3 ? i__3 : s_rnge("buffer", i__3, "edtcom_", (ftnlen)
-		    567)) * 132;
+		    571)) * 132;
 	    s_cat(line, a__1, i__1, &c__2, (ftnlen)132);
 	    nspwln_(line, (ftnlen)132);
 	}
@@ -602,7 +606,7 @@ static integer c__1 = 1;
 		    i__1[0] = 3, a__1[0] = "   ";
 		    i__1[1] = 132, a__1[1] = buffer + ((i__3 = i__ + 5) < 86 
 			    && 0 <= i__3 ? i__3 : s_rnge("buffer", i__3, 
-			    "edtcom_", (ftnlen)611)) * 132;
+			    "edtcom_", (ftnlen)615)) * 132;
 		    s_cat(line, a__1, i__1, &c__2, (ftnlen)132);
 		    nspwln_(line, (ftnlen)132);
 		}
@@ -669,7 +673,7 @@ static integer c__1 = 1;
 	i__2 = cardc_(buffer, (ftnlen)132);
 	for (i__ = 1; i__ <= i__2; ++i__) {
 	    nspwln_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? i__3 : 
-		    s_rnge("buffer", i__3, "edtcom_", (ftnlen)694)) * 132, (
+		    s_rnge("buffer", i__3, "edtcom_", (ftnlen)698)) * 132, (
 		    ftnlen)132);
 	}
 	nspioc_("UTILITY", (ftnlen)7);
@@ -725,13 +729,13 @@ static integer c__1 = 1;
 	    if (i__ == 1) {
 		s_copy(line, prompt, (ftnlen)132, prompt_len);
 		suffix_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? i__3 : 
-			s_rnge("buffer", i__3, "edtcom_", (ftnlen)758)) * 132,
+			s_rnge("buffer", i__3, "edtcom_", (ftnlen)762)) * 132,
 			 &c__1, line, (ftnlen)132, (ftnlen)132);
 	    } else {
 		s_copy(line, " ", (ftnlen)132, (ftnlen)1);
 		s_copy(line + (r__ - 1), buffer + ((i__3 = i__ + 5) < 86 && 0 
 			<= i__3 ? i__3 : s_rnge("buffer", i__3, "edtcom_", (
-			ftnlen)761)) * 132, 132 - (r__ - 1), (ftnlen)132);
+			ftnlen)765)) * 132, 132 - (r__ - 1), (ftnlen)132);
 	    }
 	    nspwln_(line, rtrim_(line, (ftnlen)132));
 	}
@@ -790,7 +794,7 @@ static integer c__1 = 1;
 		for (i__ = 1; i__ <= i__2; ++i__) {
 		    nspwln_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? 
 			    i__3 : s_rnge("buffer", i__3, "edtcom_", (ftnlen)
-			    834)) * 132, (ftnlen)132);
+			    838)) * 132, (ftnlen)132);
 		}
 		nspioc_("UTILITY", (ftnlen)7);
 
@@ -846,13 +850,13 @@ static integer c__1 = 1;
 			s_copy(line, prompt, (ftnlen)132, prompt_len);
 			suffix_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ?
 				 i__3 : s_rnge("buffer", i__3, "edtcom_", (
-				ftnlen)900)) * 132, &c__1, line, (ftnlen)132, 
+				ftnlen)904)) * 132, &c__1, line, (ftnlen)132, 
 				(ftnlen)132);
 		    } else {
 			s_copy(line, " ", (ftnlen)132, (ftnlen)1);
 			s_copy(line + (r__ - 1), buffer + ((i__3 = i__ + 5) < 
 				86 && 0 <= i__3 ? i__3 : s_rnge("buffer", 
-				i__3, "edtcom_", (ftnlen)903)) * 132, 132 - (
+				i__3, "edtcom_", (ftnlen)907)) * 132, 132 - (
 				r__ - 1), (ftnlen)132);
 		    }
 		    nspwln_(line, rtrim_(line, (ftnlen)132));
@@ -898,18 +902,18 @@ static integer c__1 = 1;
 	i__2 = cardc_(buffer, (ftnlen)132);
 	for (i__ = 1; i__ <= i__2; ++i__) {
 	    putbuf_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? i__3 : 
-		    s_rnge("buffer", i__3, "edtcom_", (ftnlen)963)) * 132, (
+		    s_rnge("buffer", i__3, "edtcom_", (ftnlen)967)) * 132, (
 		    ftnlen)132);
 	    if (i__ == 1) {
 		s_copy(line, prompt, (ftnlen)132, prompt_len);
 		suffix_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? i__3 : 
-			s_rnge("buffer", i__3, "edtcom_", (ftnlen)967)) * 132,
+			s_rnge("buffer", i__3, "edtcom_", (ftnlen)971)) * 132,
 			 &c__1, line, (ftnlen)132, (ftnlen)132);
 	    } else {
 		s_copy(line, " ", (ftnlen)132, (ftnlen)1);
 		s_copy(line + (r__ - 1), buffer + ((i__3 = i__ + 5) < 86 && 0 
 			<= i__3 ? i__3 : s_rnge("buffer", i__3, "edtcom_", (
-			ftnlen)970)) * 132, 132 - (r__ - 1), (ftnlen)132);
+			ftnlen)974)) * 132, 132 - (r__ - 1), (ftnlen)132);
 	    }
 	    nspwln_(line, rtrim_(line, (ftnlen)132));
 	}
@@ -919,7 +923,7 @@ static integer c__1 = 1;
 	i__2 = cardc_(buffer, (ftnlen)132);
 	for (i__ = 2; i__ <= i__2; ++i__) {
 	    suffix_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? i__3 : 
-		    s_rnge("buffer", i__3, "edtcom_", (ftnlen)983)) * 132, &
+		    s_rnge("buffer", i__3, "edtcom_", (ftnlen)987)) * 132, &
 		    c__1, commnd, (ftnlen)132, commnd_len);
 	}
 	i__ = i_indx(commnd, delim, commnd_len, (ftnlen)1);
@@ -960,18 +964,18 @@ static integer c__1 = 1;
 		for (i__ = 1; i__ <= i__2; ++i__) {
 		    putbuf_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? 
 			    i__3 : s_rnge("buffer", i__3, "edtcom_", (ftnlen)
-			    1032)) * 132, (ftnlen)132);
+			    1036)) * 132, (ftnlen)132);
 		    if (i__ == 1) {
 			s_copy(line, prompt, (ftnlen)132, prompt_len);
 			suffix_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ?
 				 i__3 : s_rnge("buffer", i__3, "edtcom_", (
-				ftnlen)1035)) * 132, &c__1, line, (ftnlen)132,
+				ftnlen)1039)) * 132, &c__1, line, (ftnlen)132,
 				 (ftnlen)132);
 		    } else {
 			s_copy(line, " ", (ftnlen)132, (ftnlen)1);
 			s_copy(line + (r__ - 1), buffer + ((i__3 = i__ + 5) < 
 				86 && 0 <= i__3 ? i__3 : s_rnge("buffer", 
-				i__3, "edtcom_", (ftnlen)1038)) * 132, 132 - (
+				i__3, "edtcom_", (ftnlen)1042)) * 132, 132 - (
 				r__ - 1), (ftnlen)132);
 		    }
 		    nspwln_(line, rtrim_(line, (ftnlen)132));
@@ -983,7 +987,7 @@ static integer c__1 = 1;
 		for (i__ = 2; i__ <= i__2; ++i__) {
 		    suffix_(buffer + ((i__3 = i__ + 5) < 86 && 0 <= i__3 ? 
 			    i__3 : s_rnge("buffer", i__3, "edtcom_", (ftnlen)
-			    1051)) * 132, &c__1, commnd, (ftnlen)132, 
+			    1055)) * 132, &c__1, commnd, (ftnlen)132, 
 			    commnd_len);
 		}
 		i__ = i_indx(commnd, delim, commnd_len, (ftnlen)1);

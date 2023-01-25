@@ -83,7 +83,7 @@
 
 /*     1)  If the input command is not executed successfully, and if */
 /*         this routine is able to detect the failure, the error */
-/*         SPICE(SYSTEMCALLFAILED) is signalled. */
+/*         SPICE(SYSTEMCALLFAILED) is signaled. */
 
 /* $ Files */
 
@@ -94,7 +94,7 @@
 /*     Most popular operating systems provide a Fortran-callable */
 /*     interface that allows a program to execute an operating system */
 /*     command by passing the command, in the form of a string, to the */
-/*     operating system's command interpreter. This routine encapulates */
+/*     operating system's command interpreter. This routine encapsulates */
 /*     most of the system-dependent code required to execute operating */
 /*     system commands in this manner.  The input commands are of course */
 /*     system-dependent. */
@@ -161,6 +161,10 @@
 /*     N.J. Bachman   (JPL) */
 
 /* $ Version */
+
+/* -    Beta Version 2.27.0, 28-NOV-2021 (BVS) */
+
+/*        Updated for MAC-OSX-M1-64BIT-CLANG_C. */
 
 /* -    Beta Version 2.26.0, 02-APR-2014 (BVS) */
 
@@ -272,7 +276,7 @@
 /* -    Beta Version 2.1.4, 08-OCT-1999 (WLT) */
 
 /*        The environment lines were expanded so that the supported */
-/*        environments are now explicitely given.  New */
+/*        environments are now explicitly given.  New */
 /*        environments are WIN-NT */
 
 /* -    Beta Version 2.1.3, 22-SEP-1999 (NJB) */

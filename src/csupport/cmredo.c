@@ -85,20 +85,20 @@
 
 /* $ Detailed_Output */
 
-/*     TRAP       is a logical idicating whether the string was special */
+/*     TRAP       is a logical indicating whether the string was special */
 /*                and was put on the COMMND buffer. */
 
 /* $ Parameters */
 
 /*     None. */
 
-/* $ Files */
-
-/*     None. */
-
 /* $ Exceptions */
 
 /*     Error free. */
+
+/* $ Files */
+
+/*     None. */
 
 /* $ Particulars */
 
@@ -121,15 +121,21 @@
 
 /*     None. */
 
-/* $ Author_and_Institution */
-
-/*       W.L. Taber      (JPL) */
-
 /* $ Literature_References */
 
 /*       None. */
 
+/* $ Author_and_Institution */
+
+/*       W.L. Taber      (JPL) */
+
 /* $ Version */
+
+/* -    SPICELIB Version 2.0.1, 06-DEC-2021 (BVS) */
+
+/*        Filled in $Index_Entries, cleaning up non-printing characters. */
+
+/*        Re-ordered header sections. */
 
 /* -    SPICELIB Version 2.0.0, 23-AUG-1995 (WLT) */
 
@@ -140,7 +146,7 @@
 /* -& */
 /* $ Index_Entries */
 
-/*     «We need a permuted index entry */
+/*     command loop trap */
 
 /* -& */
 

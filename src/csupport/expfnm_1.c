@@ -105,10 +105,10 @@ static integer c__1 = 1;
 
 /*     1) If the input filename is blank, begins with blank characters, */
 /*        or has embedded blanks in it, the error SPICE(BADFILENAME) */
-/*        is signalled. */
+/*        is signaled. */
 
 /*     2) If the expanded filename is too long to fit into the */
-/*        output string, the error SPICE(STRINGTOOSMALL) is signalled. */
+/*        output string, the error SPICE(STRINGTOOSMALL) is signaled. */
 
 /*     3) The output string may not overwrite the input string. */
 
@@ -136,7 +136,7 @@ static integer c__1 = 1;
 
 /*     VAX/VMS, Alpha/OpenVMS platforms: */
 
-/*     The operating system does filname expansion itself, so this */
+/*     The operating system does filename expansion itself, so this */
 /*     routine currently does not expand the name. */
 
 /* $ Examples */
@@ -159,6 +159,10 @@ static integer c__1 = 1;
 /*     H.A. Neilan    (JPL) */
 
 /* $ Version */
+
+/* -    Beta Version 3.26.0, 28-NOV-2021 (BVS) */
+
+/*        Updated for MAC-OSX-M1-64BIT-CLANG_C. */
 
 /* -    Beta Version 3.25.0, 10-MAR-2014 (BVS) */
 
@@ -301,7 +305,7 @@ static integer c__1 = 1;
 /* -    Beta Version 2.0.0, 08-JUL-1994 (HAN) */
 
 /*        The capability of resolving a Unix filename that contains */
-/*        an environment variable directory specificiation plus a */
+/*        an environment variable directory specification plus a */
 /*        filename has been added. */
 
 /* -    Beta Version 1.0.0, 06-APR-1992 (HAN) */

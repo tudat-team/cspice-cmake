@@ -9,3 +9,5 @@ NASA's Navigation and Ancillary Information Facility (NAIF) offers NASA flight p
 observations from space-based instruments aboard robotic planetary spacecraft. SPICE is also used in support of 
 engineering tasks associated with these missions. While planetary missions were the original focus, today SPICE is also
  used on some heliophysics and earth science missions.
+ 
+ All aspects related to licensing of the software are provided here: https://naif.jpl.nasa.gov/naif/rules.html

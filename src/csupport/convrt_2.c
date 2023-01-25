@@ -209,10 +209,15 @@ static integer c_n1 = -1;
 /* $ Author_and_Institution */
 
 /*     W.L. Taber     (JPL) */
+/*     B.V. Semenov   (JPL) */
 
 /* $ Version */
 
-/* -    SPICELIB 1.1.0, 28-SEP-2010 (EDW) */
+/* -    SPICELIB Version 1.2.0, 09-NOV-2020 (BVS) */
+
+/*        Added missing 'D' to literal DP constants. */
+
+/* -    SPICELIB Version 1.1.0, 28-SEP-2010 (EDW) */
 
 /*        Renamed CLASSS variable CLAS_S to eliminate ifort 11.1 Pro */
 /*        compiler error. ifort interpreted CLASSS as 'CLASS S'. */
@@ -272,17 +277,17 @@ static integer c_n1 = -1;
 	exp__ = bsrchc_("**", &nop, op, (ftnlen)2, (ftnlen)2);
 	div = bsrchc_("/", &nop, op, (ftnlen)1, (ftnlen)2);
 	opval[(i__1 = blank - 1) < 6 && 0 <= i__1 ? i__1 : s_rnge("opval", 
-		i__1, "convrt_2__", (ftnlen)327)] = 0.f;
+		i__1, "convrt_2__", (ftnlen)332)] = 0.;
 	opval[(i__1 = lparen - 1) < 6 && 0 <= i__1 ? i__1 : s_rnge("opval", 
-		i__1, "convrt_2__", (ftnlen)328)] = 0.f;
+		i__1, "convrt_2__", (ftnlen)333)] = 0.;
 	opval[(i__1 = rparen - 1) < 6 && 0 <= i__1 ? i__1 : s_rnge("opval", 
-		i__1, "convrt_2__", (ftnlen)329)] = 0.f;
+		i__1, "convrt_2__", (ftnlen)334)] = 0.;
 	opval[(i__1 = mult - 1) < 6 && 0 <= i__1 ? i__1 : s_rnge("opval", 
-		i__1, "convrt_2__", (ftnlen)330)] = 1.;
+		i__1, "convrt_2__", (ftnlen)335)] = 1.;
 	opval[(i__1 = exp__ - 1) < 6 && 0 <= i__1 ? i__1 : s_rnge("opval", 
-		i__1, "convrt_2__", (ftnlen)331)] = 3.;
+		i__1, "convrt_2__", (ftnlen)336)] = 3.;
 	opval[(i__1 = div - 1) < 6 && 0 <= i__1 ? i__1 : s_rnge("opval", i__1,
-		 "convrt_2__", (ftnlen)332)] = 2.;
+		 "convrt_2__", (ftnlen)337)] = 2.;
     }
 
 /*     First make sure that both UNIN and UNOUT are recognized */
@@ -379,7 +384,7 @@ static integer c_n1 = -1;
 /*              If we have a left parenthesis ... */
 
 		if (ident[(i__2 = i__ - 1) < 128 && 0 <= i__2 ? i__2 : s_rnge(
-			"ident", i__2, "convrt_2__", (ftnlen)457)] == lparen) 
+			"ident", i__2, "convrt_2__", (ftnlen)462)] == lparen) 
 			{
 
 /*                 We are beginnin a group now.  After beginning a */
@@ -399,19 +404,19 @@ static integer c_n1 = -1;
 /*              ... or if we have an arithmetic operations */
 
 		} else if (ident[(i__2 = i__ - 1) < 128 && 0 <= i__2 ? i__2 : 
-			s_rnge("ident", i__2, "convrt_2__", (ftnlen)479)] == 
+			s_rnge("ident", i__2, "convrt_2__", (ftnlen)484)] == 
 			mult || ident[(i__3 = i__ - 1) < 128 && 0 <= i__3 ? 
 			i__3 : s_rnge("ident", i__3, "convrt_2__", (ftnlen)
-			479)] == div || ident[(i__4 = i__ - 1) < 128 && 0 <= 
+			484)] == div || ident[(i__4 = i__ - 1) < 128 && 0 <= 
 			i__4 ? i__4 : s_rnge("ident", i__4, "convrt_2__", (
-			ftnlen)479)] == exp__) {
+			ftnlen)484)] == exp__) {
 
 /*                 Append the operation to the current group. */
 
 		    appndd_(&opval[(i__3 = ident[(i__2 = i__ - 1) < 128 && 0 
 			    <= i__2 ? i__2 : s_rnge("ident", i__2, "convrt_2"
-			    "__", (ftnlen)486)] - 1) < 6 && 0 <= i__3 ? i__3 : 
-			    s_rnge("opval", i__3, "convrt_2__", (ftnlen)486)],
+			    "__", (ftnlen)491)] - 1) < 6 && 0 <= i__3 ? i__3 : 
+			    s_rnge("opval", i__3, "convrt_2__", (ftnlen)491)],
 			     parsed);
 		    appndi_(&c_n1, clas_s__);
 		    appndd_(&c_b34, expont);
@@ -419,16 +424,16 @@ static integer c_n1 = -1;
 /*              ...or if we have a unit or number ... */
 
 		} else if (ident[(i__2 = i__ - 1) < 128 && 0 <= i__2 ? i__2 : 
-			s_rnge("ident", i__2, "convrt_2__", (ftnlen)493)] == 
+			s_rnge("ident", i__2, "convrt_2__", (ftnlen)498)] == 
 			0) {
 
 /*                  Look up the class and value for this token, */
 /*                  append them to the current group. */
 
 		    b = beg[(i__2 = i__ - 1) < 128 && 0 <= i__2 ? i__2 : 
-			    s_rnge("beg", i__2, "convrt_2__", (ftnlen)499)];
+			    s_rnge("beg", i__2, "convrt_2__", (ftnlen)504)];
 		    e = end[(i__2 = i__ - 1) < 128 && 0 <= i__2 ? i__2 : 
-			    s_rnge("end", i__2, "convrt_2__", (ftnlen)500)];
+			    s_rnge("end", i__2, "convrt_2__", (ftnlen)505)];
 		    if (inout == 1) {
 			fnducv_(unin + (b - 1), &known, &class__, &value, e - 
 				(b - 1));
@@ -439,7 +444,7 @@ static integer c_n1 = -1;
 		    appndd_(&value, parsed);
 		    appndi_(&class__, clas_s__);
 		    appndd_(&dim[(i__2 = class__) < 6 && 0 <= i__2 ? i__2 : 
-			    s_rnge("dim", i__2, "convrt_2__", (ftnlen)514)], 
+			    s_rnge("dim", i__2, "convrt_2__", (ftnlen)519)], 
 			    expont);
 
 /*              ...or if we have a right parenthesis, close off */
@@ -448,7 +453,7 @@ static integer c_n1 = -1;
 /*              of value/operation pairs. */
 
 		} else if (ident[(i__2 = i__ - 1) < 128 && 0 <= i__2 ? i__2 : 
-			s_rnge("ident", i__2, "convrt_2__", (ftnlen)523)] == 
+			s_rnge("ident", i__2, "convrt_2__", (ftnlen)528)] == 
 			rparen) {
 
 /*                 We are ending a group.  It's time to perform all */
@@ -500,7 +505,7 @@ static integer c_n1 = -1;
 		    while(j <= e) {
 			if (parsed[(i__2 = j + 5) < 134 && 0 <= i__2 ? i__2 : 
 				s_rnge("parsed", i__2, "convrt_2__", (ftnlen)
-				576)] == 3.) {
+				581)] == 3.) {
 
 /*                       We are going to simplify an expression */
 /*                       of the form  X ** Y to its computed value. */
@@ -511,20 +516,20 @@ static integer c_n1 = -1;
 			    move = TRUE_;
 			    parsed[(i__2 = active + 5) < 134 && 0 <= i__2 ? 
 				    i__2 : s_rnge("parsed", i__2, "convrt_2__"
-				    , (ftnlen)587)] = pow_dd(&parsed[(i__3 = 
+				    , (ftnlen)592)] = pow_dd(&parsed[(i__3 = 
 				    active + 5) < 134 && 0 <= i__3 ? i__3 : 
 				    s_rnge("parsed", i__3, "convrt_2__", (
-				    ftnlen)587)], &parsed[(i__4 = j + 6) < 
+				    ftnlen)592)], &parsed[(i__4 = j + 6) < 
 				    134 && 0 <= i__4 ? i__4 : s_rnge("parsed",
-				     i__4, "convrt_2__", (ftnlen)587)]);
+				     i__4, "convrt_2__", (ftnlen)592)]);
 			    expont[(i__2 = active + 5) < 134 && 0 <= i__2 ? 
 				    i__2 : s_rnge("expont", i__2, "convrt_2__"
-				    , (ftnlen)588)] = expont[(i__3 = active + 
+				    , (ftnlen)593)] = expont[(i__3 = active + 
 				    5) < 134 && 0 <= i__3 ? i__3 : s_rnge(
-				    "expont", i__3, "convrt_2__", (ftnlen)588)
+				    "expont", i__3, "convrt_2__", (ftnlen)593)
 				    ] * parsed[(i__4 = j + 6) < 134 && 0 <= 
 				    i__4 ? i__4 : s_rnge("parsed", i__4, 
-				    "convrt_2__", (ftnlen)588)];
+				    "convrt_2__", (ftnlen)593)];
 			} else {
 
 /*                       If we are moving operators and right */
@@ -537,40 +542,40 @@ static integer c_n1 = -1;
 				r__ = j + 1;
 				parsed[(i__2 = o + 5) < 134 && 0 <= i__2 ? 
 					i__2 : s_rnge("parsed", i__2, "convr"
-					"t_2__", (ftnlen)604)] = parsed[(i__3 =
+					"t_2__", (ftnlen)609)] = parsed[(i__3 =
 					 j + 5) < 134 && 0 <= i__3 ? i__3 : 
 					s_rnge("parsed", i__3, "convrt_2__", (
-					ftnlen)604)];
+					ftnlen)609)];
 				clas_s__[(i__2 = o + 5) < 134 && 0 <= i__2 ? 
 					i__2 : s_rnge("clas_s", i__2, "convr"
-					"t_2__", (ftnlen)605)] = clas_s__[(
+					"t_2__", (ftnlen)610)] = clas_s__[(
 					i__3 = j + 5) < 134 && 0 <= i__3 ? 
 					i__3 : s_rnge("clas_s", i__3, "convr"
-					"t_2__", (ftnlen)605)];
+					"t_2__", (ftnlen)610)];
 				expont[(i__2 = o + 5) < 134 && 0 <= i__2 ? 
 					i__2 : s_rnge("expont", i__2, "convr"
-					"t_2__", (ftnlen)606)] = expont[(i__3 =
+					"t_2__", (ftnlen)611)] = expont[(i__3 =
 					 j + 5) < 134 && 0 <= i__3 ? i__3 : 
 					s_rnge("expont", i__3, "convrt_2__", (
-					ftnlen)606)];
+					ftnlen)611)];
 				parsed[(i__2 = l + 5) < 134 && 0 <= i__2 ? 
 					i__2 : s_rnge("parsed", i__2, "convr"
-					"t_2__", (ftnlen)608)] = parsed[(i__3 =
+					"t_2__", (ftnlen)613)] = parsed[(i__3 =
 					 r__ + 5) < 134 && 0 <= i__3 ? i__3 : 
 					s_rnge("parsed", i__3, "convrt_2__", (
-					ftnlen)608)];
+					ftnlen)613)];
 				clas_s__[(i__2 = l + 5) < 134 && 0 <= i__2 ? 
 					i__2 : s_rnge("clas_s", i__2, "convr"
-					"t_2__", (ftnlen)609)] = clas_s__[(
+					"t_2__", (ftnlen)614)] = clas_s__[(
 					i__3 = r__ + 5) < 134 && 0 <= i__3 ? 
 					i__3 : s_rnge("clas_s", i__3, "convr"
-					"t_2__", (ftnlen)609)];
+					"t_2__", (ftnlen)614)];
 				expont[(i__2 = l + 5) < 134 && 0 <= i__2 ? 
 					i__2 : s_rnge("expont", i__2, "convr"
-					"t_2__", (ftnlen)610)] = expont[(i__3 =
+					"t_2__", (ftnlen)615)] = expont[(i__3 =
 					 r__ + 5) < 134 && 0 <= i__3 ? i__3 : 
 					s_rnge("expont", i__3, "convrt_2__", (
-					ftnlen)610)];
+					ftnlen)615)];
 			    }
 			    active += 2;
 			}
@@ -589,45 +594,45 @@ static integer c_n1 = -1;
 			r__ = j + 1;
 			class__ = clas_s__[(i__2 = r__ + 5) < 134 && 0 <= 
 				i__2 ? i__2 : s_rnge("clas_s", i__2, "convrt"
-				"_2__", (ftnlen)635)];
+				"_2__", (ftnlen)640)];
 			if (parsed[(i__2 = j + 5) < 134 && 0 <= i__2 ? i__2 : 
 				s_rnge("parsed", i__2, "convrt_2__", (ftnlen)
-				637)] == 1.) {
-			    parsed[(i__2 = active + 5) < 134 && 0 <= i__2 ? 
-				    i__2 : s_rnge("parsed", i__2, "convrt_2__"
-				    , (ftnlen)639)] = parsed[(i__3 = active + 
-				    5) < 134 && 0 <= i__3 ? i__3 : s_rnge(
-				    "parsed", i__3, "convrt_2__", (ftnlen)639)
-				    ] * parsed[(i__4 = r__ + 5) < 134 && 0 <= 
-				    i__4 ? i__4 : s_rnge("parsed", i__4, 
-				    "convrt_2__", (ftnlen)639)];
-			    dimen[(i__2 = class__) < 6 && 0 <= i__2 ? i__2 : 
-				    s_rnge("dimen", i__2, "convrt_2__", (
-				    ftnlen)640)] = dimen[(i__3 = class__) < 6 
-				    && 0 <= i__3 ? i__3 : s_rnge("dimen", 
-				    i__3, "convrt_2__", (ftnlen)640)] + 
-				    expont[(i__4 = r__ + 5) < 134 && 0 <= 
-				    i__4 ? i__4 : s_rnge("expont", i__4, 
-				    "convrt_2__", (ftnlen)640)];
-			} else if (parsed[(i__2 = j + 5) < 134 && 0 <= i__2 ? 
-				i__2 : s_rnge("parsed", i__2, "convrt_2__", (
-				ftnlen)642)] == 2.) {
+				642)] == 1.) {
 			    parsed[(i__2 = active + 5) < 134 && 0 <= i__2 ? 
 				    i__2 : s_rnge("parsed", i__2, "convrt_2__"
 				    , (ftnlen)644)] = parsed[(i__3 = active + 
 				    5) < 134 && 0 <= i__3 ? i__3 : s_rnge(
 				    "parsed", i__3, "convrt_2__", (ftnlen)644)
-				    ] / parsed[(i__4 = r__ + 5) < 134 && 0 <= 
+				    ] * parsed[(i__4 = r__ + 5) < 134 && 0 <= 
 				    i__4 ? i__4 : s_rnge("parsed", i__4, 
 				    "convrt_2__", (ftnlen)644)];
 			    dimen[(i__2 = class__) < 6 && 0 <= i__2 ? i__2 : 
 				    s_rnge("dimen", i__2, "convrt_2__", (
 				    ftnlen)645)] = dimen[(i__3 = class__) < 6 
 				    && 0 <= i__3 ? i__3 : s_rnge("dimen", 
-				    i__3, "convrt_2__", (ftnlen)645)] - 
+				    i__3, "convrt_2__", (ftnlen)645)] + 
 				    expont[(i__4 = r__ + 5) < 134 && 0 <= 
 				    i__4 ? i__4 : s_rnge("expont", i__4, 
 				    "convrt_2__", (ftnlen)645)];
+			} else if (parsed[(i__2 = j + 5) < 134 && 0 <= i__2 ? 
+				i__2 : s_rnge("parsed", i__2, "convrt_2__", (
+				ftnlen)647)] == 2.) {
+			    parsed[(i__2 = active + 5) < 134 && 0 <= i__2 ? 
+				    i__2 : s_rnge("parsed", i__2, "convrt_2__"
+				    , (ftnlen)649)] = parsed[(i__3 = active + 
+				    5) < 134 && 0 <= i__3 ? i__3 : s_rnge(
+				    "parsed", i__3, "convrt_2__", (ftnlen)649)
+				    ] / parsed[(i__4 = r__ + 5) < 134 && 0 <= 
+				    i__4 ? i__4 : s_rnge("parsed", i__4, 
+				    "convrt_2__", (ftnlen)649)];
+			    dimen[(i__2 = class__) < 6 && 0 <= i__2 ? i__2 : 
+				    s_rnge("dimen", i__2, "convrt_2__", (
+				    ftnlen)650)] = dimen[(i__3 = class__) < 6 
+				    && 0 <= i__3 ? i__3 : s_rnge("dimen", 
+				    i__3, "convrt_2__", (ftnlen)650)] - 
+				    expont[(i__4 = r__ + 5) < 134 && 0 <= 
+				    i__4 ? i__4 : s_rnge("expont", i__4, 
+				    "convrt_2__", (ftnlen)650)];
 			}
 			j += 2;
 		    }
@@ -638,7 +643,7 @@ static integer c_n1 = -1;
 
 		    keep = parsed[(i__2 = active + 5) < 134 && 0 <= i__2 ? 
 			    i__2 : s_rnge("parsed", i__2, "convrt_2__", (
-			    ftnlen)658)];
+			    ftnlen)663)];
 		    podegd_(parsed);
 		    podegi_(clas_s__);
 		    podegd_(expont);
@@ -699,18 +704,18 @@ static integer c_n1 = -1;
 
     for (i__ = 1; i__ <= 5; ++i__) {
 	if (dimeni[(i__1 = i__) < 6 && 0 <= i__1 ? i__1 : s_rnge("dimeni", 
-		i__1, "convrt_2__", (ftnlen)748)] != dimeno[(i__2 = i__) < 6 
+		i__1, "convrt_2__", (ftnlen)753)] != dimeno[(i__2 = i__) < 6 
 		&& 0 <= i__2 ? i__2 : s_rnge("dimeno", i__2, "convrt_2__", (
-		ftnlen)748)]) {
+		ftnlen)753)]) {
 	    diff = dimeni[(i__1 = i__) < 6 && 0 <= i__1 ? i__1 : s_rnge("dim"
-		    "eni", i__1, "convrt_2__", (ftnlen)750)] - dimeno[(i__2 = 
+		    "eni", i__1, "convrt_2__", (ftnlen)755)] - dimeno[(i__2 = 
 		    i__) < 6 && 0 <= i__2 ? i__2 : s_rnge("dimeno", i__2, 
-		    "convrt_2__", (ftnlen)750)];
+		    "convrt_2__", (ftnlen)755)];
 	    setmsg_("The input and output units are not dimensionally equiva"
 		    "lent.  The difference between the input and output dimen"
 		    "sion for # is #.", (ftnlen)127);
 	    errch_("#", name__ + (((i__1 = i__ - 1) < 5 && 0 <= i__1 ? i__1 : 
-		    s_rnge("name", i__1, "convrt_2__", (ftnlen)757)) << 3), (
+		    s_rnge("name", i__1, "convrt_2__", (ftnlen)762)) << 3), (
 		    ftnlen)1, (ftnlen)8);
 	    errdp_("#", &diff, (ftnlen)1);
 	    sigerr_("SPICE(NOTDIMENSIONALLYEQUIV)", (ftnlen)28);
