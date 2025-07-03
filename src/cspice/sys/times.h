@@ -1,4 +1,4 @@
-// From http://www.linuxjournal.com/article/5574
+/* From http://www.linuxjournal.com/article/5574 */
 
 #ifndef _TIMES_H
 #define _TIMES_H
@@ -10,9 +10,10 @@
 
 int gettimeofday(struct timeval* t,void* timezone);
 
-// from linux's sys/times.h
+/* from linux's sys/times.h
 
-//#include <features.h>
+#include <features.h>
+*/
 
 #define __need_clock_t
 #include <time.h>
