@@ -83,10 +83,10 @@ endforeach ()
 #set(${PROJECT_NAME_UPPER}_BINARY_CMAKE_DIR    "${BINARY_LIB_DIR}/cmake/${PROJECT_NAME_LOWER}"       CACHE PATH "Build directory for cmake config files")
 
 # Set the source and header files.
-file(GLOB_RECURSE CSPICE_HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice
-        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h)
-file(GLOB_RECURSE CSPICE_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice
-        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.c)
+file(GLOB_RECURSE CSPICE_HEADER_FILES
+        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice/*.h)
+file(GLOB_RECURSE CSPICE_SOURCE_FILES
+        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src/cspice/*.c)
 
 # Setup of library.
 
@@ -120,6 +120,15 @@ if(NOT MSVC)
             "-Wno-unsequenced")
 endif(NOT MSVC)
 
+if(MSVC)
+    # f2c.h defines complex which is also defined by MSVC's math.h unless we define the following
+    add_definitions(-D_COMPLEX_DEFINED)
+    add_definitions(-DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO)
+endif(MSVC)
+
+# Code is not C23 compliant
+set_target_properties(cspice PROPERTIES C_STANDARD 11)
+
 set_target_properties(cspice
         PROPERTIES
         LINKER_LANGUAGE C
@@ -127,6 +136,11 @@ set_target_properties(cspice
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
+
+if(MSVC)
+    # Use MultiThreaded (static runtime) as MultiThreadedDLL results in corecrt_io.h(493): error C2375: 'isatty': redefinition; different linkage
+    set_property(TARGET cspice PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif(MSVC)
 
 # Installation of the library.
 install(TARGETS cspice
