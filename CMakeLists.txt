@@ -126,6 +126,9 @@ if(MSVC)
     add_definitions(-DMSDOS -DOMIT_BLANK_CC -DNON_ANSI_STDIO)
 endif(MSVC)
 
+# Code is not C23 compliant
+set_target_properties(cspice PROPERTIES C_STANDARD 11)
+
 set_target_properties(cspice
         PROPERTIES
         LINKER_LANGUAGE C
